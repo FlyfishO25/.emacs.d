@@ -5,7 +5,7 @@
 
 (setq display-icon t)
 (setq centaur-completion-style 'childframe)
-(setq centaur-lsp 'eglot)
+(setq centaur-lsp 'lsp-mode)
 (defvar my:compile-command "~/tools/cpp11 ")
 
 (defun childframe-workable-p ()
