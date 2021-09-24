@@ -6,6 +6,7 @@
 (setq display-icon t)
 (setq centaur-completion-style 'childframe)
 (setq centaur-lsp 'eglot)
+(defvar my:compile-command "~/tools/cpp11 ")
 
 (defun childframe-workable-p ()
   "Test whether childframe is workable."
