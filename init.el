@@ -1,28 +1,24 @@
 ;;; -*- lexical-binding: t; -*-
 ;;; Code:
 
-                                        ; customize
+                                        ; customize and function defination
 
 (setq display-icon t)
+(setq centaur-completion-style 'childframe)
+(setq centaur-lsp 'eglot)
+
+(defun childframe-workable-p ()
+  "Test whether childframe is workable."
+       (eq centaur-completion-style 'childframe)
+       (not (or noninteractive
+                emacs-basic-display
+                (not (display-graphic-p)))))
+
                                         ; basic setup
 ;; performence
 
 ;; Speed up startup
 (setq auto-mode-case-fold nil)
-
-(unless (or (daemonp) noninteractive)
-  (let ((old-file-name-handler-alist file-name-handler-alist))
-    ;; If `file-name-handler-alist' is nil, no 256 colors in TUI
-    ;; @see https://emacs-china.org/t/spacemacs-centaur-emacs/3802/839
-    (setq file-name-handler-alist
-          (unless (display-graphic-p)
-            '(("\\(?:\\.tzst\\|\\.zst\\|\\.dz\\|\\.txz\\|\\.xz\\|\\.lzma\\|\\.lz\\|\\.g?z\\|\\.\\(?:tgz\\|svgz\\|sifz\\)\\|\\.tbz2?\\|\\.bz2\\|\\.Z\\)\\(?:~\\|\\.~[-[:alnum:]:#@^._]+\\(?:~[[:digit:]]+\\)?~\\)?\\'" . jka-compr-handler))))
-    (add-hook 'emacs-startup-hook
-              (lambda ()
-                "Recover file name handlers."
-                (setq file-name-handler-alist
-                      (delete-dups (append file-name-handler-alist
-                                           old-file-name-handler-alist)))))))
 
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.5)
@@ -143,18 +139,18 @@
  'after-save-hook
  (function
   (lambda ()
-    (if (string= (file-truename "~/.emacs.el")
+    (if (string= (file-truename "~/.emacs.d/init.el")
                  (file-truename (buffer-file-name)))
-        (byte-compile-init-files (file-truename "~/.emacs.el")))
+        (byte-compile-init-files (file-truename "~/.emacs.d/init.el")))
     )
   )
  )
 
 ;; Byte-compile again to ~/.emacs.elc if it is outdated
 (if (file-newer-than-file-p
-     (file-truename "~/.emacs.el")
-     (file-truename "~/.emacs.elc"))
-    (byte-compile-init-files "~/.emacs.el"))
+     (file-truename "~/.emacs.d/init.el")
+     (file-truename "~/.emacs.d/init.elc"))
+    (byte-compile-init-files "~/.emacs.d/init.el"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auto-package-update
@@ -441,6 +437,22 @@
         )
   )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Window numbering
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Package window-numbering installed from package list
+;; Allows switching between buffers using meta-(# key)
+(use-package window-numbering
+  :ensure t
+  :config
+  (eval-when-compile
+    ;; Silence missing function warnings
+    (declare-function window-numbering-mode "window-numbering.el"))
+  (window-numbering-mode t)
+  )
+
+
+
                                         ; code edit
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -637,4 +649,4 @@
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
 
                                         ; code compilation
-(require 'complete-ycmd)
+(require 'complete-lsp)
