@@ -299,6 +299,12 @@
              (company-quickhelp-mode  . company-quickhelp-terminal-mode))
       :init (setq company-quickhelp-delay 0.3))))
 
+(use-package yasnippet
+  :diminish yas-minor-mode
+  :hook (after-init . yas-global-mode))
+
+(use-package yasnippet-snippets
+  :after yasnippet)
 
 
 (provide 'complete-company)
