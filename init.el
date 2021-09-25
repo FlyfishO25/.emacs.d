@@ -23,61 +23,74 @@
             (setq gc-cons-threshold 800000
                   gc-cons-percentage 0.1)))
 
+(require 'packages-init)
+
+(use-package async
+  :ensure t)
+
+(use-package s
+  :ensure t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Automatically compile and save ~/.emacs.el
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun byte-compile-init-files (file)
+  "Automatically compile FILE."
+  (interactive)
+  (save-restriction
+    ;; Suppress the warning when you setq an undefined variable.
+    (if (>= emacs-major-version 23)
+        (setq byte-compile-warnings '(not free-vars obsolete))
+      (setq byte-compile-warnings
+            '(unresolved
+              callargs
+              redefine
+              obsolete
+              noruntime
+              cl-warnings
+              interactive-only)))
+    (byte-compile-file (expand-file-name file)))
+  )
+
+(add-hook
+ 'after-save-hook
+ (function
+  (lambda ()
+    (if (string= (file-truename "~/.emacs.d/init.el")
+                 (file-truename (buffer-file-name)))
+        (byte-compile-init-files (file-truename "~/.emacs.d/init.el")))
+    )
+  )
+ )
+
+;; Byte-compile again to ~/.emacs.elc if it is outdated
+(if (file-newer-than-file-p
+     (file-truename "~/.emacs.d/init.el")
+     (file-truename "~/.emacs.d/init.elc"))
+    (byte-compile-init-files "~/.emacs.d/init.el"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; auto-package-update
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Auto update packages once a week
+(use-package auto-package-update
+  :ensure t
+  :commands (auto-package-update-maybe)
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-hide-results t)
+  (auto-package-update-maybe)
+  (add-hook 'auto-package-update-before-hook
+          (lambda () (message "I will update packages now")))
+  )
+
 (require 'proxy-config)
-(require 'package-init)
 (require 'init-hydra)
 (require 'ui-configure)
 (require 'ui-dashboard)
 ;; (require 'ui-theme)
 (require 'ui-doomline)
-
-;; ;; set packages to install
-;; (setq package-enable-at-startup nil)
-;; ;; Ask package.el to not add (package-initialize) to .emacs.
-;; (setq package--init-file-ensured t)
-;; ;; set use-package-verbose to t for interpreted .emacs,
-;; ;; and to nil for byte-compiled .emacs.elc
-;; (eval-and-compile
-;;   (setq use-package-verbose (not (bound-and-true-p byte-compile-current-file))))
-;; ;; Add the macro generated list of package.el loadpaths to load-path.
-;; (mapc #'(lambda (add) (add-to-list 'load-path add))
-;;       (eval-when-compile
-;;         (require 'package)
-;;         (package-initialize)
-;;         ;; Install use-package if not installed yet.
-;;         (unless (package-installed-p 'use-package)
-;;           (package-refresh-contents)
-;;           (package-install 'use-package))
-;;         ;; (require 'use-package)
-;;         (let ((package-user-dir-real (file-truename package-user-dir)))
-;;           ;; The reverse is necessary, because outside we mapc
-;;           ;; add-to-list element-by-element, which reverses.
-;;           (nreverse (apply #'nconc
-;;                            ;; Only keep package.el provided loadpaths.
-;;                            (mapcar #'(lambda (path)
-;;                                        (if (string-prefix-p package-user-dir-real path)
-;;                                            (list path)
-;;                                          nil))
-;;                                    load-path))))))
-
-;; Extra plugins and config files are stored here
-
-;; ;; Setup use-package
-;; (eval-when-compile
-;;   (require 'use-package))
-
-;; (use-package bind-key
-;;   :ensure t)
-;; ;; so we can (require 'use-package) even in compiled emacs to e.g. read docs
-;; (use-package use-package
-;;   :commands use-package-autoload-keymap)
-
-;; ;; ui configuration
-;; (defun icons-displayable-p ()
-;;   "Return non-nil if `all-the-icons' is displayable."
-;;   (and display-icon
-;;        (display-graphic-p)
-;;        (require 'all-the-icons nil t)))
+;; (require 'ui-bar)
 
 (use-package doom-themes
   :ensure t
@@ -97,9 +110,6 @@
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
-;; (when (and (not (eq system-type 'darwin)) (fboundp 'menu-bar-mode))
-;;   (menu-bar-mode -1))
-
 (setq x-stretch-cursor t)
 
 
@@ -112,6 +122,7 @@
 
                                         ; use ivy for searching
 (require 'init-ivy)
+(require 'init-origami)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Window numbering
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -128,34 +139,7 @@
 
                                         ; code edit
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Origami - Does code folding, ie hide the body of an
-;; if/else/for/function so that you can fit more code on your screen
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package origami
-  :ensure t
-  :commands (origami-mode)
-  :bind (:map origami-mode-map
-              ("C-c o :" . origami-recursively-toggle-node)
-              ("C-c o a" . origami-toggle-all-nodes)
-              ("C-c o t" . origami-toggle-node)
-              ("C-c o o" . origami-show-only-node)
-              ("C-c o u" . origami-undo)
-              ("C-c o U" . origami-redo)
-              ("C-c o C-r" . origami-reset)
-              )
-  :config
-  (setq origami-show-fold-header t)
-  ;; The python parser currently doesn't fold if/for/etc. blocks, which is
-  ;; something we want. However, the basic indentation parser does support
-  ;; this with one caveat: you must toggle the node when your cursor is on
-  ;; the line of the if/for/etc. statement you want to collapse. You cannot
-  ;; fold the statement by toggling in the body of the if/for/etc.
-  (add-to-list 'origami-parser-alist '(python-mode . origami-indent-parser))
-  :init
-  (add-hook 'prog-mode-hook 'origami-mode)
-  )
-
+(require 'init-origami)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Rainbow Delimiters -  have delimiters be colored by their depth
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -213,17 +197,6 @@
 (use-package zzz-to-char
   :ensure t
   :bind ("M-z" . zzz-up-to-char))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; RealGud - https://github.com/realgud/realgud
-;; A rewrite of GUD
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;(use-package realgud
-;  :ensure t
-;  :init
-;  (setenv "TERM" "dumb")
-;  :config
-;  (setq realgud:pdb-command-name "python -m pdb"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python mode settings
@@ -326,6 +299,9 @@
 (require 'complete-company)
 (require 'complete-lsp)
 
+                                        ; other modes
+
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -335,12 +311,13 @@
  '(custom-safe-themes
    '("835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" default))
  '(package-selected-packages
-   '(ivy-prescient zzz-to-char yasnippet-snippets yapfify yaml-mode xclip writegood-mode window-numbering which-key wgrep web-mode vlf use-package string-inflection sourcerer-theme realgud rainbow-delimiters pretty-hydra powerline phi-autopair page-break-lines origami neotree multiple-cursors monokai-theme modern-cpp-font-lock melancholy-theme magit-gerrit lsp-ui lsp-ivy linum-relative json-mode hungry-delete google-c-style git-gutter flyspell-correct-ivy flycheck-ycmd flycheck-pyflakes flycheck-posframe flycheck-popup-tip flex-compile flex-autopair evil elpy ein eglot edit-server doom-themes doom-modeline diminish dashboard dap-mode cuda-mode counsel-etags company-ycmd company-statistics company-quickhelp-terminal company-prescient company-jedi company-box cmake-font-lock clang-format beacon auto-package-update auctex async all-the-icons-ivy-rich all-the-icons-ivy all-the-icons-ibuffer all-the-icons-gnus all-the-icons-dired all-the-icons-completion ace-flyspell 2048-game)))
+   '(paradox gnu-elpa-keyring-update ivy-prescient zzz-to-char yasnippet-snippets yapfify yaml-mode xclip writegood-mode window-numbering which-key wgrep web-mode vlf use-package string-inflection sourcerer-theme realgud rainbow-delimiters pretty-hydra powerline phi-autopair page-break-lines origami neotree multiple-cursors monokai-theme modern-cpp-font-lock melancholy-theme magit-gerrit lsp-ui lsp-ivy linum-relative json-mode hungry-delete google-c-style git-gutter flyspell-correct-ivy flycheck-ycmd flycheck-pyflakes flycheck-posframe flycheck-popup-tip flex-compile flex-autopair evil elpy ein eglot edit-server doom-themes doom-modeline diminish dashboard dap-mode cuda-mode counsel-etags company-ycmd company-statistics company-quickhelp-terminal company-prescient company-jedi company-box cmake-font-lock clang-format beacon auto-package-update auctex async all-the-icons-ivy-rich all-the-icons-ivy all-the-icons-ibuffer all-the-icons-gnus all-the-icons-dired all-the-icons-completion ace-flyspell 2048-game)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
  '(flycheck-posframe-background-face ((t (:inherit tooltip))))
  '(flycheck-posframe-border-face ((t (:inherit font-lock-comment-face))))
  '(flycheck-posframe-face ((t (:foreground "ForestGreen"))))
