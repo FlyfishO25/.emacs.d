@@ -7,13 +7,7 @@
 (setq centaur-completion-style 'childframe)
 (setq centaur-lsp 'lsp-mode)
 (defvar my:compile-command "~/tools/cpp11 ")
-
-(defun childframe-workable-p ()
-  "Test whether childframe is workable."
-       (eq centaur-completion-style 'childframe)
-       (not (or noninteractive
-                emacs-basic-display
-                (not (display-graphic-p)))))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
                                         ; basic setup
 ;; performence
@@ -29,64 +23,61 @@
             (setq gc-cons-threshold 800000
                   gc-cons-percentage 0.1)))
 
+(require 'proxy-config)
+(require 'package-init)
+(require 'init-hydra)
+(require 'ui-configure)
+(require 'ui-dashboard)
+;; (require 'ui-theme)
+(require 'ui-doomline)
 
-
-;; proxy and source
-(setq url-proxy-services '(("http" . "127.0.0.1:8118")))
-(setq url-proxy-services '(("https" . "127.0.0.1:8118")))
-
-(setq package-archives '(("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
-                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                         ("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
-
-;; set packages to install
-(setq package-enable-at-startup nil)
-;; Ask package.el to not add (package-initialize) to .emacs.
-(setq package--init-file-ensured t)
-;; set use-package-verbose to t for interpreted .emacs,
-;; and to nil for byte-compiled .emacs.elc
-(eval-and-compile
-  (setq use-package-verbose (not (bound-and-true-p byte-compile-current-file))))
-;; Add the macro generated list of package.el loadpaths to load-path.
-(mapc #'(lambda (add) (add-to-list 'load-path add))
-      (eval-when-compile
-        (require 'package)
-        (package-initialize)
-        ;; Install use-package if not installed yet.
-        (unless (package-installed-p 'use-package)
-          (package-refresh-contents)
-          (package-install 'use-package))
-        ;; (require 'use-package)
-        (let ((package-user-dir-real (file-truename package-user-dir)))
-          ;; The reverse is necessary, because outside we mapc
-          ;; add-to-list element-by-element, which reverses.
-          (nreverse (apply #'nconc
-                           ;; Only keep package.el provided loadpaths.
-                           (mapcar #'(lambda (path)
-                                       (if (string-prefix-p package-user-dir-real path)
-                                           (list path)
-                                         nil))
-                                   load-path))))))
+;; ;; set packages to install
+;; (setq package-enable-at-startup nil)
+;; ;; Ask package.el to not add (package-initialize) to .emacs.
+;; (setq package--init-file-ensured t)
+;; ;; set use-package-verbose to t for interpreted .emacs,
+;; ;; and to nil for byte-compiled .emacs.elc
+;; (eval-and-compile
+;;   (setq use-package-verbose (not (bound-and-true-p byte-compile-current-file))))
+;; ;; Add the macro generated list of package.el loadpaths to load-path.
+;; (mapc #'(lambda (add) (add-to-list 'load-path add))
+;;       (eval-when-compile
+;;         (require 'package)
+;;         (package-initialize)
+;;         ;; Install use-package if not installed yet.
+;;         (unless (package-installed-p 'use-package)
+;;           (package-refresh-contents)
+;;           (package-install 'use-package))
+;;         ;; (require 'use-package)
+;;         (let ((package-user-dir-real (file-truename package-user-dir)))
+;;           ;; The reverse is necessary, because outside we mapc
+;;           ;; add-to-list element-by-element, which reverses.
+;;           (nreverse (apply #'nconc
+;;                            ;; Only keep package.el provided loadpaths.
+;;                            (mapcar #'(lambda (path)
+;;                                        (if (string-prefix-p package-user-dir-real path)
+;;                                            (list path)
+;;                                          nil))
+;;                                    load-path))))))
 
 ;; Extra plugins and config files are stored here
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
-;; Setup use-package
-(eval-when-compile
-  (require 'use-package))
+;; ;; Setup use-package
+;; (eval-when-compile
+;;   (require 'use-package))
 
-(use-package bind-key
-  :ensure t)
-;; so we can (require 'use-package) even in compiled emacs to e.g. read docs
-(use-package use-package
-  :commands use-package-autoload-keymap)
+;; (use-package bind-key
+;;   :ensure t)
+;; ;; so we can (require 'use-package) even in compiled emacs to e.g. read docs
+;; (use-package use-package
+;;   :commands use-package-autoload-keymap)
 
-;; ui configuration
-(defun icons-displayable-p ()
-  "Return non-nil if `all-the-icons' is displayable."
-  (and display-icon
-       (display-graphic-p)
-       (require 'all-the-icons nil t)))
+;; ;; ui configuration
+;; (defun icons-displayable-p ()
+;;   "Return non-nil if `all-the-icons' is displayable."
+;;   (and display-icon
+;;        (display-graphic-p)
+;;        (require 'all-the-icons nil t)))
 
 (use-package doom-themes
   :ensure t
@@ -106,339 +97,21 @@
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
-(when (and (not (eq system-type 'darwin)) (fboundp 'menu-bar-mode))
-  (menu-bar-mode -1))
+;; (when (and (not (eq system-type 'darwin)) (fboundp 'menu-bar-mode))
+;;   (menu-bar-mode -1))
 
 (setq x-stretch-cursor t)
 
-;; Dont ask to follow symlink in git
-(setq vc-follow-symlinks t)
 
 (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Automatically compile and save ~/.emacs.el
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun byte-compile-init-files (file)
-  "Automatically compile FILE."
-  (interactive)
-  (save-restriction
-    ;; Suppress the warning when you setq an undefined variable.
-    (if (>= emacs-major-version 23)
-        (setq byte-compile-warnings '(not free-vars obsolete))
-      (setq byte-compile-warnings
-            '(unresolved
-              callargs
-              redefine
-              obsolete
-              noruntime
-              cl-warnings
-              interactive-only)))
-    (byte-compile-file (expand-file-name file)))
-  )
-
-(add-hook
- 'after-save-hook
- (function
-  (lambda ()
-    (if (string= (file-truename "~/.emacs.d/init.el")
-                 (file-truename (buffer-file-name)))
-        (byte-compile-init-files (file-truename "~/.emacs.d/init.el")))
-    )
-  )
- )
-
-;; Byte-compile again to ~/.emacs.elc if it is outdated
-(if (file-newer-than-file-p
-     (file-truename "~/.emacs.d/init.el")
-     (file-truename "~/.emacs.d/init.elc"))
-    (byte-compile-init-files "~/.emacs.d/init.el"))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; auto-package-update
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Auto update packages once a week
-(use-package auto-package-update
-  :ensure t
-  :commands (auto-package-update-maybe)
-  :config
-  (setq auto-package-update-delete-old-versions t)
-  (setq auto-package-update-hide-results t)
-  (auto-package-update-maybe)
-  (add-hook 'auto-package-update-before-hook
-          (lambda () (message "I will update packages now")))
-  )
 
 
-                                        ; edit optimize
 
-
-(show-paren-mode t)
-;; move window smooth
-(windmove-default-keybindings)
-;; Overwrite region selected
-(delete-selection-mode t)
-;; Show column numbers by default
-(setq column-number-mode t)
-;; Use CUA to delete selections
-(setq cua-mode t)
-(setq cua-enable-cua-keys nil)
-;; Prevent emacs from creating a bckup file filename~
-(setq make-backup-files nil)
-;; Settings for searching
-(setq-default case-fold-search t ;case insensitive searches by default
-              search-highlight t) ;hilit matches when searching
-;; Highlight the line we are currently on
-(global-hl-line-mode -1)
-;; Disable the toolbar at the top since it's useless
-;; (if (functionp 'tool-bar-mode) (tool-bar-mode -1))
-(tool-bar-mode 0)
-(menu-bar-mode 0)
-
-;; Remove trailing white space upon saving
-;; Note: because of a bug in EIN we only delete trailing whitespace
-;; when not in EIN mode.
-(add-hook 'before-save-hook
-          (lambda ()
-            (when (not (derived-mode-p 'ein:notebook-multilang-mode))
-              (delete-trailing-whitespace))))
-
-;; Auto-wrap at 80 characters
-(setq-default auto-fill-function 'do-auto-fill)
-(setq-default fill-column 80)
-(turn-on-auto-fill)
-;; Disable auto-fill-mode in programming mode
-(add-hook 'prog-mode-hook (lambda () (auto-fill-mode -1)))
-
-;; Highlight some keywords in prog-mode
-(add-hook 'prog-mode-hook
-          (lambda ()
-            ;; Highlighting in cmake-mode this way interferes with
-            ;; cmake-font-lock, which is something I don't yet understand.
-            (when (not (derived-mode-p 'cmake-mode))
-              (font-lock-add-keywords
-               nil
-               '(("\\<\\(FIXME\\|TODO\\|BUG\\|DONE\\)"
-                  1 font-lock-warning-face t))))
-            )
-          )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Enable terminal emacs to copy and paste from system clipboard
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defun osx-copy (beg end)
-  (interactive "r")
-  (call-process-region beg end  "pbcopy"))
-
-(defun osx-paste ()
-  (interactive)
-  (if (region-active-p) (delete-region (region-beginning) (region-end)) nil)
-  (call-process "pbpaste" nil t nil))
-
-                                        ; shortcuts
-
-;; Global Keyboard Shortcuts
-;; Set help to C-?
-;; (global-set-key (kbd "C-c h") 'help-command)
-(global-set-key (kbd "C-c h") help-map)
-;; Set mark paragraph to M-?
-(global-set-key (kbd "M-?") 'mark-paragraph)
-;; Set backspace to C-h
-(global-set-key (kbd "C-h") 'delete-backward-char)
-;; Set backspace word to M-h
-(global-set-key (kbd "M-h") 'backward-kill-word)
-;; Use meta+tab word completion
-(global-set-key (kbd "M-TAB") 'dabbrev-expand)
-;; Easy undo key
-(global-set-key (kbd "C-/") 'undo)
-;; Comment or uncomment the region
-(global-set-key (kbd "C-c ;") 'comment-or-uncomment-region)
-;; Indent after a newline, if required by syntax of language
-(global-set-key (kbd "C-m") 'newline-and-indent)
-;; Load the compile ocmmand
-(global-set-key (kbd "C-c C-c") 'compile)
-;; Undo, basically C-x u
-;; (global-set-key (kbd "C-/") 'undo)
-;; Find file in project
-(global-set-key (kbd "C-x M-f") 'project-find-file)
-;; Copy and paste
-(global-set-key (kbd "C-c M-w") 'osx-copy)
-(global-set-key (kbd "C-c C-y") 'osx-paste)
-;; complete the code
-;;(global-set-key (kbd "C-c TAB") 'company-complete)
-
-                                        ; packages
-
-(use-package async
-  :ensure t)
-
-(use-package s
-  :ensure t)
-
-;; Should set before loading `use-package'
-(eval-and-compile
-  (setq use-package-always-ensure t)
-  (setq use-package-always-defer t)
-  (setq use-package-expand-minimally t)
-  (setq use-package-enable-imenu-support t))
-
-(eval-when-compile
-  (require 'use-package))
-
-;; Required by `use-package'
-(use-package diminish)
-(use-package bind-key)
+(require 'edit-common)
 
                                         ; use ivy for searching
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Ivy config
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package all-the-icons-ivy
-  :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
-
-(use-package ivy
-  :ensure t
-  :commands (ivy-mode)
-  :config
-  (require 'ivy)
-  (ivy-mode t)
-  (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
-  (setq ivy-wrap t)
-  (global-set-key (kbd "C-c C-r") 'ivy-resume)
-  ;; Show #/total when scrolling buffers
-  (setq ivy-count-format "%d/%d ")
-  )
-
-(use-package swiper
-  :ensure t
-  :bind (("C-s" . swiper)
-         ("C-r" . swiper))
-  )
-
-(use-package counsel
-  :ensure t
-  :bind (("M-x" . counsel-M-x)
-         ("C-x C-f" . counsel-find-file)
-         ("<f1> f" . counsel-describe-function)
-         ("<f1> v" . counsel-describe-variable)
-         ("<f1> l" . counsel-find-library)
-         ("<f2> i" . counsel-info-lookup-symbol)
-         ("<f2> u" . counsel-unicode-char)
-         ("C-c g" . counsel-git-grep)
-         ("C-c j" . counsel-git)
-         ("C-c k" . counsel-ag)
-         ("C-c r" . counsel-rg)
-         ("C-x l" . counsel-locate)
-         :map minibuffer-local-map
-         ("C-r" . counsel-minibuffer-add)
-         )
-  :config
-  (if (executable-find "rg")
-      ;; use ripgrep instead of grep because it's way faster
-      (setq counsel-grep-base-command
-            "rg -i -M 120 --no-heading --line-number --color never '%s' %s"
-            counsel-rg-base-command
-            "rg -i -M 120 --no-heading --line-number --color never %s ."
-            )
-    (warn "\nWARNING: Could not find the ripgrep executable. It "
-          "is recommended you install ripgrep.")
-    )
-  )
-
-;; Use universal ctags to build the tags database for the project.
-;; When you first want to build a TAGS database run 'touch TAGS'
-;; in the root directory of your project.
-(use-package counsel-etags
-  :ensure t
-  :init
-  (eval-when-compile
-    ;; Silence missing function warnings
-    (declare-function counsel-etags-virtual-update-tags "counsel-etags.el")
-    (declare-function counsel-etags-guess-program "counsel-etags.el")
-    (declare-function counsel-etags-locate-tags-file "counsel-etags.el"))
-  :bind (
-         ("M-." . counsel-etags-find-tag-at-point)
-         ("M-t" . counsel-etags-grep-symbol-at-point)
-         ("M-s" . counsel-etags-find-tag))
-  :config
-  ;; Ignore files above 800kb
-  (setq counsel-etags-max-file-size 800)
-  ;; Ignore build directories for tagging
-  (add-to-list 'counsel-etags-ignore-directories '"build*")
-  (add-to-list 'counsel-etags-ignore-directories '".vscode")
-  (add-to-list 'counsel-etags-ignore-filenames '".clang-format")
-  ;; Don't ask before rereading the TAGS files if they have changed
-  (setq tags-revert-without-query t)
-  ;; Don't warn when TAGS files are large
-  (setq large-file-warning-threshold nil)
-  ;; How many seconds to wait before rerunning tags for auto-update
-  (setq counsel-etags-update-interval 180)
-  ;; Set up auto-update
-  (add-hook
-   'prog-mode-hook
-   (lambda () (add-hook 'after-save-hook
-                        (lambda ()
-                          (counsel-etags-virtual-update-tags))))
-   )
-
-  ;; The function provided by counsel-etags is broken (at least on Linux)
-  ;; and doesn't correctly exclude directories, leading to an excessive
-  ;; amount of incorrect tags. The issue seems to be that the trailing '/'
-  ;; in e.g. '*dirname/*' causes 'find' to not correctly exclude all files
-  ;; in that directory, only files in sub-directories of the dir set to be
-  ;; ignore.
-  (defun my-scan-dir (src-dir &optional force)
-    "Create tags file from SRC-DIR. \
-     If FORCE is t, the commmand is executed without \
-     checking the timer."
-    (let* ((find-pg (or
-                     counsel-etags-find-program
-                     (counsel-etags-guess-program "find")))
-           (ctags-pg (or
-                      counsel-etags-tags-program
-                      (format "%s -e -L" (counsel-etags-guess-program
-                                          "ctags"))))
-           (default-directory src-dir)
-           ;; run find&ctags to create TAGS
-           (cmd (format
-                 "%s . \\( %s \\) -prune -o -type f -not -size +%sk %s | %s -"
-                 find-pg
-                 (mapconcat
-                  (lambda (p)
-                    (format "-iwholename \"*%s*\"" p))
-                  counsel-etags-ignore-directories " -or ")
-                 counsel-etags-max-file-size
-                 (mapconcat (lambda (n)
-                              (format "-not -name \"%s\"" n))
-                            counsel-etags-ignore-filenames " ")
-                 ctags-pg))
-           (tags-file (concat (file-name-as-directory src-dir) "TAGS"))
-           (doit (or force (not (file-exists-p tags-file)))))
-      ;; always update cli options
-      (when doit
-        (message "%s at %s" cmd default-directory)
-        (shell-command cmd)
-        (visit-tags-table tags-file t)
-        )
-      )
-    )
-
-  (setq counsel-etags-update-tags-backend
-        (lambda ()
-          (interactive)
-          (let* ((tags-file (counsel-etags-locate-tags-file)))
-            (when tags-file
-              ('my-scan-dir (file-name-directory tags-file) t)
-              (run-hook-with-args
-               'counsel-etags-after-update-tags-hook tags-file)
-              (unless counsel-etags-quiet-when-updating-tags
-                (message "%s is updated!" tags-file))))
-          )
-        )
-  )
-
+(require 'init-ivy)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Window numbering
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -452,8 +125,6 @@
     (declare-function window-numbering-mode "window-numbering.el"))
   (window-numbering-mode t)
   )
-
-
 
                                         ; code edit
 
@@ -661,6 +332,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" default))
  '(package-selected-packages
    '(ivy-prescient zzz-to-char yasnippet-snippets yapfify yaml-mode xclip writegood-mode window-numbering which-key wgrep web-mode vlf use-package string-inflection sourcerer-theme realgud rainbow-delimiters pretty-hydra powerline phi-autopair page-break-lines origami neotree multiple-cursors monokai-theme modern-cpp-font-lock melancholy-theme magit-gerrit lsp-ui lsp-ivy linum-relative json-mode hungry-delete google-c-style git-gutter flyspell-correct-ivy flycheck-ycmd flycheck-pyflakes flycheck-posframe flycheck-popup-tip flex-compile flex-autopair evil elpy ein eglot edit-server doom-themes doom-modeline diminish dashboard dap-mode cuda-mode counsel-etags company-ycmd company-statistics company-quickhelp-terminal company-prescient company-jedi company-box cmake-font-lock clang-format beacon auto-package-update auctex async all-the-icons-ivy-rich all-the-icons-ivy all-the-icons-ibuffer all-the-icons-gnus all-the-icons-dired all-the-icons-completion ace-flyspell 2048-game)))
 (custom-set-faces
@@ -670,14 +343,14 @@
  ;; If there is more than one, they won't work right.
  '(flycheck-posframe-background-face ((t (:inherit tooltip))))
  '(flycheck-posframe-border-face ((t (:inherit font-lock-comment-face))))
- '(flycheck-posframe-face ((t (:foreground "#c3e88d"))))
- '(flycheck-posframe-info-face ((t (:foreground "#c3e88d"))))
- '(lsp-headerline-breadcrumb-path-error-face ((t :underline (:style wave :color "#ff5370") :inherit lsp-headerline-breadcrumb-path-face)))
- '(lsp-headerline-breadcrumb-path-hint-face ((t :underline (:style wave :color "#c3e88d") :inherit lsp-headerline-breadcrumb-path-face)))
- '(lsp-headerline-breadcrumb-path-info-face ((t :underline (:style wave :color "#c3e88d") :inherit lsp-headerline-breadcrumb-path-face)))
- '(lsp-headerline-breadcrumb-path-warning-face ((t :underline (:style wave :color "#ffcb6b") :inherit lsp-headerline-breadcrumb-path-face)))
- '(lsp-headerline-breadcrumb-symbols-error-face ((t :inherit lsp-headerline-breadcrumb-symbols-face :underline (:style wave :color "#ff5370"))))
- '(lsp-headerline-breadcrumb-symbols-hint-face ((t :inherit lsp-headerline-breadcrumb-symbols-face :underline (:style wave :color "#c3e88d"))))
- '(lsp-headerline-breadcrumb-symbols-info-face ((t :inherit lsp-headerline-breadcrumb-symbols-face :underline (:style wave :color "#c3e88d"))))
- '(lsp-headerline-breadcrumb-symbols-warning-face ((t :inherit lsp-headerline-breadcrumb-symbols-face :underline (:style wave :color "#ffcb6b"))))
+ '(flycheck-posframe-face ((t (:foreground "ForestGreen"))))
+ '(flycheck-posframe-info-face ((t (:foreground "ForestGreen"))))
+ '(lsp-headerline-breadcrumb-path-error-face ((t :underline (:style wave :color "Red1") :inherit lsp-headerline-breadcrumb-path-face)))
+ '(lsp-headerline-breadcrumb-path-hint-face ((t :underline (:style wave :color "ForestGreen") :inherit lsp-headerline-breadcrumb-path-face)))
+ '(lsp-headerline-breadcrumb-path-info-face ((t :underline (:style wave :color "ForestGreen") :inherit lsp-headerline-breadcrumb-path-face)))
+ '(lsp-headerline-breadcrumb-path-warning-face ((t :underline (:style wave :color "DarkOrange") :inherit lsp-headerline-breadcrumb-path-face)))
+ '(lsp-headerline-breadcrumb-symbols-error-face ((t :inherit lsp-headerline-breadcrumb-symbols-face :underline (:style wave :color "Red1"))))
+ '(lsp-headerline-breadcrumb-symbols-hint-face ((t :inherit lsp-headerline-breadcrumb-symbols-face :underline (:style wave :color "ForestGreen"))))
+ '(lsp-headerline-breadcrumb-symbols-info-face ((t :inherit lsp-headerline-breadcrumb-symbols-face :underline (:style wave :color "ForestGreen"))))
+ '(lsp-headerline-breadcrumb-symbols-warning-face ((t :inherit lsp-headerline-breadcrumb-symbols-face :underline (:style wave :color "DarkOrange"))))
  '(lsp-ui-sideline-code-action ((t (:inherit warning)))))
