@@ -60,4 +60,28 @@
         ("D" diff-hl-dired-mode "dired gutter" :toggle t))
        ))))
 
+(use-package major-mode-hydra
+  :ensure t
+  :bind
+  ("M-SPC" . major-mode-hydra))
+
+(major-mode-hydra-define org-mode nil
+  ("Task"
+   (("n" org-meta-return "new")
+    ("m" org-time-stamp "insert date" :exit t)
+    )
+   "Time"
+   (("s" org-clock-in "start timer" :exit t)
+    ("t" org-clock-out "stop timer" :exit t)
+    ("S" org-schedule "set SCHEDULED" :color purple)
+    ("D" org-deadline "set DEADLINE" :color purple :exit t)
+    )
+   "Actions"
+   (("x" org-ctrl-c-ctrl-c "toggle checkbox" :color red)
+    ("b" org-todo "toggle status" :color red)
+    ("v" org-toggle-inline-images "view images")
+    ("l" org-metaleft "move left" :color blue)
+    ("r" org-metaright "move right" :color blue)))
+  )
+
 (provide 'init-hydra)
