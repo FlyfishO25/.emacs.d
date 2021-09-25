@@ -82,5 +82,6 @@
   :diminish
   :hook (after-init . global-page-break-lines-mode))
 
+(setq inhibit-splash-screen t)
 
 (provide 'ui-configure)

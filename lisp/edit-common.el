@@ -21,6 +21,12 @@
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 
+(electric-pair-mode 1)
+(setq-default indent-tabs-mode nil)
+(setq indent-line-function 'insert-tab)
+(show-paren-mode 1)
+(setq show-paren-style 'parenthesis)
+
 ;; Remove trailing white space upon saving
 ;; Note: because of a bug in EIN we only delete trailing whitespace
 ;; when not in EIN mode.
