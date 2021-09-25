@@ -74,6 +74,7 @@
 ;; Setup use-package
 (eval-when-compile
   (require 'use-package))
+
 (use-package bind-key
   :ensure t)
 ;; so we can (require 'use-package) even in compiled emacs to e.g. read docs
@@ -650,4 +651,5 @@
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
 
                                         ; code compilation
+(require 'complete-company)
 (require 'complete-lsp)
