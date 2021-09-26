@@ -11,7 +11,6 @@
 (require 'eaf-browser)
 (require 'eaf-markdown-previewer)
 (require 'eaf-file-browser)
-(require 'eaf-mermaid)
 (require 'eaf-file-manager)
 (require 'eaf-mindmap)
 (require 'eaf-video-player)
