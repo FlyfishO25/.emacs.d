@@ -9,6 +9,7 @@
 ;; Use CUA to delete selections
 (setq cua-mode t)
 (setq cua-enable-cua-keys nil)
+(setq auto-save-default nil)
 ;; Prevent emacs from creating a bckup file filename~
 (setq make-backup-files nil)
 ;; Settings for searching
