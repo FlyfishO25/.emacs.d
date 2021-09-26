@@ -119,12 +119,14 @@
 
 
 (require 'edit-common)
+(require 'init-eaf)
 
                                         ; use ivy for searching
 (require 'init-ivy)
 (require 'init-origami)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Window numbering
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Package window-numbering installed from package list
 ;; Allows switching between buffers using meta-(# key)
