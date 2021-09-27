@@ -36,6 +36,8 @@
             (when (not (derived-mode-p 'ein:notebook-multilang-mode))
               (delete-trailing-whitespace))))
 
+(global-auto-revert-mode 1)
+
 ;; Auto-wrap at 80 characters
 (setq-default auto-fill-function 'do-auto-fill)
 (setq-default fill-column 80)
@@ -70,17 +72,6 @@
   (call-process "pbpaste" nil t nil))
 
                                         ; shortcuts
-;; copy on osX
-
-
-(defun osx-copy (beg end)
-  (interactive "r")
-  (call-process-region beg end  "pbcopy"))
-
-(defun osx-paste ()
-  (interactive)
-  (if (region-active-p) (delete-region (region-beginning) (region-end)) nil)
-  (call-process "pbpaste" nil t nil))
 
 ;; Global Keyboard Shortcuts
 ;; Set help to C-?
