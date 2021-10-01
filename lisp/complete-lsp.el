@@ -1,14 +1,6 @@
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; Package: eglot
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Code
 
-;; (use-package eglot
-;;   :ensure t)
-
-;; (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-;; (add-to-list 'company-backends 'company-capf)
-;; (add-hook 'c-mode-hook 'eglot-ensure)
-;; (add-hook 'c++-mode-hook 'eglot-ensure)
+(setq centaur-lsp 'lsp-mode)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; Configure flycheck
@@ -157,6 +149,8 @@
            lsp-enable-on-type-formatting nil)
 
      ;; For `lsp-clients'
+     (setq lsp-clients-clangd-executable "/usr/local/opt/llvm/bin/clangd")
+     (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=info" "-pretty" ));;"-resource-dir=")))
      (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
      :config
      (with-no-warnings

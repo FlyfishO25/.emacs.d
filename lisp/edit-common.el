@@ -31,12 +31,12 @@
 ;; Remove trailing white space upon saving
 ;; Note: because of a bug in EIN we only delete trailing whitespace
 ;; when not in EIN mode.
-(add-hook 'before-save-hook
-          (lambda ()
-            (when (not (derived-mode-p 'ein:notebook-multilang-mode))
-              (delete-trailing-whitespace))))
+;; (add-hook 'before-save-hook
+;;           (lambda ()
+;;             (when (not (derived-mode-p 'ein:notebook-multilang-mode))
+;;               (delete-trailing-whitespace))))
 
-(global-auto-revert-mode 1)
+;; (global-auto-revert-mode 1)
 
 ;; Auto-wrap at 80 characters
 (setq-default auto-fill-function 'do-auto-fill)
