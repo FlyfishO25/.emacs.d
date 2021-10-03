@@ -119,6 +119,7 @@
 
 
 (require 'edit-common)
+(require 'chtsh)
 (require 'edit-autosave)
 (require 'edit-godmode)
 (auto-save-enable)

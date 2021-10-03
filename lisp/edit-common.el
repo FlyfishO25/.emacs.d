@@ -71,6 +71,11 @@
   (if (region-active-p) (delete-region (region-beginning) (region-end)) nil)
   (call-process "pbpaste" nil t nil))
 
+(when (string= system-type "darwin")
+  (setq dired-use-ls-dired t
+        insert-directory-program "/usr/local/bin/gls"
+        dired-listing-switches "-aBhl --group-directories-first"))
+
                                         ; shortcuts
 
 ;; Global Keyboard Shortcuts
