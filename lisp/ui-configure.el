@@ -84,7 +84,4 @@
 
 (setq inhibit-splash-screen t)
 
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
-
 (provide 'ui-configure)

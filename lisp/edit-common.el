@@ -21,6 +21,7 @@
 ;; (if (functionp 'tool-bar-mode) (tool-bar-mode -1))
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+(scroll-bar-mode 0)
 
 (electric-pair-mode 1)
 (setq-default indent-tabs-mode nil)
@@ -61,20 +62,26 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Enable terminal emacs to copy and paste from system clipboard
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (defun osx-copy (beg end)
+      (interactive "r")
+      (call-process-region beg end  "pbcopy"))
+  
+  (defun osx-paste ()
+    (interactive)
+    (if (region-active-p) (delete-region (region-beginning) (region-end)) nil)
+    (call-process "pbpaste" nil t nil))
+  
+  (when (string= system-type "darwin")
+    (setq dired-use-ls-dired t
+          insert-directory-program "/usr/local/bin/gls"
+          dired-listing-switches "-aBhl --group-directories-first"))
+  
+  (global-set-key (kbd "C-c M-w") 'osx-copy)
+  (global-set-key (kbd "C-c C-y") 'osx-paste)
 
-(defun osx-copy (beg end)
-  (interactive "r")
-  (call-process-region beg end  "pbcopy"))
-
-(defun osx-paste ()
-  (interactive)
-  (if (region-active-p) (delete-region (region-beginning) (region-end)) nil)
-  (call-process "pbpaste" nil t nil))
-
-(when (string= system-type "darwin")
-  (setq dired-use-ls-dired t
-        insert-directory-program "/usr/local/bin/gls"
-        dired-listing-switches "-aBhl --group-directories-first"))
+  (use-package exec-path-from-shell)
+  (when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
                                         ; shortcuts
 
@@ -103,8 +110,6 @@
 ;; Find file in project
 (global-set-key (kbd "C-x M-f") 'project-find-file)
 ;; Copy and paste
-(global-set-key (kbd "C-c M-w") 'osx-copy)
-(global-set-key (kbd "C-c C-y") 'osx-paste)
 ;; complete the code
 ;;(global-set-key (kbd "C-c TAB") 'company-complete)
 
