@@ -560,7 +560,7 @@
                   :icon (format "%s " (all-the-icons-octicon "repo" :height 1.0 :v-adjust -0.1 :face 'all-the-icons-blue))
                   :extensions (java-project))))
 
-             (setq lsp-treemacs-theme "centaur-colors")))))
+             (setq lsp-treemacs-theme "doom-one")))))
 
      ;; Python: pyright
      (use-package lsp-pyright
