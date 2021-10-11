@@ -21,7 +21,7 @@
 ;; (if (functionp 'tool-bar-mode) (tool-bar-mode -1))
 (tool-bar-mode 0)
 (menu-bar-mode 0)
-(scroll-bar-mode 0)
+(when (display-graphic-p) (scroll-bar-mode 0))
 
 (electric-pair-mode 1)
 (setq-default indent-tabs-mode nil)
@@ -109,6 +109,7 @@
 ;; (global-set-key (kbd "C-/") 'undo)
 ;; Find file in project
 (global-set-key (kbd "C-x M-f") 'project-find-file)
+(global-set-key (kbd "C-r") 'replace-string)
 ;; Copy and paste
 ;; complete the code
 ;;(global-set-key (kbd "C-c TAB") 'company-complete)

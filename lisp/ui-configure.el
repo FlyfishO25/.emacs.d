@@ -84,4 +84,11 @@
 
 (setq inhibit-splash-screen t)
 
+(when (display-graphic-p)
+  (set-fontset-font t '(#xe903 . #xfffd) "all-the-icons")
+  (set-fontset-font t '(#x00a2 . #xf17b) "file-icons")
+  (set-fontset-font t '(#x2665 . #xf27c) "github-octicons")
+  (set-fontset-font t '(#x2122 . #xf2b4) "FontAwesome")
+  (set-fontset-font t '(#xf000 . #xf0eb) "Weather Icons"))
+
 (provide 'ui-configure)
