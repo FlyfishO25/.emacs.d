@@ -1,7 +1,7 @@
 ;; Code
 
 (setq centaur-lsp 'lsp-mode)
-(setq centaur-lsp-format-on-save-ignore-modes '())
+(setq centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; Configure flycheck
@@ -561,7 +561,7 @@
                   :icon (format "%s " (all-the-icons-octicon "repo" :height 1.0 :v-adjust -0.1 :face 'all-the-icons-blue))
                   :extensions (java-project))))
 
-             (setq lsp-treemacs-theme "doom-one")))))
+             (setq lsp-treemacs-theme "centaur-colors")))))
 
      ;; Python: pyright
      (use-package lsp-pyright
