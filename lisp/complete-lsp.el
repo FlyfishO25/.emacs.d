@@ -1,6 +1,7 @@
 ;; Code
 
 (setq centaur-lsp 'lsp-mode)
+(setq centaur-lsp-format-on-save-ignore-modes '())
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; Configure flycheck
@@ -168,17 +169,17 @@
 
        ;; Only display icons in GUI
        (defun my-lsp-icons-get-symbol-kind (fn &rest args)
-         (when (and centaur-icon (display-graphic-p))
+         (when (and display-icon (display-graphic-p))
            (apply fn args)))
        (advice-add #'lsp-icons-get-by-symbol-kind :around #'my-lsp-icons-get-symbol-kind)
 
        (defun my-lsp-icons-get-by-file-ext (fn &rest args)
-         (when (and centaur-icon (display-graphic-p))
+         (when (and display-icon (display-graphic-p))
            (apply fn args)))
        (advice-add #'lsp-icons-get-by-file-ext :around #'my-lsp-icons-get-by-file-ext)
 
        (defun my-lsp-icons-all-the-icons-material-icon (icon-name face fallback &optional feature)
-         (if (and centaur-icon
+         (if (and display-icon
                   (display-graphic-p)
                   (functionp 'all-the-icons-material)
                   (lsp-icons--enabled-for-feature feature))

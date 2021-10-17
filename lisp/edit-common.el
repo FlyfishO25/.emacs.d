@@ -88,15 +88,15 @@
 ;; Global Keyboard Shortcuts
 ;; Set help to C-?
 ;; (global-set-key (kbd "C-c h") 'help-command)
-(global-set-key (kbd "C-c h") help-map)
+;; (global-set-key (kbd "C-c h") help-map)
 ;; Set mark paragraph to M-?
-(global-set-key (kbd "M-?") 'mark-paragraph)
+;; (global-set-key (kbd "M-?") 'mark-paragraph)
 ;; Set backspace to C-h
-(global-set-key (kbd "C-h") 'delete-backward-char)
+;; (global-set-key (kbd "C-h") 'delete-backward-char)
 ;; Set backspace word to M-h
-(global-set-key (kbd "M-h") 'backward-kill-word)
+;; (global-set-key (kbd "M-h") 'backward-kill-word)
 ;; Use meta+tab word completion
-(global-set-key (kbd "M-TAB") 'dabbrev-expand)
+;; (global-set-key (kbd "M-TAB") 'dabbrev-expand)
 ;; Easy undo key
 (global-set-key (kbd "C-/") 'undo)
 ;; Comment or uncomment the region
