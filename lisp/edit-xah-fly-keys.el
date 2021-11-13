@@ -1,6 +1,13 @@
-(use-package xah-fly-keys)
-(xah-fly-keys-set-layout "qwerty")
+(unless (package-installed-p 'xah-fly-keys)
+  (package-refresh-contents)
+  (package-install 'xah-fly-keys))
 
+(setq xah-fly-use-control-key nil)
+
+
+(eval-and-compile (require 'xah-fly-keys))
+
+(xah-fly-keys-set-layout "qwerty")
 (xah-fly-keys 1)
 
 (defun my-config-xah-fly-key ()

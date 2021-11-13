@@ -1,4 +1,4 @@
-(use-package dashboard
+ (use-package dashboard
     :diminish dashboard-mode
     :functions (all-the-icons-faicon
                 all-the-icons-material)

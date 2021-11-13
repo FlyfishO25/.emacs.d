@@ -236,9 +236,10 @@
         ("s i" (setq lsp-ui-sideline-ignore-duplicate (not lsp-ui-sideline-ignore-duplicate))
          "ignore duplicate" :toggle lsp-ui-sideline-ignore-duplicate))
        "Action"
-       (("h" backward-char "←")
-        ("j" next-line "↓")
-        ("k" previous-line "↑")
+       (
+        ("i" previous-line "↑")
+        ("k" next-line "↓")
+        ("j" backward-char "←")
         ("l" forward-char "→")
         ("C-a" mwim-beginning-of-code-or-line nil)
         ("C-e" mwim-end-of-code-or-line nil)
