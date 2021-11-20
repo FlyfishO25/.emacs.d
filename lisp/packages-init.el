@@ -1,4 +1,12 @@
 ;;; -*- lexical-binding: t; -*-
+(require 'package)
+
+(setq package-archives '(("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                         ("melpa" . "https://melpa.org/packages/")))
+;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+
 
 ;; Initialize packages
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
