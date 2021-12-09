@@ -84,11 +84,63 @@
 
 (setq inhibit-splash-screen t)
 
-(when (display-graphic-p)
-  (set-fontset-font t '(#xe903 . #xfffd) "all-the-icons")
-  (set-fontset-font t '(#x00a2 . #xf17b) "file-icons")
-  (set-fontset-font t '(#x2665 . #xf27c) "github-octicons")
-  (set-fontset-font t '(#x2122 . #xf2b4) "FontAwesome")
-  (set-fontset-font t '(#xf000 . #xf0eb) "Weather Icons"))
+;; (when (display-graphic-p)
+;;   (set-fontset-font t '(#xe903 . #xfffd) "all-the-icons")
+;;   (set-fontset-font t '(#x00a2 . #xf17b) "file-icons")
+;;   (set-fontset-font t '(#x2665 . #xf27c) "github-octicons")
+;;   (set-fontset-font t '(#x2122 . #xf2b4) "FontAwesome")
+;;   (set-fontset-font t '(#xf000 . #xf0eb) "Weather Icons"))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Rainbow Delimiters -  have delimiters be colored by their depth
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (eval-when-compile
+    ;; Silence missing function warnings
+    (declare-function rainbow-delimiters-mode "rainbow-delimiters.el"))
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Beacon-mode: flash the cursor when switching buffers or scrolling
+;;              the goal is to make it easy to find the cursor
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package beacon
+  :ensure t
+  :init
+  (eval-when-compile
+    ;; Silence missing function warnings
+    (declare-function beacon-mode "beacon.el"))
+  :config
+  (beacon-mode t))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; which-key: when you pause on a keyboard shortcut it provides
+;;            suggestions in a popup buffer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package which-key
+  :ensure t
+  :init
+  (eval-when-compile
+    ;; Silence missing function warnings
+    (declare-function which-key-mode "which-key.el"))
+  )
+
+(which-key-mode 1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Window numbering
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Package window-numbering installed from package list
+;; Allows switching between buffers using meta-(# key)
+(use-package window-numbering
+  :ensure t
+  :config
+  (eval-when-compile
+    ;; Silence missing function warnings
+    (declare-function window-numbering-mode "window-numbering.el"))
+  (window-numbering-mode t)
+  )
 
 (provide 'ui-configure)

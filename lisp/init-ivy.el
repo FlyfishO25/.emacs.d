@@ -16,9 +16,10 @@
   (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
   (setq ivy-wrap t)
+  (setq ivy-on-del-error-function #'ignore)
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
   ;; Show #/total when scrolling buffers
-  (setq ivy-count-format "%d/%d ")
+  (setq ivy-count-format "( %d/%d ) ")
   )
 
 (use-package swiper
@@ -148,5 +149,4 @@
           )
         )
   )
-
 (provide 'init-ivy)

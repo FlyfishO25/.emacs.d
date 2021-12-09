@@ -42,9 +42,9 @@
         ("h r" rainbow-mode "rainbow" :toggle t)
         ("h w" (setq-default show-trailing-whitespace (not show-trailing-whitespace))
          "whitespace" :toggle show-trailing-whitespace)
-        ("h d" rainbow-delimiters-mode "delimiter" :toggle t)
-        ("h i" highlight-indent-guides-mode "indent" :toggle t)
-        ("h t" global-hl-todo-mode "todo" :toggle t))
+        ("h d" rainbow-delimiters-mode "delimiter" :toggle t))
+        ;; ("h i" highlight-indent-guides-mode "indent" :toggle t)
+        ;; ("h t" global-hl-todo-mode "todo" :toggle t))
        "Program"
        (("f" flycheck-mode "flycheck" :toggle t)
         ("F" flymake-mode "flymake" :toggle t)

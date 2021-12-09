@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t; -*-
 (show-paren-mode t)
 ;; move window smooth
 (windmove-default-keybindings)
@@ -19,9 +18,9 @@
 (global-hl-line-mode -1)
 ;; Disable the toolbar at the top since it's useless
 ;; (if (functionp 'tool-bar-mode) (tool-bar-mode -1))
-(tool-bar-mode 0)
-(menu-bar-mode 0)
-(when (display-graphic-p) (scroll-bar-mode 0))
+;; (tool-bar-mode 0)                     
+;; (menu-bar-mode 0)
+;; (when (display-graphic-p) (scroll-bar-mode 0))
 
 (electric-pair-mode 1)
 (setq-default indent-tabs-mode nil)
@@ -62,26 +61,66 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Enable terminal emacs to copy and paste from system clipboard
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (defun osx-copy (beg end)
-      (interactive "r")
-      (call-process-region beg end  "pbcopy"))
-  
-  (defun osx-paste ()
-    (interactive)
-    (if (region-active-p) (delete-region (region-beginning) (region-end)) nil)
-    (call-process "pbpaste" nil t nil))
-  
-  (when (string= system-type "darwin")
-    (setq dired-use-ls-dired t
-          insert-directory-program "/usr/local/bin/gls"
-          dired-listing-switches "-aBhl --group-directories-first"))
-  
-  (global-set-key (kbd "C-c M-w") 'osx-copy)
-  (global-set-key (kbd "C-c C-y") 'osx-paste)
+(defun osx-copy (beg end)
+  (interactive "r")
+  (call-process-region beg end  "pbcopy"))
 
-  (use-package exec-path-from-shell)
-  (when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+(defun osx-paste ()
+  (interactive)
+  (if (region-active-p) (delete-region (region-beginning) (region-end)) nil)
+  (call-process "pbpaste" nil t nil))
+
+(when (string= system-type "darwin")
+  (setq dired-use-ls-dired t
+        insert-directory-program "/usr/local/bin/gls"
+        dired-listing-switches "-aBhl --group-directories-first"))
+
+(global-set-key (kbd "C-c M-w") 'osx-copy)
+(global-set-key (kbd "C-c C-y") 'osx-paste)
+
+;; (use-package exec-path-from-shell)
+;; (exec-path-from-shell-initialize)
+
+(use-package anzu
+  :diminish
+  :bind (([remap query-replace] . anzu-query-replace)
+         ([remap query-replace-regexp] . anzu-query-replace-regexp)
+         :map isearch-mode-map
+         ([remap isearch-query-replace] . anzu-isearch-query-replace)
+         ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
+  :hook (after-init . global-anzu-mode))
+
+(use-package multiple-cursors
+  :ensure t
+  :bind (("M-n" . mc/mark-next-like-this)
+         ("M-p" . mc/mark-previous-like-this)
+         ("C-c a" . mc/mark-all-like-this)
+         ("C-c e" . mc/edit-lines))
+  
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; avy: always fast jump to char inside the current view buffer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package avy
+  :ensure t
+  :bind (("M-c" . avy-goto-char)
+         ("M-s" . avy-goto-word-1))
+  ;; Set keys for Dvorak mode instead of qwerty
+  ;; :init (setq avy-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s
+  ;;                           ?A ?O ?E ?U ?I ?D ?H ?T ?N ?S
+  ;;                           ?p ?y ?f ?g ?c ?r ?l
+  ;;                           ?P ?Y ?F ?G ?C ?R ?L))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; zzz-to-char: replaces the built-in zap-to-char with avy-like
+;;              replacement options
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package zzz-to-char
+  :ensure t
+  :bind ("M-z" . zzz-up-to-char))
+
 
                                         ; shortcuts
 

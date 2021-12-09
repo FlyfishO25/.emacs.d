@@ -1,4 +1,4 @@
-;;; -*- lexical-binding: t; -*-
+;;; -*- lexical-binding: nil; -*-
 (require 'package)
 
 (setq package-archives '(("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
@@ -35,21 +35,34 @@
 (use-package gnu-elpa-keyring-update)
 
 ;; A modern Packages Menu
-(use-package paradox
-  :hook (after-init . paradox-enable)
-  :init (setq paradox-execute-asynchronously t
-              paradox-github-token t
-              paradox-display-star-count nil)
-  :config
-  (when (fboundp 'page-break-lines-mode)
-    (add-hook 'paradox-after-execute-functions
-              (lambda (&rest _)
-                "Display `page-break-lines' in \"*Paradox Report*\"."
-                (let ((buf (get-buffer "*Paradox Report*"))
-                      (inhibit-read-only t))
-                  (when (buffer-live-p buf)
-                    (with-current-buffer buf
-                      (page-break-lines-mode 1)))))
-              t)))
+;; (use-package paradox
+;;   :hook (after-init . paradox-enable)
+;;   :init (setq paradox-execute-asynchronously t
+;;               paradox-github-token t
+;;               paradox-display-star-count nil)
+;;   :config
+;;   (when (fboundp 'page-break-lines-mode)
+;;     (add-hook 'paradox-after-execute-functions
+;;               (lambda (&rest _)
+;;                 "Display `page-break-lines' in \"*Paradox Report*\"."
+;;                 (let ((buf (get-buffer "*Paradox Report*"))
+;;                       (inhibit-read-only t))
+;;                   (when (buffer-live-p buf)
+;;                     (with-current-buffer buf
+;;                       (page-break-lines-mode 1)))))
+;;               t)))
+
+(use-package async
+  :ensure t)
+
+(use-package s
+  :ensure t)
+
+;; (use-package async-await)
+
+;; (use-package page-break-lines)
+
+;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
+;; (require 'feather)
 
 (provide 'packages-init)

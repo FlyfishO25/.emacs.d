@@ -8,7 +8,6 @@
 (eval-and-compile (require 'xah-fly-keys))
 
 (xah-fly-keys-set-layout "qwerty")
-(xah-fly-keys 1)
 
 (defun my-config-xah-fly-key ()
   "Modify keys for xah fly key command mode keys
@@ -19,5 +18,7 @@ To be added to `xah-fly-command-mode-activate-hook'"
   )
 
 (add-hook 'xah-fly-command-mode-activate-hook 'my-config-xah-fly-key)
+
+(xah-fly-keys 1)
 
 (provide 'edit-xah-fly-keys)

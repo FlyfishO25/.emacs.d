@@ -148,7 +148,7 @@
            lsp-enable-on-type-formatting nil)
 
      ;; For `lsp-clients'
-     (setq lsp-clients-clangd-executable "/usr/local/opt/llvm/bin/clangd")
+     (if (eq system-type 'darwin) (setq lsp-clients-clangd-executable "/usr/local/opt/llvm/bin/clangd"))
      (setq lsp-clients-clangd-args '("-j=4" "-background-index" "-log=info" "-pretty" ));;"-resource-dir=")))
      (setq lsp-clients-python-library-directories '("/usr/local/" "/usr/"))
      :config
