@@ -1,0 +1,58 @@
+# Compiled
+*.elc
+
+# Packaging
+.cask
+
+# Backup files
+*~
+
+# Undo-tree save-files
+*.~undo-tree
+
+# site-lisp and elpa
+elpa
+ycmd
+yasnippet-snippets
+plugins
+eaf
+
+# cache
+.cache
+eln-cache
+tutorial
+var
+*cookie*
+.dap-breakpoints
+nov*
+recentf
+projects
+places
+projectile*
+presient*
+transient
+history
+.last*
+*auto*
+
+# macOS
+.DS_Store
+
+# personal data
+*.db
+*.data
+
+.lsp-session-v1
+.local/env
+.mc-lists.el
+.org-id-locations
+.persistent-scratch
+ac-comphist.dat
+amx-items
+bookmarks
+flycheck_init.new.el
+*.el#
+site-lisp/feather-dashboard.el
+site-lisp/feather.el
+site-lisp/ppp.el
+persistent-scratch/2021-07-03--21-42-40-849852000

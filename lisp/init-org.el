@@ -5,6 +5,7 @@
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; URL: https://github.com/seagle0128/.emacs.d
 
+
 ;; This file is not part of GNU Emacs.
 ;;
 ;; This program is free software; you can redistribute it and/or
@@ -67,7 +68,7 @@
   :custom-face (org-ellipsis ((t (:foreground nil))))
   :pretty-hydra
   ((:title (pretty-hydra-title "Org Template" 'fileicon "org" :face 'all-the-icons-green :height 1.1 :v-adjust 0.0)
-    :color blue :quit-key "q")
+           :color blue :quit-key "q")
    ("Basic"
     (("a" (hot-expand "<a") "ascii")
      ("c" (hot-expand "<c") "center")
@@ -157,9 +158,9 @@ prepended to the element after the #+HEADER: tag."
           ("j" "Journal" entry (,(if (>= emacs-major-version 26) 'file+olp+datetree 'file+datetree)
                                 ,(concat org-directory "/journal.org"))
            "*  %^{Title} %?\n%U\n%a\n" :clock-in t :clock-resume t)
-	      ("b" "Book" entry (,(if (>= emacs-major-version 26) 'file+olp+datetree 'file+datetree)
+	  ("b" "Book" entry (,(if (>= emacs-major-version 26) 'file+olp+datetree 'file+datetree)
                              ,(concat org-directory "/book.org"))
-	       "* Topic: %^{Description}  %^g %? Added: %U"))
+	   "* Topic: %^{Description}  %^g %? Added: %U"))
 
         org-agenda-files `(,centaur-org-directory)
         org-todo-keywords
@@ -204,9 +205,17 @@ prepended to the element after the #+HEADER: tag."
   ;; Prettify UI
   (when (>= emacs-major-version 26)
     (use-package org-superstar
-      :if (and (display-graphic-p) (char-displayable-p ?⚫))
       :hook (org-mode . org-superstar-mode)
-      :init (setq org-superstar-headline-bullets-list '("⚫" "⚫" "⚫" "⚫"))))
+      :config
+      (setq org-hide-leading-stars t)
+      :custom
+      ;; Change org headlines' style to ›.
+      (org-superstar-headline-bullets-list '("›"))
+      ;; Change org unordered list styles.
+      (org-superstar-prettify-item-bullets t)
+      (org-superstar-item-bullet-alist '((?* . ?•)
+                                         (?+ . ?•)
+                                         (?- . ?•)))))
 
   (use-package org-fancy-priorities
     :diminish
@@ -253,7 +262,7 @@ prepended to the element after the #+HEADER: tag."
   ;; Rich text clipboard
   (use-package org-rich-yank
     :bind (:map org-mode-map
-           ("C-M-y" . org-rich-yank)))
+                ("C-M-y" . org-rich-yank)))
 
   ;; Table of contents
   (use-package toc-org
@@ -262,9 +271,9 @@ prepended to the element after the #+HEADER: tag."
   ;; Export text/html MIME emails
   (use-package org-mime
     :bind (:map message-mode-map
-           ("C-c M-o" . org-mime-htmlize)
-           :map org-mode-map
-           ("C-c M-o" . org-mime-org-buffer-htmlize)))
+                ("C-c M-o" . org-mime-htmlize)
+                :map org-mode-map
+                ("C-c M-o" . org-mime-org-buffer-htmlize)))
 
   ;; Add graphical view of agenda
   (use-package org-timeline
@@ -285,12 +294,12 @@ prepended to the element after the #+HEADER: tag."
     :functions (org-display-inline-images
                 org-remove-inline-images)
     :bind (:map org-mode-map
-           ("s-<f7>" . org-tree-slide-mode)
-           :map org-tree-slide-mode-map
-           ("<left>" . org-tree-slide-move-previous-tree)
-           ("<right>" . org-tree-slide-move-next-tree)
-           ("S-SPC" . org-tree-slide-move-previous-tree)
-           ("SPC" . org-tree-slide-move-next-tree))
+                ("s-<f7>" . org-tree-slide-mode)
+                :map org-tree-slide-mode-map
+                ("<left>" . org-tree-slide-move-previous-tree)
+                ("<right>" . org-tree-slide-move-next-tree)
+                ("S-SPC" . org-tree-slide-move-previous-tree)
+                ("SPC" . org-tree-slide-move-next-tree))
     :hook ((org-tree-slide-play . (lambda ()
                                     (text-scale-increase 4)
                                     (org-display-inline-images)
@@ -315,12 +324,14 @@ prepended to the element after the #+HEADER: tag."
     (org-pomodoro-mode-line-overtime ((t (:inherit error))))
     (org-pomodoro-mode-line-break ((t (:inherit success))))
     :bind (:map org-mode-map
-           ("C-c C-x m" . org-pomodoro))
+                ("C-c C-x m" . org-pomodoro))
     :init
     (with-eval-after-load 'org-agenda
       (bind-keys :map org-agenda-mode-map
-        ("K" . org-pomodoro)
-        ("C-c C-x m" . org-pomodoro)))))
+                 ("K" . org-pomodoro)
+                 ("C-c C-x m" . org-pomodoro)))))
+
+
 
 (provide 'init-org)
 

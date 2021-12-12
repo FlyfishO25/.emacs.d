@@ -22,6 +22,9 @@
   (setq ivy-count-format "( %d/%d ) ")
   )
 
+(use-package ivy-rich)
+(ivy-rich-mode 1)
+
 (use-package swiper
   :ensure t
   :bind (("C-s" . swiper)

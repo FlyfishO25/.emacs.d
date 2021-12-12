@@ -1,3 +1,3 @@
 (use-package cnfonts)
-(cnfonts-enable)
+(cnfonts-mode 1)
 (provide 'ui-cnfont)

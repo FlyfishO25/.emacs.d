@@ -20,7 +20,7 @@
   (package-refresh-contents)
   (package-install 'org-roam-ui))
 
-(add-to-list 'load-path "~/.emacs.d/private/org-roam-ui")
+;; (add-to-list 'load-path "~/.emacs.d/private/org-roam-ui")
 ;; (load-library "org-roam-ui")
 
 (provide 'init-roam)
