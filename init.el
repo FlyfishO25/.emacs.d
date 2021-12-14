@@ -126,11 +126,6 @@
             (lambda () (message "I will update packages now")))
   )
 
-
-;; (require 'ui-theme)
-;; (require 'ui-auto-dark)
-;; (require 'ui-bar)
-
 (require 'ui-cnfont)
 (require 'ui-tree)
 (require 'ui-doomline)
@@ -167,19 +162,14 @@
 (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
 
 (add-hook 'after-init-hook (lambda () (require 'edit-common)))
-;; (require 'chtsh)
 (require 'edit-autosave)
-;; (require 'edit-godmode)
 (auto-save-enable)
-;; (require 'init-eaf)
 (require 'edit-xah-fly-keys)
 
                                         ; use ivy for searching
 (require 'init-ivy)
 (require 'init-origami)
                                         ; code edit
-
-;; (add-hook 'prog-mode-hook (lambda () (require 'init-origami)))
 
 (add-hook 'python-mode-hook (lambda () (require 'lang-python)))
 (add-hook 'c-mode-common-hook (lambda () (require 'lang-c)))
