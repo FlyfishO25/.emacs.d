@@ -62,6 +62,7 @@
                                              ))))
         ;; Only set after LIBRARY_PATH can find gcc libraries.
         (defvar comp-deferred-compilation t)
+        (setq package-native-compile t)
         (defvar comp-speed 3))
     (message "Native comp is *not* available")))
 
@@ -195,7 +196,7 @@
  '(doom-modeline-mode t)
  '(ns-alternate-modifier '(:ordinary meta :function meta :mouse meta))
  '(ns-command-modifier nil)
- '(package-native-compile t)
+ ;; '(package-native-compile t)
  '(package-selected-packages
    '(diff-hl org-tree-slide org-preview-html org-fragtog org-timeline org-mime toc-org org-rich-yank ob-mermaid ob-rust ob-go org-fancy-priorities org-superstar ox-gfm gameoflife wanderlust anzu benchmark-init org-roam-ui org-roam cnfonts xah-fly-keys spaceline spaceline-all-the-icons spacemacs-theme treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile hlinum god-mode exec-path-from-shell org-pomodoro good-scroll paradox gnu-elpa-keyring-update ivy-prescient zzz-to-char yasnippet-snippets yapfify yaml-mode xclip writegood-mode window-numbering which-key wgrep web-mode vlf use-package string-inflection sourcerer-theme realgud rainbow-delimiters pretty-hydra powerline phi-autopair page-break-lines origami neotree multiple-cursors monokai-theme modern-cpp-font-lock melancholy-theme magit-gerrit lsp-ui lsp-ivy linum-relative json-mode hungry-delete google-c-style git-gutter flyspell-correct-ivy flycheck-ycmd flycheck-pyflakes flycheck-posframe flycheck-popup-tip flex-compile flex-autopair evil elpy ein eglot edit-server doom-themes doom-modeline diminish dashboard dap-mode cuda-mode counsel-etags company-ycmd company-statistics company-quickhelp-terminal company-prescient company-jedi company-box cmake-font-lock clang-format beacon auto-package-update auctex async all-the-icons-ivy-rich all-the-icons-ivy all-the-icons-ibuffer all-the-icons-gnus all-the-icons-dired all-the-icons-completion ace-flyspell 2048-game)))
 (custom-set-faces
