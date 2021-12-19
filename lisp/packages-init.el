@@ -1,9 +1,12 @@
 ;;; -*- lexical-binding: nil; -*-
 (require 'package)
 
-(setq package-archives '(("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+(setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ;; ("org" . "http://orgmode.org/elpa/")
+                         ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                          ("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                         ("melpa" . "https://melpa.org/packages/")))
+                         ))
 ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 

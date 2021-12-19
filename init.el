@@ -196,15 +196,17 @@
  '(doom-modeline-mode t)
  '(ns-alternate-modifier '(:ordinary meta :function meta :mouse meta))
  '(ns-command-modifier nil)
- ;; '(package-native-compile t)
  '(package-selected-packages
-   '(diff-hl org-tree-slide org-preview-html org-fragtog org-timeline org-mime toc-org org-rich-yank ob-mermaid ob-rust ob-go org-fancy-priorities org-superstar ox-gfm gameoflife wanderlust anzu benchmark-init org-roam-ui org-roam cnfonts xah-fly-keys spaceline spaceline-all-the-icons spacemacs-theme treemacs-persp treemacs-magit treemacs-icons-dired treemacs-projectile hlinum god-mode exec-path-from-shell org-pomodoro good-scroll paradox gnu-elpa-keyring-update ivy-prescient zzz-to-char yasnippet-snippets yapfify yaml-mode xclip writegood-mode window-numbering which-key wgrep web-mode vlf use-package string-inflection sourcerer-theme realgud rainbow-delimiters pretty-hydra powerline phi-autopair page-break-lines origami neotree multiple-cursors monokai-theme modern-cpp-font-lock melancholy-theme magit-gerrit lsp-ui lsp-ivy linum-relative json-mode hungry-delete google-c-style git-gutter flyspell-correct-ivy flycheck-ycmd flycheck-pyflakes flycheck-posframe flycheck-popup-tip flex-compile flex-autopair evil elpy ein eglot edit-server doom-themes doom-modeline diminish dashboard dap-mode cuda-mode counsel-etags company-ycmd company-statistics company-quickhelp-terminal company-prescient company-jedi company-box cmake-font-lock clang-format beacon auto-package-update auctex async all-the-icons-ivy-rich all-the-icons-ivy all-the-icons-ibuffer all-the-icons-gnus all-the-icons-dired all-the-icons-completion ace-flyspell 2048-game)))
+   '(zzz-to-char lsp-treemacs dap-mode lsp-ivy lsp-ui lsp-mode multiple-cursors anzu yasnippet-snippets window-numbering which-key use-package treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired toc-org rainbow-delimiters page-break-lines ox-gfm origami org-tree-slide org-timeline org-superstar org-rich-yank org-preview-html org-pomodoro org-mime org-fragtog org-fancy-priorities ob-rust ob-mermaid ob-go nov minions markdown-mode major-mode-hydra magit-gerrit linum-off ivy-rich hlinum good-scroll gnu-elpa-keyring-update flycheck-posframe exec-path-from-shell doom-themes doom-modeline diminish diff-hl dashboard counsel-etags company-prescient company-box cnfonts beacon auto-package-update async all-the-icons-ivy)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
+ '(diff-hl-change ((t (:background "#8fe9e3"))))
+ '(diff-hl-delete ((t (:background "#f5cce1"))))
+ '(diff-hl-insert ((t (:background "#80f1a4"))))
  '(doom-modeline-buffer-file ((t (:inherit (mode-line bold)))))
  '(flycheck-posframe-background-face ((t (:inherit tooltip))))
  '(flycheck-posframe-border-face ((t (:inherit font-lock-comment-face))))

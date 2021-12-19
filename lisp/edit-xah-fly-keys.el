@@ -1,6 +1,8 @@
-(unless (package-installed-p 'xah-fly-keys)
-  (package-refresh-contents)
-  (package-install 'xah-fly-keys))
+;; (unless (package-installed-p 'xah-fly-keys)
+;;   (package-refresh-contents)
+;;   (package-install 'xah-fly-keys))
+
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
 
 (setq xah-fly-use-control-key nil)
 (setq xah-fly-use-meta-key nil)

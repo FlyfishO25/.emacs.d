@@ -82,6 +82,11 @@
   :diminish
   :hook (after-init . global-page-break-lines-mode))
 
+(use-package solaire-mode
+  :config
+  (solaire-global-mode +1)
+)
+
 (setq inhibit-splash-screen t)
 
 ;; (when (display-graphic-p)
