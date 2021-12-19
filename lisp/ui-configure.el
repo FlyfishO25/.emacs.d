@@ -132,6 +132,8 @@
   (eval-when-compile
     ;; Silence missing function warnings
     (declare-function which-key-mode "which-key.el"))
+  :diminish
+  :custom (which-key-idle-delay 0.5)
   )
 
 (which-key-mode 1)
