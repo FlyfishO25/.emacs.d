@@ -43,18 +43,18 @@
   :init
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-  :config
-  (global-diff-hl-mode)
-  ;; Highlight changes on editing.
-  (diff-hl-flydiff-mode)
-  ;; Makes fringe and margin react to mouse clicks to show the curresponding hunk.
-  (diff-hl-show-hunk-mouse-mode)
   :custom
   (diff-hl-draw-borders nil)
   :custom-face
   (diff-hl-change ((t (:background "#8fe9e3"))))
   (diff-hl-insert ((t (:background "#80f1a4"))))
   (diff-hl-delete ((t (:background "#f5cce1")))))
+
+(global-diff-hl-mode)
+;; Highlight changes on editing.
+(diff-hl-flydiff-mode)
+;; Makes fringe and margin react to mouse clicks to show the curresponding hunk.
+(diff-hl-show-hunk-mouse-mode)
 
 (setq vc-follow-symlinks t)
 

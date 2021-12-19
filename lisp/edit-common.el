@@ -28,6 +28,9 @@
 (show-paren-mode 1)
 (setq show-paren-style 'parenthesis)
 
+
+
+
 ;; Remove trailing white space upon saving
 ;; Note: because of a bug in EIN we only delete trailing whitespace
 ;; when not in EIN mode.
