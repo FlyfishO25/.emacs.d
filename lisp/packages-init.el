@@ -38,22 +38,22 @@
 (use-package gnu-elpa-keyring-update)
 
 ;; A modern Packages Menu
-;; (use-package paradox
-;;   :hook (after-init . paradox-enable)
-;;   :init (setq paradox-execute-asynchronously t
-;;               paradox-github-token t
-;;               paradox-display-star-count nil)
-;;   :config
-;;   (when (fboundp 'page-break-lines-mode)
-;;     (add-hook 'paradox-after-execute-functions
-;;               (lambda (&rest _)
-;;                 "Display `page-break-lines' in \"*Paradox Report*\"."
-;;                 (let ((buf (get-buffer "*Paradox Report*"))
-;;                       (inhibit-read-only t))
-;;                   (when (buffer-live-p buf)
-;;                     (with-current-buffer buf
-;;                       (page-break-lines-mode 1)))))
-;;               t)))
+(use-package paradox
+  :hook (after-init . paradox-enable)
+  :init (setq paradox-execute-asynchronously t
+              paradox-github-token t
+              paradox-display-star-count nil)
+  :config
+  (when (fboundp 'page-break-lines-mode)
+    (add-hook 'paradox-after-execute-functions
+              (lambda (&rest _)
+                "Display `page-break-lines' in \"*Paradox Report*\"."
+                (let ((buf (get-buffer "*Paradox Report*"))
+                      (inhibit-read-only t))
+                  (when (buffer-live-p buf)
+                    (with-current-buffer buf
+                      (page-break-lines-mode 1)))))
+              t)))
 
 (use-package async
   :ensure t)
@@ -61,11 +61,20 @@
 (use-package s
   :ensure t)
 
-;; (use-package async-await)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; auto-package-update
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Auto update packages once a week
+(use-package auto-package-update
+  :ensure t
+  :commands (auto-package-update-maybe)
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-hide-results t)
+  (auto-package-update-maybe)
+  (add-hook 'auto-package-update-before-hook
+            (lambda () (message "I will update packages now")))
+  )
 
-;; (use-package page-break-lines)
-
-;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
-;; (require 'feather)
 
 (provide 'packages-init)

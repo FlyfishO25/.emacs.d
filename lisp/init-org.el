@@ -52,7 +52,8 @@
     ("#+BEGIN_QUOTE" . ?»)
     ("#+END_QUOTE" . ?«)
     ("#+HEADERS" . ?☰)
-    ("#+RESULTS:" . ?💻))
+    ;; ("#+RESULTS:" . ?💻)
+)
   "Alist of symbol prettifications for `org-mode'."
   :group 'centaur
   :type '(alist :key-type string :value-type (choice character sexp)))

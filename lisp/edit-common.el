@@ -124,6 +124,13 @@
   :ensure t
   :bind ("M-z" . zzz-up-to-char))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; aggressive-indent-mode: make your code always indented
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package aggressive-indent
+  :config
+  (global-aggressive-indent-mode 1)
+  )
 
                                         ; shortcuts
 
