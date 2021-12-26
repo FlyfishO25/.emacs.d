@@ -1,7 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 
 (use-package all-the-icons)
-(use-package all-the-icons-dired)
 
 (setq x-stretch-cursor t)
 
@@ -9,8 +8,13 @@
   "Return non-nil if `all-the-icons' is displayable."
   (and display-icon
        (display-graphic-p)
-       (require 'all-the-icons nil t)
-       (all-the-icons-dired-mode)))
+       (require 'all-the-icons nil t)))
+
+(use-package all-the-icons-dired
+  :diminish
+  :if (icons-displayable-p)
+  :hook (dired-mode . (lambda () (whitespace-mode -1)))
+  )
 
 (when (and (not (eq system-type 'darwin)) (fboundp 'menu-bar-mode))
   (menu-bar-mode -1))
