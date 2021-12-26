@@ -1,6 +1,8 @@
 # .emacs.d
 My personal emacs configure
 
+# Screenshot
+
 # Credit
 [Centaur Emacs](https://github.com/seagle0128/.emacs.d)
 
