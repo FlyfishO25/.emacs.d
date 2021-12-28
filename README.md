@@ -1,3 +1,5 @@
+![LOGO](./media/logo.png)
+
 # .emacs.d
 My personal emacs configure
 
