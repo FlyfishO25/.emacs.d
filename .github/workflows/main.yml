@@ -10,7 +10,6 @@ jobs:
         emacs-version:
           - 27.1
           - 27.2
-          - 28.0
           - snapshot
 
     steps:
