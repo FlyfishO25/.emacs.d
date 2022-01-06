@@ -1,6 +1,7 @@
 (use-package pretty-hydra
   :bind (("C-, t" . toggles-hydra/body)
-	 ("C-, o" . org-mode-hydra/body))
+	 ("C-, o" . org-mode-hydra/body)
+         ("C-, m" . multiple-cursors-hydra/body))
   :init
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name
                                       &key face height v-adjust)
@@ -106,5 +107,19 @@
      ("d" forward-char "→")
     )
   ))
+
+(pretty-hydra-define multiple-cursors-hydra
+  (:title (pretty-hydra-title "Multiple Cursor" 'faicon "i-cursor" :face 'all-the-icons-green :height 1.1 :v-adjust 0.0)
+          :color blue :quit-key "q")
+  ("Mark"
+   ((">" mc/mark-next-like-this "mark next like this" :exit t)
+    ("<" mc/mark-previous-like-this "mark previous like this" :exit t)
+    ("a" mc/mark-all-like-this "mark all like this" :exit t))
+   "Sort"
+   (("s" mc/sort-regions "sort the marked regions alphabetically" :exit t))
+   "Insert"
+   (("i" mc/insert-numbers "insert increasing numbers" :exit t)
+    ("I" mc/insert-letters "insert increasing letters" :exit t))
+   ))
 
 (provide 'init-hydra)

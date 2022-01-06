@@ -28,9 +28,6 @@
 (show-paren-mode 1)
 (setq show-paren-style 'parenthesis)
 
-
-
-
 ;; Remove trailing white space upon saving
 ;; Note: because of a bug in EIN we only delete trailing whitespace
 ;; when not in EIN mode.
@@ -99,7 +96,6 @@
          ("M-p" . mc/mark-previous-like-this)
          ("C-c a" . mc/mark-all-like-this)
          ("C-c e" . mc/edit-lines))
-  
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
