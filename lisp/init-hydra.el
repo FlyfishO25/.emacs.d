@@ -1,5 +1,6 @@
 (use-package pretty-hydra
-  :bind ("C-," . toggles-hydra/body)
+  :bind (("C-, t" . toggles-hydra/body)
+	 ("C-, o" . org-mode-hydra/body))
   :init
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name
                                       &key face height v-adjust)
@@ -19,7 +20,7 @@
   ;; Global toggles
   (with-no-warnings
     (pretty-hydra-define toggles-hydra (:title (pretty-hydra-title "Toggles" 'faicon "toggle-on" :v-adjust -0.1)
-                                        :color amaranth :quit-key "q")
+                                               :color amaranth :quit-key "q")
       ("Basic"
        (("n" (if (fboundp 'display-line-numbers-mode)
                  (display-line-numbers-mode (if display-line-numbers-mode -1 1))
@@ -43,8 +44,8 @@
         ("h w" (setq-default show-trailing-whitespace (not show-trailing-whitespace))
          "whitespace" :toggle show-trailing-whitespace)
         ("h d" rainbow-delimiters-mode "delimiter" :toggle t))
-        ;; ("h i" highlight-indent-guides-mode "indent" :toggle t)
-        ;; ("h t" global-hl-todo-mode "todo" :toggle t))
+       ;; ("h i" highlight-indent-guides-mode "indent" :toggle t)
+       ;; ("h t" global-hl-todo-mode "todo" :toggle t))
        "Program"
        (("f" flycheck-mode "flycheck" :toggle t)
         ("F" flymake-mode "flymake" :toggle t)
@@ -79,14 +80,16 @@
     "Display an icon from the GitHub Octicons."
     (s-concat (all-the-icons-octicon icon :v-adjust (or v-adjust 0) :height (or height 1) :face face) " " str)))
 
-(major-mode-hydra-define org-mode nil
+(pretty-hydra-define org-mode-hydra
+  (:title (pretty-hydra-title "Org Mode" 'fileicon "org" :face 'all-the-icons-green :height 1.1 :v-adjust 0.0)
+           :color blue :quit-key "q")
   ("Task"
    (("n" org-meta-return "new")
     ("m" org-time-stamp "insert date" :exit t)
     )
    "Time"
-   (("s" org-clock-in "start timer" :exit t)
-    ("t" org-clock-out "stop timer" :exit t)
+   (("s" org-clock-in "start timer" :color blue :exit t)
+    ("t" org-clock-out "stop timer" :color blue :exit t)
     ("S" org-schedule "set SCHEDULED" :color purple)
     ("D" org-deadline "set DEADLINE" :color purple :exit t)
     )
@@ -95,7 +98,13 @@
     ("b" org-todo "toggle status" :color red)
     ("v" org-toggle-inline-images "view images")
     ("l" org-metaleft "move left" :color blue)
-    ("r" org-metaright "move right" :color blue)))
-  )
+    ("r" org-metaright "move right" :color blue))
+   "Move"
+    (("w" previous-line "↑")
+     ("s" next-line "↓")
+     ("a" backward-char "←")
+     ("d" forward-char "→")
+    )
+  ))
 
 (provide 'init-hydra)

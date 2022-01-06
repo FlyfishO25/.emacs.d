@@ -91,7 +91,8 @@
 (use-package all-the-icons-dired
   :diminish
   :if (icons-displayable-p)
-  :hook (dired-mode . (lambda () (whitespace-mode -1)))
+  :hook (dired-mode . all-the-icons-dired-mode)
+  :init (setq all-the-icons-dired-monochrome nil)
   )
 
 (when (and (not (eq system-type 'darwin)) (fboundp 'menu-bar-mode))

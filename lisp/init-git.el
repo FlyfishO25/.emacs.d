@@ -58,4 +58,4 @@
 
 (setq vc-follow-symlinks t)
 
-(provide 'git-package)
+(provide 'init-git)

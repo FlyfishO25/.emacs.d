@@ -59,17 +59,17 @@
 ;; We want to be able to see if there is a tab character vs a space.
 ;; global-whitespace-mode allows us to do just that.
 ;; Set whitespace mode to only show tabs, not newlines/spaces.
-(use-package whitespace
-  :ensure t
-  :init
-  (eval-when-compile
-      ;; Silence missing function warnings
-      (declare-function global-whitespace-mode "whitespace.el"))
-  :config
-  (setq whitespace-style '(tabs tab-mark))
-  ;; Turn on whitespace mode globally.
-  (global-whitespace-mode t)
-  )
+;; (use-package whitespace
+;;   :ensure t
+;;   :init
+;;   (eval-when-compile
+;;       ;; Silence missing function warnings
+;;       (declare-function global-whitespace-mode "whitespace.el"))
+;;   :config
+;;   (setq whitespace-style '(tabs tab-mark))
+;;   ;; Turn on whitespace mode globally.
+;;   (global-whitespace-mode t)
+;;   )
 
 ;; Enable hide/show of code blocks
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
