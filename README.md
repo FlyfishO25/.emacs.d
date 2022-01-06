@@ -1,6 +1,6 @@
 ![LOGO](./media/logo.png)
 
-# .emacs.d
+# FLYMACS
 My personal emacs configure
 
 # Screenshot
