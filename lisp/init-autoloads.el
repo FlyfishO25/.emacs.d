@@ -86,7 +86,7 @@
 ;; (autoload 'textile-mode "textile-mode" "Mode for editing Textile documents" t)
 ;; (autoload 'find-library-name "find-func")
 (autoload 'web-mode "web-mode")
-;; (autoload 'snippet-mode "yasnippet" "")
+(autoload 'snippet-mode "yasnippet" "")
 (autoload 'run-js "js-comint" "")
 (autoload 'js-comint-clear "js-comint" "")
 (autoload 'js-comint-send-buffer "js-comint" "")

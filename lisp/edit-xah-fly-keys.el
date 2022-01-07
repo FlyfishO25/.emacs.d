@@ -16,6 +16,7 @@
 To be added to `xah-fly-command-mode-activate-hook'"
   (interactive)
   (define-key xah-fly-key-map (kbd "n") 'swiper)
+  (define-key xah-fly-key-map (kbd "2") 'delete-window)
   ;; more here
   )
 

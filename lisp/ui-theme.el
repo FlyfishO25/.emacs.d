@@ -4,8 +4,6 @@
   :defer
   :custom-face
   (doom-modeline-buffer-file ((t (:inherit (mode-line bold)))))
-  :custom
-  (doom-themes-treemacs-theme "doom-colors")
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
@@ -15,6 +13,7 @@
   ;; Enable custom neotree theme (all-the-icons must be installed!)
   (doom-themes-neotree-config)
   ;; or for treemacs usersXb
+  (setq doom-themes-treemacs-theme "doom-colors")
   (with-eval-after-load 'lsp-treemacs
     (doom-themes-treemacs-config))
   ;; Corrects (and improves) org-mode's native fontification.
