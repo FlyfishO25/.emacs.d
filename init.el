@@ -33,43 +33,44 @@
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
                                         ; basic setup
-  (require 'init-default)
-  (require 'packages-init)
+  (require 'init-funcs)
+  (loadpkg 'init-default t)
+  (loadpkg 'packages-init t)
   ;; (require 'init-autoloads)
-  (load (concat user-emacs-directory "lisp/init-compile.el"))
-  (require 'init-performance)
-  (require 'init-misc)
+  (loadpkg 'init-compile t)
+  (loadpkg 'init-performance t)
+  (loadpkg 'init-misc t)
 
-  (require 'ui-cnfont)
-  (require 'ui-tree)
-  (require 'ui-doomline)
-  ;; (require 'ui-tab)
-  (require 'ui-configure)
-  (require 'ui-dashboard)
-  (require 'ui-theme)
+  (loadpkg 'ui-cnfont t)
+  (loadpkg 'ui-tree)
+  (loadpkg 'ui-doomline t)
+  ;; (loadpkg 'ui-tab)
+  (loadpkg 'ui-configure t)
+  (loadpkg 'ui-dashboard)
+  (loadpkg 'ui-theme t)
 
-  (add-hook 'after-init-hook (lambda () (require 'edit-common)))
-  (require 'edit-autosave)
+  (add-hook 'after-init-hook (lambda () (loadpkg 'edit-common t)))
+  (loadpkg 'edit-autosave t)
   (auto-save-enable)
-  (require 'edit-xah-fly-keys)
+  (loadpkg 'edit-xah-fly-keys t)
 
   
-  (require 'init-ivy)
-  (require 'init-hydra)
+  (loadpkg 'init-ivy t)
+  (loadpkg 'init-hydra t)
                                         ; code edit
 
-  (require 'lang-python)
-  (require 'lang-c)
+  (loadpkg 'lang-python)
+  (loadpkg 'lang-c)
 
                                         ; code compilation
 
-  (require 'complete-company)
-  (require 'complete-lsp)
+  (loadpkg 'complete-company t)
+  (loadpkg 'complete-lsp)
 
                                         ; other modes
-  (require 'init-org)
-  (add-hook 'org-mode-hook (lambda () (require 'init-roam)))
-  (require 'reading)
-  (require 'init-git)
+  (loadpkg 'init-org)
+  (add-hook 'org-mode-hook (lambda () (loadpkg 'init-roam)))
+  (loadpkg 'reading)
+  (loadpkg 'init-git)
   (load (concat user-emacs-directory "config-user.el"))
   )

@@ -1,8 +1,8 @@
 (use-package exec-path-from-shell
   :ensure t
   :config
-  (if (and (and (fboundp 'native-comp-available-p)
-                (native-comp-available-p)) (display-graphic-p))
+  (if (and (fboundp 'native-comp-available-p)
+                (native-comp-available-p))
       (progn
         (message "Native comp is available")
         ;; Using Emacs.app/Contents/MacOS/bin since it was compiled with
