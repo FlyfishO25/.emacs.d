@@ -1,7 +1,7 @@
 (use-package pretty-hydra
-  :bind (("C-, t" . toggles-hydra/body)
-	 ("C-, o" . org-mode-hydra/body)
-         ("C-, m" . multiple-cursors-hydra/body))
+  :bind (("C-c h t" . toggles-hydra/body)
+	 ("C-c h o" . org-mode-hydra/body)
+         ("C-c h m" . multiple-cursors-hydra/body))
   :init
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name
                                       &key face height v-adjust)
