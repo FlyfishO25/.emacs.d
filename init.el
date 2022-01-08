@@ -28,51 +28,52 @@
 
 ;;; Code:
 
+(let* ((file-name-handler-alist nil))
                                         ; customize and function defination
 
-;; (defvar performence-test nil)
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
+  ;; (defvar performence-test nil)
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
                                         ; basic setup
-(require 'init-default)
-(require 'packages-init)
-(require 'init-autoloads)
-(require 'init-compile)
-(require 'init-performance)
-(require 'init-misc)
+  (require 'init-default)
+  (require 'packages-init)
+  ;; (require 'init-autoloads)
+  (load (concat user-emacs-directory "lisp/init-compile.el"))
+  (require 'init-performance)
+  (require 'init-misc)
 
-(require 'ui-cnfont)
-(require 'ui-tree)
-(require 'ui-doomline)
-;; (require 'ui-tab)
-(require 'ui-configure)
-(require 'ui-dashboard)
-(require 'ui-theme)
+  (require 'ui-cnfont)
+  (require 'ui-tree)
+  (require 'ui-doomline)
+  ;; (require 'ui-tab)
+  (require 'ui-configure)
+  (require 'ui-dashboard)
+  (require 'ui-theme)
 
-(add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
+  ;; (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
 
-(add-hook 'after-init-hook (lambda () (require 'edit-common)))
-(require 'edit-autosave)
-(auto-save-enable)
-(require 'edit-xah-fly-keys)
+  (add-hook 'after-init-hook (lambda () (require 'edit-common)))
+  (require 'edit-autosave)
+  (auto-save-enable)
+  (require 'edit-xah-fly-keys)
 
-                                        
-(require 'init-ivy)
-(require 'init-hydra)
-(require 'init-origami)
+  
+  (require 'init-ivy)
+  (require 'init-hydra)
                                         ; code edit
 
-(require 'lang-python)
-(require 'lang-c)
+  (require 'lang-python)
+  (require 'lang-c)
 
                                         ; code compilation
 
-(require 'complete-company)
-(require 'complete-lsp)
+  (require 'complete-company)
+  (require 'complete-lsp)
 
                                         ; other modes
-(require 'init-org)
-(add-hook 'org-mode-hook (lambda () (require 'init-roam)))
-(require 'reading-nov)
-(require 'init-git)
-(load-file (concat user-emacs-directory "config-user.el"))
+  (require 'init-org)
+  (add-hook 'org-mode-hook (lambda () (require 'init-roam)))
+  (require 'reading)
+  (require 'init-git)
+  (load-file (concat user-emacs-directory "config-user.el"))
+  )

@@ -13,5 +13,8 @@
             "Recover GC values after startup."
             (setq gc-cons-threshold 100000000
                   gc-cons-percentage 0.1)))
+(use-package esup
+  :config
+  (setq esup-depth 0))
 
 (provide 'init-performance)

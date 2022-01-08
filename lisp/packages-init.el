@@ -1,20 +1,17 @@
 ;;; -*- lexical-binding: nil; -*-
-(require 'package)
-
-(setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
+(setq package-archives '(;; ("elpa" . "https://elpa.gnu.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")
                          ;; ("org" . "http://orgmode.org/elpa/")
-                         ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                         ("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                          ))
 ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
-
-
-;; Initialize packages
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
+
+(require 'package)
 
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)
