@@ -30,8 +30,6 @@
 
 (let* ((file-name-handler-alist nil))
                                         ; customize and function defination
-
-  ;; (defvar performence-test nil)
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
                                         ; basic setup
@@ -49,8 +47,6 @@
   (require 'ui-configure)
   (require 'ui-dashboard)
   (require 'ui-theme)
-
-  ;; (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
 
   (add-hook 'after-init-hook (lambda () (require 'edit-common)))
   (require 'edit-autosave)
@@ -75,5 +71,5 @@
   (add-hook 'org-mode-hook (lambda () (require 'init-roam)))
   (require 'reading)
   (require 'init-git)
-  (load-file (concat user-emacs-directory "config-user.el"))
+  (load (concat user-emacs-directory "config-user.el"))
   )

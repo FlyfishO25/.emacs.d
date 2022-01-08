@@ -3,8 +3,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(cc-mode zzz-to-char yasnippet-snippets yapfify window-numbering which-key use-package treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired toc-org solaire-mode rainbow-delimiters paradox page-break-lines ox-gfm origami org-tree-slide org-timeline org-superstar org-roam-ui org-rich-yank org-preview-html org-pomodoro org-mime org-fragtog org-fancy-priorities ob-rust ob-mermaid ob-go nov neotree multiple-cursors modern-cpp-font-lock minions major-mode-hydra magit-gerrit lsp-ui lsp-sourcekit lsp-pyright lsp-julia lsp-java lsp-ivy linum-off ivy-prescient hlinum good-scroll gnu-elpa-keyring-update flycheck-posframe flycheck-popup-tip exec-path-from-shell esup elpy eglot doom-themes doom-modeline diminish diff-hl dashboard counsel-osx-app counsel-etags company-quickhelp-terminal company-prescient company-box cnfonts clang-format circadian ccls calibredb beacon auto-package-update async anzu all-the-icons-ivy-rich all-the-icons-ivy all-the-icons-dired aggressive-indent)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

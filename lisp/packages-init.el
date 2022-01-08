@@ -1,11 +1,12 @@
 ;;; -*- lexical-binding: nil; -*-
-(setq package-archives '(;; ("elpa" . "https://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")
-                         ;; ("org" . "http://orgmode.org/elpa/")
-                         ("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                         ))
-;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(setq flymacs-package-archives-cn '(("mepla" . 	"http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                                    ("elpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                                    ("mepla-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/stable-melpa/")
+                                    ))
+
+(setq flymacs-package-archives-origin '(("melpa" . "https://melpa.org/packages/")
+                                        ("melpa-stable" . "https://stable.melpa.org/packages/")
+                                        ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
@@ -51,6 +52,16 @@
                     (with-current-buffer buf
                       (page-break-lines-mode 1)))))
               t)))
+
+;; @see https://github.com/jwiegley/use-package/issues/383
+(defun flymacs-package--save-selected-packages (&optional value)
+  "Set and (don't!) save `package-selected-packages' to VALUE."
+  (when value
+    (setq package-selected-packages value))
+  (unless after-init-time
+    (add-hook 'after-init-hook #'package--save-selected-packages)))
+
+(advice-add 'package--save-selected-packages :override #'flymacs-package--save-selected-packages)
 
 (use-package async
   :ensure t)
