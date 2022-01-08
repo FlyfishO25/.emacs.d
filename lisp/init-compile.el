@@ -65,5 +65,3 @@
      (file-truename "~/.emacs.d/init.el")
      (file-truename "~/.emacs.d/init.elc"))
     (byte-compile-init-files "~/.emacs.d/init.el"))
-
-(provide 'init-compile)
