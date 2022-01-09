@@ -65,3 +65,8 @@
      (file-truename "~/.emacs.d/init.el")
      (file-truename "~/.emacs.d/init.elc"))
     (byte-compile-init-files "~/.emacs.d/init.el"))
+
+(if (file-newer-than-file-p
+     (file-truename "~/.emacs.d/config-user.el")
+     (file-truename "~/.emacs.d/config-user.elc"))
+    (byte-compile-init-files "~/.emacs.d/config-user.el"))

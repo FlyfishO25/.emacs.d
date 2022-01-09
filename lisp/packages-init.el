@@ -1,12 +1,17 @@
 ;;; -*- lexical-binding: nil; -*-
-(setq flymacs-package-archives-cn '(("mepla" . 	"http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                                    ("elpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-                                    ("mepla-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/stable-melpa/")
-                                    ))
+(setq flymacs-package-archives-tingshua '(("mepla" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                                             ("elpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
+      
+      flymacs-package-archives-bfsu '(("elpa" . "https://mirrors.bfsu.edu.cn/elpa/gnu/")
+                                         ("melpa" . "https://mirrors.bfsu.edu.cn/elpa/melpa/"))
 
-(setq flymacs-package-archives-origin '(("melpa" . "https://melpa.org/packages/")
-                                        ("melpa-stable" . "https://stable.melpa.org/packages/")
+      flymacs-package-archives-tencent '(("elpa" . "https://mirrors.cloud.tencent.com/elpa/gnu/")
+                                            ("melpa" . "https://mirrors.cloud.tencent.com/elpa/melpa/"))
+
+      flymacs-package-archives-origin '(("melpa" . "https://melpa.org/packages/")
                                         ("elpa" . "https://elpa.gnu.org/packages/")))
+
+(setq package-archives flymacs-package-archives-origin)
 
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
@@ -83,6 +88,5 @@
   (add-hook 'auto-package-update-before-hook
             (lambda () (message "I will update packages now")))
   )
-
 
 (provide 'packages-init)
