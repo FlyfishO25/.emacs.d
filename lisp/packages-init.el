@@ -1,5 +1,5 @@
 ;;; -*- lexical-binding: nil; -*-
-(setq flymacs-package-archives-tingshua '(("mepla" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+(setq flymacs-package-archives-tsinghua '(("mepla" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
                                              ("elpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
       
       flymacs-package-archives-bfsu '(("elpa" . "https://mirrors.bfsu.edu.cn/elpa/gnu/")
@@ -11,7 +11,7 @@
       flymacs-package-archives-origin '(("melpa" . "https://melpa.org/packages/")
                                         ("elpa" . "https://elpa.gnu.org/packages/")))
 
-(setq package-archives flymacs-package-archives-origin)
+(setq package-archives flymacs-package-archives-bfsu)
 
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
