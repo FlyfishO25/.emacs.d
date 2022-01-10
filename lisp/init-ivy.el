@@ -28,11 +28,6 @@
 
 ;;; Code:
 
-(when (eq system-type 'darwin)
-  (use-package all-the-icons-ivy
-    :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
-)
-
 (use-package ivy
   :ensure t
   :commands (ivy-mode)
@@ -48,111 +43,6 @@
   (setq ivy-count-format "%d/%d ")
   )
 
-(use-package all-the-icons-ivy-rich
-  :hook (ivy-mode . all-the-icons-ivy-rich-mode)
-  :init (setq all-the-icons-ivy-rich-icon display-icon)
-  :config
-  (plist-put all-the-icons-ivy-rich-display-transformers-list
-             'load-theme
-             '(:columns
-               ((all-the-icons-ivy-rich-theme-icon)
-                (ivy-rich-candidate))
-               :delimiter "\t"))
-  (all-the-icons-ivy-rich-reload))
-
-(use-package ivy-rich
-  :config
-  (ivy-rich-mode 1)
-  )
-
-(use-package prescient
-  :commands prescient-persist-mode
-  :init (prescient-persist-mode 1))
-
-(use-package ivy-prescient
-  :commands ivy-prescient-re-builder
-  :init
-  ;; See https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-ivy.el#397
-  (defun ivy-prescient-rebuilder (str)
-    "Generate an regexp for STR by `ivy-prescient-re-builder'."
-    (let ((prescient-filter-method '(literal regexp)))
-        (ivy-prescient-re-builder str)
-    ))
-  (setq ivy-prescient-retain-classic-highlighting t
-          ivy-re-builders-alist
-          '((counsel-ag . ivy-prescient-rebuilder)
-            (counsel-pt . ivy-prescient-rebuilder)
-            (counsel-grep . ivy-prescient-rebuilder)
-            (counsel-fzf . ivy-prescient-rebuilder)
-            (counsel-imenu . ivy-prescient-rebuilder)
-            (counsel-yank-pop . ivy-prescient-rebuilder)
-            (swiper . ivy-prescient-rebuilder)
-            (swiper-isearch . ivy-prescient-rebuilder)
-            (swiper-all . ivy-prescient-rebuilder)
-            (lsp-ivy-workspace-symbol . ivy-prescient-rebuilder)
-            (lsp-ivy-global-workspace-symbol . ivy-prescient-rebuilder)
-            (insert-char . ivy-prescient-rebuilder)
-            (counsel-unicode-char . ivy-prescient-rebuilder)
-            (t . ivy-prescient-re-builder))
-          ivy-prescient-sort-commands
-          '(:not swiper swiper-isearch ivy-switch-buffer
-            lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
-            counsel-grep counsel-git-grep counsel-rg counsel-ag
-            counsel-ack counsel-fzf counsel-pt counsel-imenu
-            counsel-org-capture counsel-outline counsel-org-goto
-            counsel-load-theme counsel-yank-pop
-            counsel-recentf counsel-buffer-or-recentf))
-  (ivy-prescient-mode 1)
-  )
-
-(defvar ivy-fly-commands
-  '(query-replace-regexp
-        flush-lines keep-lines ivy-read
-        swiper swiper-backward swiper-all
-        swiper-isearch swiper-isearch-backward
-        lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol
-        counsel-grep-or-swiper counsel-grep-or-swiper-backward
-        counsel-grep counsel-ack counsel-ag counsel-rg counsel-pt))
-
-(defvar ivy-fly-back-commands
-  '(self-insert-command
-        ivy-forward-char ivy-delete-char delete-forward-char kill-word kill-sexp
-        end-of-line mwim-end-of-line mwim-end-of-code-or-line mwim-end-of-line-or-code
-        yank ivy-yank-word ivy-yank-char ivy-yank-symbol counsel-yank-pop))
-
-(defun ivy-fly-back ()
-  (cond ((and (memq last-command ivy-fly-commands)
-              (equal (this-command-keys-vector) (kbd "M-p")))
-         (or (memq this-command ivy-fly-back-commands)
-             (equal (this-command-keys-vector) (kbd "M-n")))
-         )
-        ((delete-region (point) (point-max))
-         (when (memq this-command '(ivy-forward-char
-                                    ivy-delete-char delete-forward-char
-                                    kill-word kill-sexp
-                                    end-of-line mwim-end-of-line
-                                    mwim-end-of-code-or-line
-                                    mwim-end-of-line-or-code))
-           (insert (ivy-cleanup-string ivy-text))
-           (when (memq this-command '(ivy-delete-char
-                                      delete-forward-char
-                                      kill-word kill-sexp))
-             (beginning-of-line))))))
-
-(defun ivy-fly-hist ()
-  (when (memq this-command ivy-fly-commands)
-        (insert (propertize
-                 (save-excursion
-		           (set-buffer (window-buffer (minibuffer-selected-window)))
-		           (ivy-thing-at-point))
-                 'face 'shadow))
-        (add-hook 'pre-command-hook 'ivy-fly-back nil t)
-        (beginning-of-line)))
-
-    (add-hook 'minibuffer-setup-hook #'ivy-fly-hist)
-    (add-hook 'minibuffer-exit-hook
-              (lambda ()
-                (remove-hook 'pre-command-hook 'ivy-fly-back t)))
 
 (use-package swiper
   :ensure t
@@ -281,4 +171,114 @@
           )
         )
   )
+
+(use-package all-the-icons-ivy
+  :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
+
+(use-package all-the-icons-ivy-rich
+  :hook (ivy-mode . all-the-icons-ivy-rich-mode)
+  :init (setq all-the-icons-ivy-rich-icon display-icon)
+  :config
+  (plist-put all-the-icons-ivy-rich-display-transformers-list
+             'load-theme
+             '(:columns
+               ((all-the-icons-ivy-rich-theme-icon)
+                (ivy-rich-candidate))
+               :delimiter "\t"))
+  (all-the-icons-ivy-rich-reload))
+
+(use-package ivy-rich
+  :config
+  (ivy-rich-mode 1)
+  )
+
+(use-package prescient
+  :commands prescient-persist-mode
+  :init (prescient-persist-mode 1))
+
+(use-package ivy-prescient
+  :commands ivy-prescient-re-builder
+  :init
+  ;; See https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-ivy.el#397
+  (defun ivy-prescient-rebuilder (str)
+    "Generate an regexp for STR by `ivy-prescient-re-builder'."
+    (let ((prescient-filter-method '(literal regexp)))
+        (ivy-prescient-re-builder str)
+    ))
+  (setq ivy-prescient-retain-classic-highlighting t
+          ivy-re-builders-alist
+          '((counsel-ag . ivy-prescient-rebuilder)
+            (counsel-pt . ivy-prescient-rebuilder)
+            (counsel-grep . ivy-prescient-rebuilder)
+            (counsel-fzf . ivy-prescient-rebuilder)
+            (counsel-imenu . ivy-prescient-rebuilder)
+            (counsel-yank-pop . ivy-prescient-rebuilder)
+            (swiper . ivy-prescient-rebuilder)
+            (swiper-isearch . ivy-prescient-rebuilder)
+            (swiper-all . ivy-prescient-rebuilder)
+            (lsp-ivy-workspace-symbol . ivy-prescient-rebuilder)
+            (lsp-ivy-global-workspace-symbol . ivy-prescient-rebuilder)
+            (insert-char . ivy-prescient-rebuilder)
+            (counsel-unicode-char . ivy-prescient-rebuilder)
+            (t . ivy-prescient-re-builder))
+          ivy-prescient-sort-commands
+          '(:not swiper swiper-isearch ivy-switch-buffer
+            lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
+            counsel-grep counsel-git-grep counsel-rg counsel-ag
+            counsel-ack counsel-fzf counsel-pt counsel-imenu
+            counsel-org-capture counsel-outline counsel-org-goto
+            counsel-load-theme counsel-yank-pop
+            counsel-recentf counsel-buffer-or-recentf))
+  (ivy-prescient-mode 1)
+  )
+
+(defvar ivy-fly-commands
+  '(query-replace-regexp
+        flush-lines keep-lines ivy-read
+        swiper swiper-backward swiper-all
+        swiper-isearch swiper-isearch-backward
+        lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol
+        counsel-grep-or-swiper counsel-grep-or-swiper-backward
+        counsel-grep counsel-ack counsel-ag counsel-rg counsel-pt))
+
+(defvar ivy-fly-back-commands
+  '(self-insert-command
+        ivy-forward-char ivy-delete-char delete-forward-char kill-word kill-sexp
+        end-of-line mwim-end-of-line mwim-end-of-code-or-line mwim-end-of-line-or-code
+        yank ivy-yank-word ivy-yank-char ivy-yank-symbol counsel-yank-pop))
+
+(defun ivy-fly-back ()
+  (cond ((and (memq last-command ivy-fly-commands)
+              (equal (this-command-keys-vector) (kbd "M-p")))
+         (or (memq this-command ivy-fly-back-commands)
+             (equal (this-command-keys-vector) (kbd "M-n")))
+         )
+        ((delete-region (point) (point-max))
+         (when (memq this-command '(ivy-forward-char
+                                    ivy-delete-char delete-forward-char
+                                    kill-word kill-sexp
+                                    end-of-line mwim-end-of-line
+                                    mwim-end-of-code-or-line
+                                    mwim-end-of-line-or-code))
+           (insert (ivy-cleanup-string ivy-text))
+           (when (memq this-command '(ivy-delete-char
+                                      delete-forward-char
+                                      kill-word kill-sexp))
+             (beginning-of-line))))))
+
+(defun ivy-fly-hist ()
+  (when (memq this-command ivy-fly-commands)
+        (insert (propertize
+                 (save-excursion
+		           (set-buffer (window-buffer (minibuffer-selected-window)))
+		           (ivy-thing-at-point))
+                 'face 'shadow))
+        (add-hook 'pre-command-hook 'ivy-fly-back nil t)
+        (beginning-of-line)))
+
+    (add-hook 'minibuffer-setup-hook #'ivy-fly-hist)
+    (add-hook 'minibuffer-exit-hook
+              (lambda ()
+                (remove-hook 'pre-command-hook 'ivy-fly-back t)))
+
 (provide 'init-ivy)
