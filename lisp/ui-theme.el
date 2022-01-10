@@ -1,7 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 (use-package doom-themes
-  :ensure t
-  :defer
   :custom-face
   (doom-modeline-buffer-file ((t (:inherit (mode-line bold)))))
   :config
@@ -21,7 +19,6 @@
   )
 
 (use-package circadian
-  :ensure t
   :hook ('after-make-frame-functions . (lambda ()
                                          (circadian-setup)))
   :config
@@ -29,8 +26,8 @@
   (setq calendar-latitude 23.130280
         calendar-longitude 113.288879)
   
-  (setq circadian-themes '((:sunrise . doom-one-light)
-                           (:sunset . doom-vibrant)))
+  (setq circadian-themes '(("7:00" . doom-one-light)
+                           ("19:30" . doom-vibrant)))
   )
 
 (circadian-setup)
