@@ -2,7 +2,7 @@ name: CI
 on: [push, pull_request]
 jobs:
   linux-test:
-    runs-on: fedora-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         emacs-version:
