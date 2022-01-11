@@ -11,7 +11,7 @@ jobs:
           - snapshot
     steps:
       - uses: actions/checkout@v1
-      - uses: purcell/setup-emacs@master
+      - uses: FlyfishO25/setup-emacs@master
         with:
           version: ${{ matrix.emacs-version }}
       - name: Test
