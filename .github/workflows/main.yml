@@ -16,7 +16,6 @@ jobs:
           version: ${{ matrix.emacs-version }}
       - name: Test
         run: |
-          sudo apt-get install ripgrep; \
           rm -rf ~/.emacs.d; \
           mv -f ~/work/.emacs.d/.emacs.d ~; \
           emacs --version; \
