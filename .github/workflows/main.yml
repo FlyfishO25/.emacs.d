@@ -11,11 +11,12 @@ jobs:
           - snapshot
     steps:
       - uses: actions/checkout@v1
-      - uses: FlyfishO25/setup-emacs@master
+      - uses: purcell/setup-emacs@master
         with:
           version: ${{ matrix.emacs-version }}
       - name: Test
         run: |
+          sudo apt-get install ripgrep; \
           rm -rf ~/.emacs.d; \
           mv -f ~/work/.emacs.d/.emacs.d ~; \
           emacs --version; \
