@@ -32,4 +32,6 @@ jobs:
                     (run-hooks 'after-init-hook)
                     (run-hooks 'emacs-startup-hook)
                     (run-hooks 'window-setup-hook))" \
-          --eval "(message \"Testing...done\")"
+          --eval "(message \"Testing...done\")"; \
+          echo "Time: "; \
+          bash -c "time -p emacs -e kill-emacs";
