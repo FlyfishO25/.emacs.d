@@ -18,6 +18,7 @@ My personal emacs configure
 + Emacs 27.1+ (*27.2 is recommended*, or [native-comp](https://www.emacswiki.org/emacs/GccEmacs)).
 + [ripgrep](https://github.com/BurntSushi/ripgrep) 11.0+
 + [clangd](https://clangd.llvm.org)
++ [Fira Code Font](https://github.com/tonsky/FiraCode)
 
 # Install
 
