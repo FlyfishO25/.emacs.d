@@ -23,4 +23,3 @@
 ;; (add-to-list 'load-path "~/.emacs.d/private/org-roam-ui")
 ;; (load-library "org-roam-ui")
 
-(provide 'init-roam)

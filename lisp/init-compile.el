@@ -60,7 +60,7 @@
   )
  )
 
-;; Byte-compile again to ~/.emacs.elc if it is outdated
+;; Byte-compile to .elc if it is outdated
 (if (file-newer-than-file-p
      (file-truename "~/.emacs.d/init.el")
      (file-truename "~/.emacs.d/init.elc"))

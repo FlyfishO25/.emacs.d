@@ -100,7 +100,7 @@
 
 (defun childframe-workable-p ()
   "Test whether childframe is workable."
-       (eq centaur-completion-style 'childframe)
+       (eq completion-style 'childframe)
        (not (or noninteractive
                 emacs-basic-display
                 (not (display-graphic-p)))))
@@ -234,5 +234,3 @@
     (declare-function window-numbering-mode "window-numbering.el"))
   (window-numbering-mode t)
   )
-
-(provide 'ui-configure)

@@ -57,5 +57,3 @@
 (diff-hl-show-hunk-mouse-mode)
 
 (setq vc-follow-symlinks t)
-
-(provide 'init-git)

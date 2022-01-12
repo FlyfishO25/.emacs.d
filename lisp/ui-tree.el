@@ -103,5 +103,3 @@
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 
 (global-set-key [f7] 'neotree-toggle)
-
-(provide 'ui-tree)

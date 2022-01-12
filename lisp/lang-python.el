@@ -22,4 +22,3 @@
   :init
   (add-hook 'python-mode-hook 'yapf-mode))
 
-(provide 'lang-python)

@@ -607,4 +607,3 @@
     (dolist (lang org-babel-lang-list)
       (eval `(lsp-org-babel-enable ,lang))))
 
-(provide 'complete-lsp)

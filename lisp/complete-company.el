@@ -307,5 +307,3 @@
 (use-package yasnippet-snippets
   :after yasnippet)
 
-
-(provide 'complete-company)

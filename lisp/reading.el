@@ -64,6 +64,4 @@
         calibredb-program "/Applications/calibre.app/Contents/MacOS/calibredb")
   )
 
-(provide 'reading)
-
 ;;; reading.el ends here

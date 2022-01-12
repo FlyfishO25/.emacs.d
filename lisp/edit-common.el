@@ -158,5 +158,3 @@
 ;; Copy and paste
 ;; complete the code
 ;;(global-set-key (kbd "C-c TAB") 'company-complete)
-
-(provide 'edit-common)

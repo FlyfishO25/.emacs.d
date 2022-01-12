@@ -1,6 +1,3 @@
 (defvar display-icon t)
-(defvar centaur-completion-style 'childframe)
-(defvar centaur-lsp 'lsp-mode)
-(setq my:compile-command "~/tools/cpp11 ")
-
-(provide 'init-default)
+(defvar completion-style 'childframe)
+(defvar centaur-lsp 'lsp-mode) ;; orginal from centaur emacs @see https://github.com/seagle0128/.emacs.d

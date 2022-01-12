@@ -25,5 +25,3 @@
   :init
   (add-hook 'prog-mode-hook 'origami-mode)
   )
-
-(provide 'init-origami)

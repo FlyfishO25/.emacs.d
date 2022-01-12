@@ -15,4 +15,4 @@
 ;; (use-package spaceline)
 ;; (require 'spaceline-config)
 ;; (spaceline-spacemacs-theme)
-(provide 'ui-doomline)
+

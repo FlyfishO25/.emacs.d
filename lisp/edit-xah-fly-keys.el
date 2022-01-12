@@ -33,5 +33,3 @@ To be added to `xah-fly-insert-mode-activate-hook'"
 (add-hook 'xah-fly-insert-mode-activate-hook 'my-config-xah-fly-key-insert)
 
 (xah-fly-keys 1)
-
-(provide 'edit-xah-fly-keys)

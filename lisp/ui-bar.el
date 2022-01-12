@@ -80,5 +80,3 @@
 ;; Call the header line update
 (add-hook 'buffer-list-update-hook
           'sl/display-header)
-
-(provide 'ui-bar)

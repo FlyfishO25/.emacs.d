@@ -34,6 +34,7 @@
 
                                         ; basic setup
   (require 'init-funcs)
+  (loadpkg 'init-user)
   (loadpkg 'init-default t)
   (loadpkg 'packages-init t)
   ;; (require 'init-autoloads)
@@ -43,11 +44,12 @@
 
   (loadpkg 'ui-cnfont t)
   (loadpkg 'ui-tree)
-  (loadpkg 'ui-doomline t)
+  (loadpkg 'ui-modeline t)
   ;; (loadpkg 'ui-tab)
   (loadpkg 'ui-configure t)
   (loadpkg 'ui-dashboard)
   (loadpkg 'ui-theme t)
+  (loadpkg 'ui-flycheck)
 
   (add-hook 'after-init-hook (lambda () (loadpkg 'edit-common t)))
   (loadpkg 'edit-autosave t)
@@ -72,5 +74,4 @@
   (add-hook 'org-mode-hook (lambda () (loadpkg 'init-roam)))
   (loadpkg 'reading)
   (loadpkg 'init-git)
-  (load (concat user-emacs-directory "config-user.el"))
   )

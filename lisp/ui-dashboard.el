@@ -19,5 +19,3 @@
                                     (agenda    . "calendar")))
 
      (dashboard-setup-startup-hook))
-
-(provide 'ui-dashboard)

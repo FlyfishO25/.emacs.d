@@ -74,6 +74,8 @@
 (use-package s
   :ensure t)
 
+(use-package system-packages)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; auto-package-update
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -88,5 +90,3 @@
   (add-hook 'auto-package-update-before-hook
             (lambda () (message "I will update packages now")))
   )
-
-(provide 'packages-init)

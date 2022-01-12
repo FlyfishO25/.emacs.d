@@ -22,14 +22,9 @@
   :hook ('after-make-frame-functions . (lambda ()
                                          (circadian-setup)))
   :config
-  ;; use Guangzhou, China as default
-  (setq calendar-latitude 23.130280
-        calendar-longitude 113.288879)
-  
   (setq circadian-themes '(("7:00" . doom-one-light)
                            ("19:30" . doom-vibrant)))
   )
 
 (circadian-setup)
 
-(provide 'ui-theme)

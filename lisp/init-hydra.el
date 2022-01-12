@@ -121,5 +121,3 @@
    (("i" mc/insert-numbers "insert increasing numbers" :exit t)
     ("I" mc/insert-letters "insert increasing letters" :exit t))
    ))
-
-(provide 'init-hydra)

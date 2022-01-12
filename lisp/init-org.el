@@ -333,9 +333,5 @@ prepended to the element after the #+HEADER: tag."
                  ("K" . org-pomodoro)
                  ("C-c C-x m" . org-pomodoro)))))
 
-
-
-(provide 'init-org)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-org.el ends here

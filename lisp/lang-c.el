@@ -73,5 +73,3 @@
 
 ;; Enable hide/show of code blocks
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
-
-(provide 'lang-c)

@@ -280,5 +280,3 @@
     (add-hook 'minibuffer-exit-hook
               (lambda ()
                 (remove-hook 'pre-command-hook 'ivy-fly-back t)))
-
-(provide 'init-ivy)
