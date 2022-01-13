@@ -40,8 +40,8 @@
 (defun flymacs-post-install ()
   (if (not (eq system-type "windows-nt"))
     (when (not (executable-find "rg"))
-      (system-packages-install "ripgrep")
-      (message "Cannot find ripgrep executable (rg), please install it.")))
+      (system-packages-install "ripgrep"))
+    (message "Cannot auto install ripgrep executable (rg), please install it."))
 )
 
 (defun byte-compile-init-files (file)
