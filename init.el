@@ -34,7 +34,7 @@
 
                                         ; basic setup
   (require 'init-funcs)
-  (loadpkg 'init-user)
+  (loadpkg 'init-user t)
   (loadpkg 'init-default t)
   (loadpkg 'packages-init t)
   ;; (require 'init-autoloads)
@@ -74,4 +74,7 @@
   (add-hook 'org-mode-hook (lambda () (loadpkg 'init-roam)))
   (loadpkg 'reading)
   (loadpkg 'init-git)
+  (flymacs-post-install)
   )
+
+;;; init.el ends here

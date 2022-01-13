@@ -36,22 +36,22 @@
     ("[X]" . ?☑)
     ("[-]" . ?⛝)
 
-    ("#+ARCHIVE:" . ?📦)
-    ("#+AUTHOR:" . ?👤)
-    ("#+CREATOR:" . ?💁)
-    ("#+DATE:" . ?📆)
-    ("#+DESCRIPTION:" . ?⸙)
-    ("#+EMAIL:" . ?📧)
-    ("#+OPTIONS:" . ?⛭)
-    ("#+SETUPFILE:" . ?⛮)
-    ("#+TAGS:" . ?🏷)
-    ("#+TITLE:" . ?📓)
+    ;; ("#+ARCHIVE:" . ?📦)
+    ;; ("#+AUTHOR:" . ?👤)
+    ;; ("#+CREATOR:" . ?💁)
+    ;; ("#+DATE:" . ?📆)
+    ;; ("#+DESCRIPTION:" . ?⸙)
+    ;; ("#+EMAIL:" . ?📧)
+    ;; ("#+OPTIONS:" . ?⛭)
+    ;; ("#+SETUPFILE:" . ?⛮)
+    ;; ("#+TAGS:" . ?🏷)
+    ;; ("#+TITLE:" . ?📓)
 
-    ("#+BEGIN_SRC" . ?✎)
-    ("#+END_SRC" . ?□)
-    ("#+BEGIN_QUOTE" . ?»)
-    ("#+END_QUOTE" . ?«)
-    ("#+HEADERS" . ?☰)
+    ;; ("#+BEGIN_SRC" . ?✎)
+    ;; ("#+END_SRC" . ?□)
+    ;; ("#+BEGIN_QUOTE" . ?»)
+    ;; ("#+END_QUOTE" . ?«)
+    ;; ("#+HEADERS" . ?☰)
     ;; ("#+RESULTS:" . ?💻)
 )
   "Alist of symbol prettifications for `org-mode'."
@@ -101,7 +101,12 @@
      ("P" (progn
             (insert "#+HEADERS: :results output :exports both :shebang \"#!/usr/bin/env perl\"\n")
             (hot-expand "<s" "perl")) "Perl tangled")
-     ("<" self-insert-command "ins"))))
+     ("<" self-insert-command "ins")
+     ("w" (progn
+            (insert "#+TITLE: 
+#+OPTIONS: toc:nil num:3 H:4 ^:nil pri:t
+#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://gongzhitaao.org/orgcss/org.css\"/>")
+            )))))
   :bind (("C-c a" . org-agenda)
          ("C-c b" . org-switchb)
          ("C-c x" . org-capture)
@@ -211,9 +216,7 @@ prepended to the element after the #+HEADER: tag."
       :config
       (setq org-hide-leading-stars t)
       :custom
-      ;; Change org headlines' style to ›.
-      (org-superstar-headline-bullets-list '("›"))
-      ;; Change org unordered list styles.
+      (org-superstar-headline-bullets-list '("○" "◉" "◇" "◈" "›"))
       (org-superstar-prettify-item-bullets t)
       (org-superstar-item-bullet-alist '((?* . ?•)
                                          (?+ . ?•)
@@ -332,6 +335,5 @@ prepended to the element after the #+HEADER: tag."
       (bind-keys :map org-agenda-mode-map
                  ("K" . org-pomodoro)
                  ("C-c C-x m" . org-pomodoro)))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-org.el ends here

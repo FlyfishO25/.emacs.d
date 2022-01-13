@@ -1,3 +1,37 @@
+;;; init-compile.el --- provide compile feature	-*- lexical-binding: t -*-
+
+;; Copyright (C) 2022 FlyfishO25
+
+;; Author: FlyfishO25 <markzhou0125@gmail.com>
+;; URL: https://github.com/FlyfishO25/.emacs.d
+
+;; This file is not part of GNU Emacs.
+;;
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 3, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+;; Floor, Boston, MA 02110-1301, USA.
+;;
+
+;;; Commentary:
+;; Provide compile feature to speed up flymacs.
+
+;;; Code:
+
+(require 'init-funcs)
+
+(loadpkg 'init-const)
+
 (use-package exec-path-from-shell
   :ensure t
   :config
@@ -31,23 +65,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Automatically compile
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun byte-compile-init-files (file)
-  "Automatically compile FILE."
-  (interactive)
-  (save-restriction
-    ;; Suppress the warning when you setq an undefined variable.
-    (if (>= emacs-major-version 23)
-        (setq byte-compile-warnings '(not free-vars obsolete cl-function))
-      (setq byte-compile-warnings
-            '(unresolved
-              callargs
-              redefine
-              obsolete
-              noruntime
-              cl-warnings
-              interactive-only)))
-    (byte-compile-file (expand-file-name file)))
-  )
 
 (add-hook
  'after-save-hook
@@ -60,13 +77,8 @@
   )
  )
 
-;; Byte-compile to .elc if it is outdated
-(if (file-newer-than-file-p
-     (file-truename "~/.emacs.d/init.el")
-     (file-truename "~/.emacs.d/init.elc"))
-    (byte-compile-init-files "~/.emacs.d/init.el"))
+(while flymacs-files-to-compile
+  (flymacs-compile-file (eval (pop flymacs-files-to-compile)))
+  )
 
-(if (file-newer-than-file-p
-     (file-truename "~/.emacs.d/config-user.el")
-     (file-truename "~/.emacs.d/config-user.elc"))
-    (byte-compile-init-files "~/.emacs.d/config-user.el"))
+;;; init-compile.el ends here

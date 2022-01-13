@@ -1,4 +1,4 @@
-;;; init.el --- Initialize reding envoirment file.	-*- lexical-binding: t -*-
+;;; reading.el --- Initialize pacakges for reading.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2022 FlyfishO25
 
@@ -24,11 +24,13 @@
 ;;
 
 ;;; Commentary:
-;; Reading enviorment configures
+;; Configure packages for reading.
 
 ;;; Code:
 
 (use-package nov
+  ;; Author: Vincent Zhang <seagle0128@gmail.com>
+  ;; URL: https://github.com/seagle0128/.emacs.d
   :mode ("\\.epub\\'" . nov-mode)
   :hook (nov-mode . my-nov-setup)
   :init
