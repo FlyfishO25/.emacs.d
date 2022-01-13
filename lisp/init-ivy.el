@@ -75,8 +75,8 @@
             counsel-rg-base-command
             "rg -i -M 120 --no-heading --line-number --color never %s ."
             )
-    (warn "\nWARNING: Could not find the ripgrep executable. It "
-          "is recommended you install ripgrep.")
+    (warn "\nWARNING: Could not find the ripgrep executable. It 
+          is recommended you install ripgrep.")
     )
   )
 
