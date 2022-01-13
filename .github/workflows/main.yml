@@ -35,7 +35,6 @@ jobs:
           --eval "(message \"Testing...done\")"; \
           echo "Time: "; \
           bash -c "time -p emacs -q --batch \
-          --eval \"(message \"Testing...\")\" \
           --eval \"(setq package-check-signature nil
                         url-show-status nil)\" \
           --eval \"(when (and (require 'org nil t) (string= (org-version) \"\"))
@@ -47,5 +46,4 @@ jobs:
                     (run-hooks 'after-init-hook)
                     (run-hooks 'emacs-startup-hook)
                     (run-hooks 'window-setup-hook))\" \
-          --eval \"(message \"Testing...done\")\" \
           -e kill-emacs";
