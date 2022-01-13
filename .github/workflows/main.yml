@@ -35,17 +35,17 @@ jobs:
           --eval "(message \"Testing...done\")"; \
           echo "Time: "; \
           bash -c "time -p emacs -q --batch \
-          --eval "(message \"Testing...\")" \
-          --eval "(setq package-check-signature nil
-                        url-show-status nil)" \
-          --eval "(when (and (require 'org nil t) (string= (org-version) \"\"))
-                     (advice-add 'org-version :override (lambda (&rest _) \"9.3\")))" \
-          --eval "(let ((early-init-file (locate-user-emacs-file \"early-init.el\"))
+          --eval \"(message \"Testing...\")\" \
+          --eval \"(setq package-check-signature nil
+                        url-show-status nil)\" \
+          --eval \"(when (and (require 'org nil t) (string= (org-version) \"\"))
+                     (advice-add 'org-version :override (lambda (&rest _) \"9.3\")))\" \
+          --eval \"(let ((early-init-file (locate-user-emacs-file \"early-init.el\"))
                         (user-init-file (locate-user-emacs-file \"init.el\")))
                     (and (>= emacs-major-version 27) (load early-init-file))
                     (load user-init-file)
                     (run-hooks 'after-init-hook)
                     (run-hooks 'emacs-startup-hook)
-                    (run-hooks 'window-setup-hook))" \
-          --eval "(message \"Testing...done\")" \
+                    (run-hooks 'window-setup-hook))\" \
+          --eval \"(message \"Testing...done\")\" \
           -e kill-emacs";
