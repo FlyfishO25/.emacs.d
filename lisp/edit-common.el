@@ -1,5 +1,5 @@
 (show-paren-mode t)
-;; move window smooth
+;; move window
 (windmove-default-keybindings)
 ;; Overwrite region selected
 (delete-selection-mode t)

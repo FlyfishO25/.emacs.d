@@ -83,7 +83,7 @@
 
 (pretty-hydra-define org-mode-hydra
   (:title (pretty-hydra-title "Org Mode" 'fileicon "org" :face 'all-the-icons-green :height 1.1 :v-adjust 0.0)
-           :color blue :quit-key "q")
+           :color blue :quit-key "q" :foreign-keys "warn")
   ("Task"
    (("n" org-meta-return "new")
     ("m" org-time-stamp "insert date" :exit t)
@@ -101,10 +101,10 @@
     ("l" org-metaleft "move left" :color blue)
     ("r" org-metaright "move right" :color blue))
    "Move"
-    (("w" previous-line "↑")
-     ("s" next-line "↓")
-     ("a" backward-char "←")
-     ("d" forward-char "→")
+    (("w" previous-line "↑" :exit nil)
+     ("s" next-line "↓" :exit nil)
+     ("a" backward-char "←" :exit nil)
+     ("d" forward-char "→" :exit nil)
     )
   ))
 

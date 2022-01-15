@@ -41,6 +41,7 @@ history
 # personal data
 *.db
 *.data
+config-user
 
 .lsp-session-v1
 .local/env
@@ -56,3 +57,4 @@ site-lisp/feather-dashboard.el
 site-lisp/feather.el
 site-lisp/ppp.el
 persistent-scratch/2021-07-03--21-42-40-849852000
+newsticker/feeds/Emacs Wiki/data
