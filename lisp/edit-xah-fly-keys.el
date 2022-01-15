@@ -1,35 +1,30 @@
-;; (unless (package-installed-p 'xah-fly-keys)
-;;   (package-refresh-contents)
-;;   (package-install 'xah-fly-keys))
+(use-package xah-fly-keys
+  :load-path "site-lisp/"
+  :demand
+  :init (setq xah-fly-use-meta-key nil
+              xah-fly-use-control-key nil)
+  :config
+  ;; (eval-and-compile (require 'xah-fly-keys))
+  (xah-fly-keys-set-layout "qwerty")
+  (defun my-config-xah-fly-key-command ()
+    "Modify keys for xah fly key command mode keys
+to be added to `xah-fly-command-mode-activate-hook'"
+    (interactive)
+    (define-key xah-fly-key-map (kbd "n") 'swiper)
+    (define-key xah-fly-key-map (kbd "2") 'delete-window)
+    ;; more here
+    )
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
+  (defun my-config-xah-fly-key-insert ()
+    "Modify keys for xah fly key command mode keys
+to be added to `xah-fly-insert-mode-activate-hook'"
+    (interactive)
+    (define-key xah-fly-key-map (kbd "M-<SPC>") 'xah-fly-command-mode-activate)
+    ;; more here
+    )
 
-(setq xah-fly-use-control-key nil)
-(setq xah-fly-use-meta-key nil)
+  (add-hook 'xah-fly-command-mode-activate-hook 'my-config-xah-fly-key-command)
+  (add-hook 'xah-fly-insert-mode-activate-hook 'my-config-xah-fly-key-insert)
 
-(eval-and-compile (require 'xah-fly-keys))
-
-(xah-fly-keys-set-layout "qwerty")
-
-(defun my-config-xah-fly-key-command ()
-  "Modify keys for xah fly key command mode keys
-To be added to `xah-fly-command-mode-activate-hook'"
-  (interactive)
-  (define-key xah-fly-key-map (kbd "n") 'swiper)
-  (define-key xah-fly-key-map (kbd "2") 'delete-window)
-  ;; more here
+  (xah-fly-keys 1)
   )
-
-(defun my-config-xah-fly-key-insert ()
-  "Modify keys for xah fly key command mode keys
-To be added to `xah-fly-insert-mode-activate-hook'"
-  (interactive)
-  (define-key xah-fly-key-map (kbd "M-<SPC>") 'xah-fly-command-mode-activate)
-  ;; more here
-  )
-
-
-(add-hook 'xah-fly-command-mode-activate-hook 'my-config-xah-fly-key-command)
-(add-hook 'xah-fly-insert-mode-activate-hook 'my-config-xah-fly-key-insert)
-
-(xah-fly-keys 1)

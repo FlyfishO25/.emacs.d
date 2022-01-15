@@ -91,7 +91,7 @@
   :hook (after-init . global-anzu-mode))
 
 (use-package multiple-cursors
-  :ensure t
+  :defer 5
   :bind (("M-n" . mc/mark-next-like-this)
          ("M-p" . mc/mark-previous-like-this)
          ("C-c a" . mc/mark-all-like-this)
@@ -102,7 +102,7 @@
 ;; avy: always fast jump to char inside the current view buffer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package avy
-  :ensure t
+  :defer 4
   :bind (("M-c" . avy-goto-char)
          ("M-s" . avy-goto-word-1))
   ;; Set keys for Dvorak mode instead of qwerty
@@ -117,16 +117,8 @@
 ;;              replacement options
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package zzz-to-char
-  :ensure t
+  :defer 4
   :bind ("M-z" . zzz-up-to-char))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; aggressive-indent-mode: make your code always indented
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package aggressive-indent
-  :config
-  (global-aggressive-indent-mode 1)
-  )
 
                                         ; shortcuts
 

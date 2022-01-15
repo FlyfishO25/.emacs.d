@@ -168,18 +168,12 @@
   :hook (after-init . global-page-break-lines-mode))
 
 (use-package solaire-mode
+  :defer 5
   :config
   (solaire-global-mode +1)
 )
 
 (setq inhibit-splash-screen t)
-
-;; (when (display-graphic-p)
-;;   (set-fontset-font t '(#xe903 . #xfffd) "all-the-icons")
-;;   (set-fontset-font t '(#x00a2 . #xf17b) "file-icons")
-;;   (set-fontset-font t '(#x2665 . #xf27c) "github-octicons")
-;;   (set-fontset-font t '(#x2122 . #xf2b4) "FontAwesome")
-;;   (set-fontset-font t '(#xf000 . #xf0eb) "Weather Icons"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Rainbow Delimiters -  have delimiters be colored by their depth
@@ -210,6 +204,7 @@
 ;;            suggestions in a popup buffer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package which-key
+  :defer 3
   :ensure t
   :init
   (eval-when-compile

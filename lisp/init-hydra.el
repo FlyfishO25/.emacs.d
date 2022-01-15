@@ -1,4 +1,5 @@
 (use-package pretty-hydra
+  :defer 3
   :bind (("C-c h t" . toggles-hydra/body)
 	 ("C-c h o" . org-mode-hydra/body)
          ("C-c h m" . multiple-cursors-hydra/body))

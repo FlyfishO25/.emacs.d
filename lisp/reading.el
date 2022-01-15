@@ -58,7 +58,7 @@
                 process-coding-system-alist))))
 
 (use-package calibredb
-  :defer t
+  :defer 10
   :config
   (setq calibredb-root-dir "~/Documents/Calibre"
         calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir)
