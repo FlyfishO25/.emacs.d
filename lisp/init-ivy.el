@@ -173,6 +173,7 @@
   )
 
 (use-package all-the-icons-ivy
+  :if (icons-displayable-p)
   :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
 
 (use-package all-the-icons-ivy-rich
