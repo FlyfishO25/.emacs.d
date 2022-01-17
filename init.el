@@ -55,7 +55,7 @@
   (loadpkg 'edit-autosave t)
   (auto-save-enable)
   (loadpkg 'edit-xah-fly-keys t)
-
+  ;; (loadpkg 'edit-keybinds t)
   
   (loadpkg 'init-ivy t)
   (loadpkg 'init-hydra t)

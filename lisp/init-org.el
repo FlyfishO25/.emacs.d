@@ -103,10 +103,8 @@
             (hot-expand "<s" "perl")) "Perl tangled")
      ("<" self-insert-command "ins")
      ("w" (progn
-            (insert "#+TITLE: 
-#+OPTIONS: toc:nil num:3 H:4 ^:nil pri:t
-#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://gongzhitaao.org/orgcss/org.css\"/>")
-            )))))
+            (insert "#+TITLE: \n#+OPTIONS: toc:nil num:3 H:4 ^:nil pri:t\n#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://gongzhitaao.org/orgcss/org.css\"/>")
+            ) "prettify html"))))
   :bind (("C-c a" . org-agenda)
          ("C-c b" . org-switchb)
          ("C-c x" . org-capture)

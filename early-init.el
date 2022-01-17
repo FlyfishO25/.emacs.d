@@ -12,6 +12,7 @@
 
 ;; ban ads
 (defun display-startup-echo-area-message ()
+  "Re-define this funciton to ban GNU's ad."
   (message nil))
 
 ;; Faster to disable these here (before they've been initialized)

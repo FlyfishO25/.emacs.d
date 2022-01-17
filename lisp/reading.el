@@ -32,6 +32,7 @@
   ;; Author: Vincent Zhang <seagle0128@gmail.com>
   ;; URL: https://github.com/seagle0128/.emacs.d
   :mode ("\\.epub\\'" . nov-mode)
+  :defer 7
   :hook (nov-mode . my-nov-setup)
   :init
   (defun my-nov-setup ()
