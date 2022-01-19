@@ -67,6 +67,10 @@
 (use-package diminish)
 (use-package bind-key)
 
+(require 'benchmark-init)
+;; To disable collection of benchmark data after init is done.
+(add-hook 'after-init-hook 'benchmark-init/deactivate)
+
 ;; Update GPG keyring for GNU ELPA
 (use-package gnu-elpa-keyring-update)
 
