@@ -9,3 +9,9 @@
 
 ;; Keybinding
 ;; (setq flymacs-keybinding 'xah) ;; 'xah, 'evil, or 'emacs
+
+;; Themes
+;; (setq flymacs-theme-auto '(("7:00" . doom-one-light)
+;;                             ("17:30" . doom-vibrant)))
+;; You can also set it to:
+;; (setq flymacs-theme-auto 'doom-one)
