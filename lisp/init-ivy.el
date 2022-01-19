@@ -34,12 +34,6 @@
   :config
   (require 'ivy)
   (ivy-mode t)
-
-  (use-package all-the-icons-ivy-rich
-  :init (all-the-icons-ivy-rich-mode 1))
-
-  (use-package ivy-rich
-    :init (ivy-rich-mode 1))
   
   (setq ivy-use-virtual-buffers t
         enable-recursive-minibuffers t
@@ -206,6 +200,12 @@
 (use-package prescient
   :commands prescient-persist-mode
   :init (prescient-persist-mode 1))
+
+(use-package all-the-icons-ivy-rich
+  :init (all-the-icons-ivy-rich-mode 1))
+
+(use-package ivy-rich
+  :init (ivy-rich-mode 1))
 
 (use-package ivy-prescient
   :commands ivy-prescient-re-builder
