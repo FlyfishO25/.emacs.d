@@ -112,7 +112,7 @@
     :init (company-prescient-mode 1))
 
   ;; Icons and quickhelp
-  (if (display-graphic-p)
+  (if (or (display-graphic-p) (daemonp))
       (if (>= emacs-major-version 26)
           (use-package company-box
             :diminish

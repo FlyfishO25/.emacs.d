@@ -18,17 +18,17 @@
   (doom-themes-org-config)
   )
 
-(if (and (boundp 'flymacs-theme-auto) (listp flymacs-theme-auto))
+(unless (boundp 'flymacs-theme-auto)
+  (setq flymacs-theme-auto '(("7:00" . doom-one-light)
+                             ("17:30" . doom-vibrant))))
+
+(if (listp flymacs-theme-auto)
     (progn
       (use-package circadian
         :hook ('after-make-frame-functions . (lambda ()
                                                (circadian-setup)))
         :config
-        (if (boundp 'flymacs-theme-auto)
-            (setq circadian-themes flymacs-theme-auto)
-          (setq circadian-themes '(("7:00" . doom-one-light)
-                                   ("17:30" . doom-vibrant)))))
-      (circadian-setup)))
-
-(if (not (listp flymacs-theme-auto)) (load-theme flymacs-theme-auto))
+          (setq circadian-themes flymacs-theme-auto))
+      (circadian-setup))
+  (load-theme flymacs-theme-auto))
 
