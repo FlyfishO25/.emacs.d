@@ -31,7 +31,7 @@
 (let* ((file-name-handler-alist nil))
                                         ; customize and function defination
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
                                         ; basic setup
   (require 'init-funcs)
   (loadpkg 'init-user t)
@@ -54,8 +54,8 @@
   (add-hook 'after-init-hook (lambda () (loadpkg 'edit-common t)))
   (loadpkg 'edit-autosave t)
   (auto-save-enable)
-  (loadpkg 'edit-xah-fly-keys t)
-  ;; (loadpkg 'edit-keybinds t)
+  ;; (loadpkg 'edit-xah-fly-keys t)
+  (loadpkg 'edit-keybinds t)
   
   (loadpkg 'init-ivy t)
   (loadpkg 'init-hydra t)

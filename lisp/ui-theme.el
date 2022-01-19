@@ -23,7 +23,7 @@
                                          (circadian-setup)))
   :config
   (setq circadian-themes '(("7:00" . doom-one-light)
-                           ("19:30" . doom-vibrant)))
+                           ("17:30" . doom-vibrant)))
   )
 
 (circadian-setup)

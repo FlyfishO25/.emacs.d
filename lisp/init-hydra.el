@@ -1,3 +1,5 @@
+(require 'init-funcs)
+
 (use-package pretty-hydra
   :defer 3
   :bind (("C-c h t" . toggles-hydra/body)

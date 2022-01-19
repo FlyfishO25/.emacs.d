@@ -71,6 +71,15 @@
       (byte-compile-init-files file))
   )
 
+(defun icons-displayable-p ()
+  "Return non-nil if `all-the-icons' is displayable."
+  (and display-icon
+       (display-graphic-p)
+       (require 'all-the-icons nil t)))
+
+(defun flymacs-setup ()
+  )
+
 (provide 'init-funcs)
 
 ;;; init-funcs.el ends here

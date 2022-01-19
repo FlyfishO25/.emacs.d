@@ -28,8 +28,7 @@
 
 ;;; Code:
 
-
-(setq flymacs-files-to-compile
+(defconst flymacs-files-to-compile
   '((concat user-emacs-directory "config-user.el")
     (concat user-emacs-directory "site-lisp/xah-fly-keys.el")
     (concat user-emacs-directory "init.el")

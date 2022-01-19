@@ -42,7 +42,7 @@ history
 *.db
 *.data
 config-user
-
+games
 .lsp-session-v1
 .local/env
 .mc-lists.el
@@ -58,3 +58,5 @@ site-lisp/feather.el
 site-lisp/ppp.el
 persistent-scratch/2021-07-03--21-42-40-849852000
 newsticker/feeds/Emacs Wiki/data
+
+config-user.el

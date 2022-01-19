@@ -31,6 +31,7 @@
 
 ;;; Code:
 
+(require 'init-funcs)
 
 (setq centaur-lsp 'lsp-mode)
 (setq centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode))
@@ -38,6 +39,7 @@
 (pcase centaur-lsp
     ('eglot
      (use-package eglot
+       :defer 1.9
        :hook ((prog-mode . (lambda ()
                              (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
                                (eglot-ensure))))
@@ -47,6 +49,7 @@
      ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
      (use-package lsp-mode
        :diminish
+       :defer 1.9
        :defines lsp-clients-python-library-directories
        :commands (lsp-enable-which-key-integration
                   lsp-format-buffer
@@ -159,6 +162,7 @@
          (lsp-install-server t)))
 
      (use-package lsp-ui
+       :after lsp-mode
        :custom-face
        (lsp-ui-sideline-code-action ((t (:inherit warning))))
        :pretty-hydra

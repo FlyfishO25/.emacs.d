@@ -30,6 +30,8 @@
 
 ;;; Code:
 
+(require 'init-funcs)
+
 (use-package company
   :diminish
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
