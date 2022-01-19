@@ -1,9 +1,14 @@
 ;;; -*- lexical-binding: t; -*-
-(defun icons-displayable-p ()
-  "Return non-nil if `all-the-icons' is displayable."
-  (and display-icon
-       (display-graphic-p)
-       (require 'all-the-icons nil t)))
+(require 'init-funcs)
+
+(setq frame-title-format
+      '(:eval (concat
+	       (if (and buffer-file-name (buffer-modified-p)) "•")
+	       (buffer-name)
+	       (if buffer-file-name
+		   (concat " (" (directory-file-name (abbreviate-file-name default-directory)) ")"))
+	       " - Emacs"))
+      )
 
 (use-package all-the-icons
   :config
@@ -100,10 +105,10 @@
 
 (defun childframe-workable-p ()
   "Test whether childframe is workable."
-       (eq completion-style 'childframe)
-       (not (or noninteractive
-                emacs-basic-display
-                (not (display-graphic-p)))))
+  (eq completion-style 'childframe)
+  (not (or noninteractive
+           emacs-basic-display
+           (not (display-graphic-p)))))
 
 (setq x-stretch-cursor t)
 
@@ -136,7 +141,7 @@
       window-divider-default-right-width 1)
 (add-hook 'window-setup-hook #'window-divider-mode)
 ;; Set the font to size 9 (90/10).
-;(set-face-attribute 'default nil :height my-font-size)
+                                        ;(set-face-attribute 'default nil :height my-font-size)
 
 (setq-default indicate-empty-lines t)
 (when (not indicate-empty-lines)
@@ -169,10 +174,11 @@
   :hook (after-init . global-page-break-lines-mode))
 
 (use-package solaire-mode
-  :defer 5
+  :defer 0.8
+  :diminish
   :config
   (solaire-global-mode +1)
-)
+  )
 
 (setq inhibit-splash-screen t)
 
@@ -180,24 +186,18 @@
 ;; Rainbow Delimiters -  have delimiters be colored by their depth
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package rainbow-delimiters
-  :ensure t
-  :init
-  (eval-when-compile
-    ;; Silence missing function warnings
-    (declare-function rainbow-delimiters-mode "rainbow-delimiters.el"))
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+  :defer 3
+  :diminish
+  :hook (prog-mode-hook . rainbow-delimiters-mode)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Beacon-mode: flash the cursor when switching buffers or scrolling
 ;;              the goal is to make it easy to find the cursor
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package beacon
-  :ensure t
-  :init
-  (eval-when-compile
-    ;; Silence missing function warnings
-    (declare-function beacon-mode "beacon.el"))
   :config
+  :diminish
   (beacon-mode t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -205,12 +205,7 @@
 ;;            suggestions in a popup buffer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package which-key
-  :defer 3
-  :ensure t
-  :init
-  (eval-when-compile
-    ;; Silence missing function warnings
-    (declare-function which-key-mode "which-key.el"))
+  :defer 1
   :diminish
   :custom (which-key-idle-delay 0.5)
   )
@@ -223,10 +218,6 @@
 ;; Package window-numbering installed from package list
 ;; Allows switching between buffers using meta-(# key)
 (use-package window-numbering
-  :ensure t
+  :defer 1.3
   :config
-  (eval-when-compile
-    ;; Silence missing function warnings
-    (declare-function window-numbering-mode "window-numbering.el"))
-  (window-numbering-mode t)
-  )
+  (window-numbering-mode 1))
