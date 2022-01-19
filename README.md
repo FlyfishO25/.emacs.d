@@ -1,7 +1,7 @@
 ![LOGO](./media/logo.png)
 
 # FLYMACS
-My personal emacs configure
+A easy-to-use, beautiful Emacs configure.
 
 [![Build Status](https://github.com/FlyfishO25/.emacs.d/workflows/CI/badge.svg)](https://github.com/FlyfishO25/.emacs.d/actions?query=workflow%3ACI)
 
