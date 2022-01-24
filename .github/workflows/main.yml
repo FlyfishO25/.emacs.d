@@ -43,3 +43,22 @@ jobs:
                     (run-hooks 'emacs-startup-hook)
                     (run-hooks 'window-setup-hook))" \
           -e kill-emacs ;
+  windows-test:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        emacs-version:
+          - 27.2
+    steps:
+    - uses: actions/checkout@v1
+
+    - uses: jcs090218/setup-emacs-windows@v3
+      with:
+        version: ${{ matrix.emacs-version }}
+
+    - name: setup
+      run: 'Copy-Item -Path ..\\.emacs.d -Destination $HOME\\.emacs.d -Recurse -Force'
+
+    - name: test
+      run: 'emacs.exe --debug-init --batch --eval "(message \"test\")"'
+        
