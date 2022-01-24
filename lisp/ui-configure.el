@@ -174,7 +174,7 @@
   :hook (after-init . global-page-break-lines-mode))
 
 (use-package solaire-mode
-  :defer 0.8
+  :defer t
   :diminish
   :config
   (solaire-global-mode +1)
@@ -186,7 +186,7 @@
 ;; Rainbow Delimiters -  have delimiters be colored by their depth
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package rainbow-delimiters
-  :defer 3
+  :defer 1.2
   :diminish
   :hook (prog-mode-hook . rainbow-delimiters-mode)
   )

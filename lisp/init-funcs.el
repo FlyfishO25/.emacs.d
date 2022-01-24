@@ -33,11 +33,13 @@
   (boundp 'startup-now))
 
 (defun loadpkg (name &optional must-be-loaded)
-  "Load customization files"
+  "Load customization file NAME if MUST-BE-LOADED is t.
+Otherwise, if it is not currently in the git merge state, load it."
   (when (or (not (flymacs-git-merge-p)) must-be-loaded)
     (load (file-truename (concat user-emacs-directory (format "lisp/%s" name))) t t)))
 
 (defun flymacs-post-install ()
+  "Install programs after Emacs startup."
   (if (not (eq system-type "windows-nt"))
     (when (not (executable-find "rg"))
       (system-packages-install "ripgrep"))
@@ -76,9 +78,6 @@
   (and display-icon
        (display-graphic-p)
        (require 'all-the-icons nil t)))
-
-(defun flymacs-setup ()
-  )
 
 (provide 'init-funcs)
 
