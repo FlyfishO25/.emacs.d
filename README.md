@@ -1,13 +1,10 @@
 ![LOGO](./media/logo.png)
 
-## Introduction [![Build Status](https://github.com/FlyfishO25/.emacs.d/workflows/CI/badge.svg)](https://github.com/FlyfishO25/.emacs.d/actions?query=workflow%3ACI)
+## FLYMACS [![Build Status](https://github.com/FlyfishO25/.emacs.d/workflows/CI/badge.svg)](https://github.com/FlyfishO25/.emacs.d/actions?query=workflow%3ACI)
 
-Flymacs is an easy-to-use and beautiful Emacs configure.
+## Introduction
 
-## Screenshots
-
-![Screenshot-1](./media/Screenshot-1.png)
-![Screenshot-2](./media/Screenshot-2.png)
+Flymacs is an easy-to-use and beautiful Emacs configuration.
 
 ## Prerequisites
 
@@ -29,3 +26,8 @@ git clone https://github.com/Flyfish/.emacs.d ~/.emacs.d
 
 * [Centaur Emacs](https://github.com/seagle0128/.emacs.d)
 * [Doom Emacs](https://github.com/hlissner/doom-emacs)
+
+## Screenshots
+
+![Screenshot-1](./media/Screenshot-1.png)
+![Screenshot-2](./media/Screenshot-2.png)
