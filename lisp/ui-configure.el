@@ -100,6 +100,12 @@
   :init (setq all-the-icons-dired-monochrome nil)
   )
 
+(use-package diredfl
+  :init (diredfl-global-mode 1))
+
+(use-package all-the-icons-ibuffer
+  :init (all-the-icons-ibuffer-mode 1))
+
 (when (and (not (eq system-type 'darwin)) (fboundp 'menu-bar-mode))
   (menu-bar-mode -1))
 
