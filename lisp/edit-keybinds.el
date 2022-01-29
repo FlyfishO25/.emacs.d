@@ -36,6 +36,8 @@
    (use-package xah-fly-keys
      :load-path "site-lisp/"
      :demand
+     :commands (xah-fly-keys-set-layout
+                xah-fly-keys)
      :init (setq xah-fly-use-meta-key nil
                  xah-fly-use-control-key nil)
      :config
@@ -45,8 +47,8 @@
        "Modify keys for xah fly key command mode keys
 to be added to `xah-fly-command-mode-activate-hook'"
        (interactive)
-       (define-key xah-fly-key-map (kbd "n") 'swiper)
-       (define-key xah-fly-key-map (kbd "2") 'delete-window)
+       (define-key xah-fly-command-map (kbd "n") 'swiper)
+       (define-key xah-fly-command-map (kbd "2") 'delete-window)
        ;; more here
        )
 
@@ -54,25 +56,30 @@ to be added to `xah-fly-command-mode-activate-hook'"
        "Modify keys for xah fly key command mode keys
 to be added to `xah-fly-insert-mode-activate-hook'"
        (interactive)
-       (define-key xah-fly-key-map (kbd "M-<SPC>") 'xah-fly-command-mode-activate)
+       (define-key xah-fly-insert-map (kbd "M-<SPC>") 'xah-fly-command-mode-activate)
        ;; more here
        )
 
      (add-hook 'xah-fly-command-mode-activate-hook 'my-config-xah-fly-key-command)
      (add-hook 'xah-fly-insert-mode-activate-hook 'my-config-xah-fly-key-insert)
-
+     
      (xah-fly-keys 1)
      )
    )
   ('evil
    (use-package evil
+     :demand
+     :commands (evil-mode)
      :config
-     (setq evil-want-keybinding nil)
      (evil-mode 1)
      (use-package evil-collection
+       :demand
+       :commands (evil-collection-init)
        :config
        (evil-collection-init))
      (use-package evil-surround
+       :demand
+       :commands (global-evil-surround-mode)
        :config
        (global-evil-surround-mode 1)))
    )
