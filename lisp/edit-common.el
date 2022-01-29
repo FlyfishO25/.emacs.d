@@ -1,4 +1,3 @@
-(show-paren-mode t)
 ;; move window
 (windmove-default-keybindings)
 ;; Overwrite region selected
@@ -26,6 +25,12 @@
 (setq-default indent-tabs-mode nil)
 (setq indent-line-function 'insert-tab)
 (show-paren-mode 1)
+(define-advice show-paren-function (:around (fn) fix-show-paren-function)
+  "Highlight enclosing parens."
+  (cond ((looking-at-p "\\s(") (funcall fn))
+	(t (save-excursion
+	     (ignore-errors (backward-up-list))
+	     (funcall fn)))))
 (setq show-paren-style 'parenthesis)
 
 ;; Remove trailing white space upon saving
