@@ -192,7 +192,7 @@
 ;; Rainbow Delimiters -  have delimiters be colored by their depth
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package rainbow-delimiters
-  :defer 1.2
+  :defer 1
   :diminish
   :hook (prog-mode-hook . rainbow-delimiters-mode)
   )
@@ -211,7 +211,7 @@
 ;;            suggestions in a popup buffer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package which-key
-  :defer 1
+  :defer 0.3
   :diminish
   :custom (which-key-idle-delay 0.5)
   )
@@ -224,6 +224,6 @@
 ;; Package window-numbering installed from package list
 ;; Allows switching between buffers using meta-(# key)
 (use-package window-numbering
-  :defer 1.3
+  :defer 0.8
   :config
   (window-numbering-mode 1))
