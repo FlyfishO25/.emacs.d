@@ -36,12 +36,11 @@
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
                                         ; basic setup
   (require 'init-funcs)
+  (loadpkg 'init-performance t)
   (loadpkg 'init-user t)
   (loadpkg 'init-default t)
   (loadpkg 'packages-init t)
-  ;; (require 'init-autoloads)
   (loadpkg 'init-compile t)
-  (loadpkg 'init-performance t)
   (loadpkg 'init-misc t)
 
   (loadpkg 'ui-cnfont t)

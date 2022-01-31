@@ -36,6 +36,17 @@
 
 ;; Speed up startup
 (setq auto-mode-case-fold nil)
+;; https://github.com/hlissner/doom-emacs/blob/58af4aef56469f3f495129b4e7d947553f420fca/core/core.el#L167
+(setq ad-redefinition-action 'accept)
+;; https://github.com/hlissner/doom-emacs/blob/58af4aef56469f3f495129b4e7d947553f420fca/core/core.el#L194
+(setq initial-major-mode 'fundamental-mode)
+;; https://github.com/hlissner/doom-emacs/blob/58af4aef56469f3f495129b4e7d947553f420fca/core/core.el#L358
+(unless (daemonp)
+  (advice-add #'tty-run-terminal-initialization :override #'ignore)
+  (add-hook 'window-setup-hook
+            (defun doom-init-tty-h ()
+              (advice-remove #'tty-run-terminal-initialization #'ignore)
+              (tty-run-terminal-initialization (selected-frame) nil t))))
 
 (setq gc-cons-threshold (* 384 1024 1024)
       gc-cons-percentage 0.6)
@@ -46,8 +57,5 @@
             "Recover GC values after startup."
             (setq gc-cons-threshold 100000000
                   gc-cons-percentage 0.1)))
-(use-package esup
-  :config
-  (setq esup-depth 0))
 
 ;;; init-performance ends here
