@@ -28,6 +28,8 @@
 
 ;;; Code:
 
+(setq flymacs--file-name-handler-alist-old file-name-handler-alist)
+
 (let* ((file-name-handler-alist nil))
                                         ; customize and function defination
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
@@ -76,5 +78,7 @@
   (loadpkg 'init-git)
   (flymacs-post-install)
   )
+
+(setq file-name-handler-alist flymacs--file-name-handler-alist-old)
 
 ;;; init.el ends here
