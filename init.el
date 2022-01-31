@@ -60,12 +60,12 @@
   
   (loadpkg 'init-ivy t)
   (loadpkg 'init-hydra t)
-                                        ; code edit
+                                        ; code editing
 
   (loadpkg 'lang-python)
   (loadpkg 'lang-c)
 
-                                        ; code compilation
+                                        ; code completion
 
   (loadpkg 'complete-company t)
   (loadpkg 'complete-lsp)
