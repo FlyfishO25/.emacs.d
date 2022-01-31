@@ -1,4 +1,29 @@
-# [](https://github.com/FlyfishO25/.emacs.d/compare/v1.0.0...v) (2022-01-19)
+# [](https://github.com/FlyfishO25/.emacs.d/compare/v1.1.0...v) (2022-01-31)
+
+
+### Bug Fixes
+
+* Fix cnfonts error ([9562a8c](https://github.com/FlyfishO25/.emacs.d/commit/9562a8cfd0ba410a7033ad8f281030c5040bf143))
+* Fix company-box (daemon) and theme loading error ([b0cdda2](https://github.com/FlyfishO25/.emacs.d/commit/b0cdda2d900a22624e7e1fa7bfbbcf6bd62011ef))
+* Fix edit-keybinds.el ([cc9170e](https://github.com/FlyfishO25/.emacs.d/commit/cc9170e3d88d6eff6425ae55ca369110f3b73e7a))
+* Fix file not recognized bug ([afb2177](https://github.com/FlyfishO25/.emacs.d/commit/afb21775b73f9e8c95324b6f2e3ec8262b9e20b2))
+
+
+### Features
+
+* Add new custom option: flymacs-cpp-style ([61d0dc6](https://github.com/FlyfishO25/.emacs.d/commit/61d0dc6104d65a2b6c819608f49494cef5c64e54))
+* Allow users to modify themes ([88dca46](https://github.com/FlyfishO25/.emacs.d/commit/88dca46ac7fc07fa4ce3318fd9f389c4065f1052))
+* Highlight surrounding brackets ([817df95](https://github.com/FlyfishO25/.emacs.d/commit/817df95a6663315b4c7a751fe155ee3a439ff1bd))
+
+
+### Performance Improvements
+
+* Change defer time ([f84b784](https://github.com/FlyfishO25/.emacs.d/commit/f84b78491ce43fb0807039b7bbc3a73d47116680))
+* Improve performance ([c440274](https://github.com/FlyfishO25/.emacs.d/commit/c4402740aa488e5a308a0572307b57d2f7fc7015))
+
+
+
+# [1.1.0](https://github.com/FlyfishO25/.emacs.d/compare/v1.0.0...v1.1.0) (2022-01-19)
 
 
 ### Bug Fixes
