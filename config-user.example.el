@@ -18,7 +18,7 @@
 ;; (setq flymacs-theme-auto 'doom-one)
 
 ;; C/C++
-;; (setq flymacs-cpp-google-style t) ;; t or nil
+;; (setq flymacs-cpp-style "google") ;; see C-h v c-style-alist or google
 
 (provide 'config-user)
 ;;; config-user.el ends here

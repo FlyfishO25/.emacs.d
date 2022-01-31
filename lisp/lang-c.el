@@ -35,7 +35,18 @@
   :ensure nil
   :bind (:map c-mode-base-map
               ("C-c c" . compile))
-  :hook (c-mode-common . (lambda () (c-set-style "")))
+  :init
+  (if (boundp 'flymacs-cpp-style)
+      (if (string= flymacs-cpp-style "google")
+          (use-package google-c-style
+            :config
+            (add-hook 'c-mode-common-hook 'google-set-c-style)
+            (add-hook 'c-mode-common-hook 'google-make-newline-indent)))
+    (progn
+      (message "C/C++ code style is not set, automatically set to k&r style.")
+      (setq flymacs-cpp-style "k&r")
+      ))
+  :hook (c-mode-common . (lambda () (if (not (string= "google" flymacs-cpp-style)) (c-set-style flymacs-cpp-style))))
   :config
   (use-package modern-cpp-font-lock
     :diminish
@@ -46,11 +57,6 @@
     :bind (("C-c C-f" . clang-format-region))
     ;; clang-format -style=google -dump-config > .clang-format to generate config file.
     )
-  (use-package google-c-style
-    :if flymacs-cpp-google-style
-    :config
-    (add-hook 'c-mode-common-hook 'google-set-c-style)
-    (add-hook 'c-mode-common-hook 'google-make-newline-indent))
   (setq compile-command my:compile-command)
   ;; Change tab key behavior to insert spaces instead
   (setq-default indent-tabs-mode nil)
