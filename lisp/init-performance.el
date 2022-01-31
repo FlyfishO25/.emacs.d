@@ -37,10 +37,10 @@
 ;; Speed up startup
 (setq auto-mode-case-fold nil)
 
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.5)
+(setq gc-cons-threshold (* 384 1024 1024)
+      gc-cons-percentage 0.6)
 
-(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq read-process-output-max (* 3 1024 1024)) ;; 3mb
 (add-hook 'emacs-startup-hook
           (lambda ()
             "Recover GC values after startup."

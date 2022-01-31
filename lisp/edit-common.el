@@ -125,33 +125,4 @@
   :defer 4
   :bind ("M-z" . zzz-up-to-char))
 
-                                        ; shortcuts
-
-;; Global Keyboard Shortcuts
-;; Set help to C-?
-;; (global-set-key (kbd "C-c h") 'help-command)
-;; (global-set-key (kbd "C-c h") help-map)
-;; Set mark paragraph to M-?
-;; (global-set-key (kbd "M-?") 'mark-paragraph)
-;; Set backspace to C-h
-;; (global-set-key (kbd "C-h") 'delete-backward-char)
-;; Set backspace word to M-h
-;; (global-set-key (kbd "M-h") 'backward-kill-word)
-;; Use meta+tab word completion
-;; (global-set-key (kbd "M-TAB") 'dabbrev-expand)
-;; Easy undo key
-(global-set-key (kbd "C-/") 'undo)
-;; Comment or uncomment the region
-(global-set-key (kbd "C-c ;") 'comment-or-uncomment-region)
-;; Indent after a newline, if required by syntax of language
-(global-set-key (kbd "C-m") 'newline-and-indent)
-;; Load the compile ocmmand
-(global-set-key (kbd "C-c C-c") 'compile)
-;; Undo, basically C-x u
-;; (global-set-key (kbd "C-/") 'undo)
-;; Find file in project
-(global-set-key (kbd "C-x M-f") 'project-find-file)
-(global-set-key (kbd "C-r") 'replace-string)
-;; Copy and paste
-;; complete the code
-;;(global-set-key (kbd "C-c TAB") 'company-complete)
+;;; edit-common.el ends here

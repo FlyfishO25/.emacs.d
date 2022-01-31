@@ -87,6 +87,23 @@ to be added to `xah-fly-insert-mode-activate-hook'"
    (message "Using default keybinding."))
   )
 
+(global-set-key (kbd "C-c C-k") 'kill-compilation)
+(global-set-key (kbd "C-c c") 'comment-region)
+;; Global Keyboard Shortcuts
+;; Easy undo key
+(global-set-key (kbd "C-/") 'undo)
+;; Comment or uncomment the region
+(global-set-key (kbd "C-c ;") 'comment-or-uncomment-region)
+;; Indent after a newline, if required by syntax of language
+(global-set-key (kbd "C-m") 'newline-and-indent)
+;; Load the compile command
+(global-set-key (kbd "C-c C-c") 'compile)
+;; Undo, basically C-x u
+(global-set-key (kbd "C-/") 'undo)
+;; Find file in project
+(global-set-key (kbd "C-x M-f") 'project-find-file)
+(global-set-key (kbd "C-r") 'replace-string)
+
 ;;; edit-keybinds.el ends here
 
 

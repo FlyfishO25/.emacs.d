@@ -17,4 +17,8 @@
 ;; You can also set it to:
 ;; (setq flymacs-theme-auto 'doom-one)
 
+;; C/C++
+;; (setq flymacs-cpp-google-style t) ;; t or nil
+
 (provide 'config-user)
+;;; config-user.el ends here
