@@ -20,5 +20,8 @@
 ;; C/C++
 ;; (setq flymacs-cpp-style "google") ;; see C-h v c-style-alist or google
 
+;; Entertainment
+;; (setq flymacs-games t) ;; t or nil means need games or not
+
 (provide 'config-user)
 ;;; config-user.el ends here

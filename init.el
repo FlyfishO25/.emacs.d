@@ -75,6 +75,9 @@
   (add-hook 'org-mode-hook (lambda () (loadpkg 'init-roam)))
   (loadpkg 'reading)
   (loadpkg 'init-git)
+
+                                        ; games
+  (loadpkg 'init-games)
   (flymacs-post-install)
   )
 
