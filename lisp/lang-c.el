@@ -67,6 +67,8 @@
   ;; Set the size that a tab CHARACTER is interpreted as
   ;; (unnecessary if there are no tab characters in the file!)
   (setq tab-width 4)
-  )
+  (with-eval-after-load 'dap-mode
+    (require 'dap-cpptools))
+)
 
 ;;; lang-c.el ends here
