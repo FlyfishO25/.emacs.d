@@ -61,8 +61,12 @@
     (let ((zone-programs (list (intern pgm))))
       (zone))))
 
-(unless (or (file-exists-p (expand-file-name "site-lisp/wordel.el" user-emacs-directory))
-            (not flymacs-games))
-  (url-copy-file "https://raw.fastgit.org/progfolio/wordel/main/wordel.el" (expand-file-name "site-lisp/wordel.el" user-emacs-directory)))
+(if flymacs-games
+    (progn
+      (unless (file-exists-p (expand-file-name "site-lisp/wordel.el" user-emacs-directory))
+        (url-copy-file "https://raw.fastgit.org/progfolio/wordel/main/wordel.el" (expand-file-name "site-lisp/wordel.el" user-emacs-directory)))
+      (require 'wordel)
+      )
+  )
 
 ;;; init-games.el ends here
