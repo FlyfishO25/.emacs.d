@@ -61,3 +61,7 @@ newsticker/feeds/Emacs Wiki/data
 
 config-user.el
 etc/custom.el
+cnfonts/v4
+site-lisp/words/scrabble
+site-lisp/words/wordle
+site-lisp/wordel.el
