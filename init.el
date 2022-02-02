@@ -37,9 +37,9 @@
                                         ; basic setup
   (require 'init-funcs)
   (loadpkg 'init-performance t)
-  (loadpkg 'init-user t)
-  (loadpkg 'init-default t)
   (loadpkg 'packages-init t)
+  (loadpkg 'init-default t)
+  (loadpkg 'init-user t)
   (loadpkg 'init-compile t)
   (loadpkg 'init-misc t)
 
