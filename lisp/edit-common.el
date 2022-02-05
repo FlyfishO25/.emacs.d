@@ -83,11 +83,9 @@
 (global-set-key (kbd "C-c M-w") 'osx-copy)
 (global-set-key (kbd "C-c C-y") 'osx-paste)
 
-;; (use-package exec-path-from-shell)
-;; (exec-path-from-shell-initialize)
-
 (use-package anzu
   :diminish
+  :defer 2
   :bind (([remap query-replace] . anzu-query-replace)
          ([remap query-replace-regexp] . anzu-query-replace-regexp)
          :map isearch-mode-map
@@ -96,7 +94,7 @@
   :hook (after-init . global-anzu-mode))
 
 (use-package multiple-cursors
-  :defer 5
+  :defer 3
   :bind (("M-n" . mc/mark-next-like-this)
          ("M-p" . mc/mark-previous-like-this)
          ("C-c a" . mc/mark-all-like-this)
@@ -107,7 +105,7 @@
 ;; avy: always fast jump to char inside the current view buffer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package avy
-  :defer 4
+  :defer 2
   :bind (("M-c" . avy-goto-char)
          ("M-s" . avy-goto-word-1))
   ;; Set keys for Dvorak mode instead of qwerty
@@ -122,7 +120,7 @@
 ;;              replacement options
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package zzz-to-char
-  :defer 4
+  :defer 2
   :bind ("M-z" . zzz-up-to-char))
 
 ;;; edit-common.el ends here

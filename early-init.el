@@ -6,6 +6,7 @@
 ;; loaded, but after `early-init-file'. We handle package
 ;; initialization, so we must prevent Emacs from doing it early!
 (setq use-package-verbose t)
+(setq package-enable-at-startup nil)
 
 ;; Inhibit resizing frame
 (setq frame-inhibit-implied-resize t)
