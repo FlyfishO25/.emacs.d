@@ -52,33 +52,36 @@
   (loadpkg 'ui-theme t)
   (loadpkg 'ui-flycheck)
 
-  (add-hook 'after-init-hook (lambda () (loadpkg 'edit-common t)))
-  (loadpkg 'edit-autosave t)
-  (auto-save-enable)
-  ;; (loadpkg 'edit-xah-fly-keys t)
-  (loadpkg 'edit-keybinds t)
-  
-  (loadpkg 'init-ivy t)
-  (loadpkg 'init-hydra t)
+  ;; (add-hook 'after-init-hook (lambda () (loadpkg 'edit-common t)))
+  (add-hook 'after-init-hook (lambda ()
+                               (loadpkg 'edit-common t)
+                               (loadpkg 'edit-autosave t)
+                               (auto-save-enable)
+                               ;; (loadpkg 'edit-xah-fly-keys t)
+                               (loadpkg 'edit-keybinds t)
+                               
+                               (loadpkg 'init-ivy t)
+                               (loadpkg 'init-hydra t)
                                         ; code editing
 
-  (loadpkg 'lang-python)
-  (loadpkg 'lang-c)
+                               (loadpkg 'lang-python)
+                               (loadpkg 'lang-c)
 
                                         ; code completion
 
-  (loadpkg 'complete-company t)
-  (loadpkg 'complete-lsp)
+                               (loadpkg 'complete-company t)
+                               (loadpkg 'complete-lsp)
 
                                         ; other modes
-  (loadpkg 'init-org)
-  (add-hook 'org-mode-hook (lambda () (loadpkg 'init-roam)))
-  (loadpkg 'reading)
-  (loadpkg 'init-git)
+                               (loadpkg 'init-org)
+                               (add-hook 'org-mode-hook (lambda () (loadpkg 'init-roam)))
+                               (loadpkg 'reading)
+                               (loadpkg 'init-git)
 
                                         ; games
-  (loadpkg 'init-games)
-  (flymacs-post-install)
+                               (loadpkg 'init-games)
+                               (flymacs-post-install)
+                               ))
   )
 
 (setq file-name-handler-alist flymacs--file-name-handler-alist-old)
