@@ -59,17 +59,12 @@
                                (auto-save-enable)
                                ;; (loadpkg 'edit-xah-fly-keys t)
                                (loadpkg 'edit-keybinds t)
-                               
                                (loadpkg 'init-ivy t)
                                (loadpkg 'init-hydra t)
-                                        ; code editing
 
+                                        ; code editing
                                (loadpkg 'lang-python)
                                (loadpkg 'lang-c)
-
-                                        ; code completion
-
-                               (loadpkg 'complete-company t)
                                (loadpkg 'complete-lsp)
 
                                         ; other modes
@@ -82,6 +77,9 @@
                                (loadpkg 'init-games)
                                (flymacs-post-install)
                                ))
+                                        ; code completion
+  
+  (loadpkg 'complete-company t)
   )
 
 (setq file-name-handler-alist flymacs--file-name-handler-alist-old)
