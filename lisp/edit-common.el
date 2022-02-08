@@ -123,4 +123,11 @@
   :defer 2
   :bind ("M-z" . zzz-up-to-char))
 
+(use-package drag-stuff
+  :commands (drag-stuff-define-keys)
+  :config
+  (drag-stuff-global-mode 1)
+  (drag-stuff-define-keys)
+)
+
 ;;; edit-common.el ends here
