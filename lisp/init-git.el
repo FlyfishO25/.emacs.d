@@ -57,6 +57,7 @@
 ;; Highlight uncommitted changes using VC
 ;; @see https://github.com/seagle0128/.emacs.d/blob/e840ab62fd5f1a8df9818d0678e7413145e4c8d3/lisp/init-highlight.el#L223
 (use-package diff-hl
+  :after magit
   :custom-face
   (diff-hl-change ((t (:foreground ,(face-background 'highlight) :background nil))))
   (diff-hl-insert ((t (:inherit diff-added :background nil))))
