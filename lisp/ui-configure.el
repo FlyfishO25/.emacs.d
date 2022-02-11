@@ -104,6 +104,7 @@
   :init (diredfl-global-mode 1))
 
 (use-package all-the-icons-ibuffer
+  :if (icons-displayable-p)
   :init (all-the-icons-ibuffer-mode 1))
 
 (when (and (not (eq system-type 'darwin)) (fboundp 'menu-bar-mode))
@@ -126,7 +127,7 @@
     :demand
     :defines linum-format
     :hook (after-init . global-linum-mode)
-    :init (setq linum-format "%4d ")
+    :init (setq linum-format "%4d")
     :config
     ;; Highlight current line number
     (use-package hlinum

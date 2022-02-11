@@ -38,7 +38,7 @@
   (require 'init-funcs)
   (loadpkg 'init-performance t)
   (loadpkg 'packages-init t)
-  (loadpkg 'init-default t)
+  (loadpkg 'init-server t)
   (loadpkg 'init-user t)
   (loadpkg 'init-compile t)
   (loadpkg 'init-misc t)

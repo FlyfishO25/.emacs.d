@@ -29,12 +29,9 @@
 ;;; Code:
 
 (use-package ivy
-  :ensure t
+  :hook (after-init . ivy-mode)
   :commands (ivy-mode)
   :config
-  (require 'ivy)
-  (ivy-mode t)
-  
   (setq ivy-use-virtual-buffers t
         enable-recursive-minibuffers t
         ivy-wrap t
@@ -50,12 +47,14 @@
 
 (use-package swiper
   :ensure t
+  :after ivy
   :bind (("C-s" . swiper)
          ("C-r" . swiper))
   )
 
 (use-package counsel
   :ensure t
+  :after ivy
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
          ("<f1> f" . counsel-describe-function)
@@ -89,6 +88,7 @@
 ;; in the root directory of your project.
 (use-package counsel-etags
   :ensure t
+  :after counsel
   :init
   (eval-when-compile
     ;; Silence missing function warnings

@@ -41,7 +41,7 @@
       flymacs-package-archives-origin '(("melpa" . "https://melpa.org/packages/")
                                         ("elpa" . "https://elpa.gnu.org/packages/")))
 
-(setq package-archives flymacs-package-archives-tencent)
+(setq package-archives flymacs-package-archives-origin)
 
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
