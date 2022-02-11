@@ -33,7 +33,8 @@
 
 (require 'init-funcs)
 
-(setq centaur-lsp 'lsp-mode)
+(unless (boundp 'centaur-lsp)
+  (setq centaur-lsp 'lsp-mode))
 (setq centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode))
 
 (pcase centaur-lsp

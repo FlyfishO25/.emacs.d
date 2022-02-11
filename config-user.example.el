@@ -41,5 +41,15 @@
 ;;   :post-config
 ;;   (setq lsp-headerline-breadcrumb-enable t))
 
+;; UI
+;; (setq display-icon t) ;; non-nil if you want to display icons (from centaur emacs)
+;; (setq completion-style 'childframe) ;; 'childframe or 'minibuffer to set different type of flycheck errors (from centaur emacs)
+
+;; LSP
+;; (setq centaur-lsp 'lsp-mode) ;; 'lsp-mode or 'eglot to set lsp client (from centaur emacs)
+
+;; Server
+;; (setq flymacs-server t) ;; non-nil to enable server-mode at startup
+
 (provide 'config-user)
 ;;; config-user.el ends here
