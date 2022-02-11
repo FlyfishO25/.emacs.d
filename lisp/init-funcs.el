@@ -41,8 +41,12 @@ Otherwise, if it is not currently in the git merge state, load it."
 (defun flymacs-post-install ()
   "Install programs after Emacs startup."
   (if (not (eq system-type "windows-nt"))
-    (when (not (executable-find "rg"))
-      (system-packages-install "ripgrep"))
+      (progn
+        (when (not (executable-find "rg"))
+          (system-packages-install "ripgrep"))
+        (unless (or (executable-find "gls")
+                    (not (eq system-type 'darwin)))
+          (system-packages-install "coreutils")))
     (message "Cannot auto install ripgrep executable (rg), please install it."))
 )
 
