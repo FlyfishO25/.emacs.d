@@ -76,6 +76,8 @@
   (call-process "pbpaste" nil t nil))
 
 (when (string= system-type "darwin")
+  (unless (executable-find "gls")
+    (message "We can not detect gls program in this machine, maybe you need to install homebrew and then install it."))
   (setq dired-use-ls-dired t
         insert-directory-program "/usr/local/bin/gls"
         dired-listing-switches "-aBhl --group-directories-first"))
@@ -85,7 +87,6 @@
 
 (use-package anzu
   :diminish
-  :defer 2
   :bind (([remap query-replace] . anzu-query-replace)
          ([remap query-replace-regexp] . anzu-query-replace-regexp)
          :map isearch-mode-map
