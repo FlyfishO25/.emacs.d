@@ -126,7 +126,7 @@
     :demand
     :defines linum-format
     :hook (after-init . global-linum-mode)
-    :init (setq linum-format "%4d ")
+    :init (setq linum-format "%4d")
     :config
     ;; Highlight current line number
     (use-package hlinum
