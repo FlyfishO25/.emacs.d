@@ -40,4 +40,14 @@
 (unless (boundp 'flymacs-cpp-google-style)
   (setq flymacs-cpp-google-style nil))
 
+(unless (boundp 'flymacs-server)
+  (setq flymacs-server nil))
+
+(unless (boundp 'display-icon)
+  (setq display-icon t))
+
+(unless (boundp 'completion-style)
+  (setq completion-style 'childframe)
+  (message "You have not set completion-style, use default option 'childframe."))
+
 ;;; init-user.el ends here

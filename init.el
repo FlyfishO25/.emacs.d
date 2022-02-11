@@ -38,12 +38,12 @@
   (require 'init-funcs)
   (loadpkg 'init-performance t)
   (loadpkg 'packages-init t)
-  (loadpkg 'init-server t)
   (loadpkg 'init-user t)
+  (loadpkg 'init-server)
   (loadpkg 'init-compile t)
   (loadpkg 'init-misc t)
 
-  (loadpkg 'ui-cnfont t)
+  (loadpkg 'ui-configure t)
   (loadpkg 'ui-tree)
   (loadpkg 'ui-modeline t)
   ;; (loadpkg 'ui-tab)
@@ -51,6 +51,7 @@
   (loadpkg 'ui-dashboard)
   (loadpkg 'ui-theme t)
   (loadpkg 'ui-flycheck)
+  (loadpkg 'ui-cnfont t)
 
   ;; (add-hook 'after-init-hook (lambda () (loadpkg 'edit-common t)))
   (add-hook 'after-init-hook (lambda ()
