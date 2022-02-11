@@ -43,7 +43,7 @@
   (loadpkg 'init-compile t)
   (loadpkg 'init-misc t)
 
-  (loadpkg 'ui-cnfont t)
+  (loadpkg 'ui-configure t)
   (loadpkg 'ui-tree)
   (loadpkg 'ui-modeline t)
   ;; (loadpkg 'ui-tab)
@@ -51,6 +51,7 @@
   (loadpkg 'ui-dashboard)
   (loadpkg 'ui-theme t)
   (loadpkg 'ui-flycheck)
+  (loadpkg 'ui-cnfont t)
 
   (add-hook 'after-init-hook (lambda () (loadpkg 'edit-common t)))
   (loadpkg 'edit-autosave t)

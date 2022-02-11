@@ -119,23 +119,6 @@
 
 (setq x-stretch-cursor t)
 
-(if (fboundp 'display-line-numbers-mode)
-    (use-package display-line-numbers
-      :ensure nil
-      :hook ((prog-mode yaml-mode) . display-line-numbers-mode))
-  (use-package linum-off
-    :demand
-    :defines linum-format
-    :hook (after-init . global-linum-mode)
-    :init (setq linum-format "%4d")
-    :config
-    ;; Highlight current line number
-    (use-package hlinum
-      :defines linum-highlight-in-all-buffersp
-      :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
-      :hook (global-linum-mode . hlinum-activate)
-      :init (setq linum-highlight-in-all-buffersp t))))
-
 ;; Suppress GUI features
 (setq use-file-dialog nil
       use-dialog-box nil
@@ -228,3 +211,24 @@
   :defer 0.8
   :config
   (window-numbering-mode 1))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Display line numbers
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(if (fboundp 'display-line-numbers-mode)
+    (use-package display-line-numbers
+      :ensure nil
+      :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
+      :init (setq display-line-numbers-width-start t))
+  (use-package linum-off
+    :demand
+    :defines linum-format
+    :hook (after-init . global-linum-mode)
+    :init (setq linum-format "%4d ")
+    :config
+    ;; Highlight current line number
+    (use-package hlinum
+      :defines linum-highlight-in-all-buffersp
+      :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
+      :hook (global-linum-mode . hlinum-activate)
+      :init (setq linum-highlight-in-all-buffersp t))))
