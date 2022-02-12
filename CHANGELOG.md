@@ -1,4 +1,39 @@
-# [](https://github.com/FlyfishO25/.emacs.d/compare/v1.1.0...v) (2022-01-31)
+# [](https://github.com/FlyfishO25/.emacs.d/compare/v1.2.0...v) (2022-02-12)
+
+
+### Bug Fixes
+
+* Beacon won't load error ([6ac468e](https://github.com/FlyfishO25/.emacs.d/commit/6ac468e0d63e22b44bd207a46bafbf7cf60c70e0))
+* company error and void variable errors ([1716526](https://github.com/FlyfishO25/.emacs.d/commit/1716526dd96893c3afd9ebe93b98d9463963042c))
+* diff-hl UI ([8bdc35c](https://github.com/FlyfishO25/.emacs.d/commit/8bdc35cc63a2f731e25e0fd043af08d97717696b))
+* Fix wordel did not load ([003d3ce](https://github.com/FlyfishO25/.emacs.d/commit/003d3ce55f8318a046261298c48aa09b3bd194f8))
+* Icons will display in ibuffer even display-icon is nil ([84bbeff](https://github.com/FlyfishO25/.emacs.d/commit/84bbefff8c6da5f36d143b6a113f19cb41d8e8a6))
+* Line number display problem ([ee8f8ea](https://github.com/FlyfishO25/.emacs.d/commit/ee8f8ea4e83e04785bbeed234a96eeccc6d87644))
+* Line number twitch ([7d329a8](https://github.com/FlyfishO25/.emacs.d/commit/7d329a883a074c711e31635175b9bcfd05b08af4))
+* Remove redundant configurations ([9b443e8](https://github.com/FlyfishO25/.emacs.d/commit/9b443e8238387aae5aef9643d30de792e1a3f708))
+* User can't use use-package in config-user.el ([330b495](https://github.com/FlyfishO25/.emacs.d/commit/330b495f24a9ddf6990be2c0309dc611bf40c098))
+* Wordel.el error ([d5f0615](https://github.com/FlyfishO25/.emacs.d/commit/d5f0615b1fb159b44331231aaa4bc1ad7485dce7))
+
+
+### Features
+
+* Add cpptool (vscode) for dap-mode for C/C++ ([d75f374](https://github.com/FlyfishO25/.emacs.d/commit/d75f374320655ad04b2ef9ccd165325bbe3e8896))
+* Add emacs-everywhere plugin ([8716713](https://github.com/FlyfishO25/.emacs.d/commit/8716713ae30eed8c47ec5523c22598a616de0f2b))
+* Add game features ([75576fc](https://github.com/FlyfishO25/.emacs.d/commit/75576fc9a3c98f4185d6982b7e05d518dea9f925))
+* Add new config-user options and a new plugin ([1e8059f](https://github.com/FlyfishO25/.emacs.d/commit/1e8059f7b095b37b665caa8f032c4caac8ead842))
+* Add sky-color-clock.el for modeline ([dab55b4](https://github.com/FlyfishO25/.emacs.d/commit/dab55b4ff124826e2f2962c4e16ecd7cbe7e06cf))
+* Allow user to hook packages ([2b9e1b0](https://github.com/FlyfishO25/.emacs.d/commit/2b9e1b0c0e5a651cb5bcae573d265ea1e41033b8))
+* Auto enable server-mode at startup ([1f1e669](https://github.com/FlyfishO25/.emacs.d/commit/1f1e6692d9a651c3859d439011bbf7cd12a55bfc))
+
+
+### Performance Improvements
+
+* Improve performance ([6b9debe](https://github.com/FlyfishO25/.emacs.d/commit/6b9debe2044dfda2cdea968e258c033d016d3051))
+* Performance improvement ([d7eae32](https://github.com/FlyfishO25/.emacs.d/commit/d7eae32590536fb5cfd5edadeadd84e2b5f73053))
+
+
+
+# [1.2.0](https://github.com/FlyfishO25/.emacs.d/compare/v1.1.0...v1.2.0) (2022-01-31)
 
 
 ### Bug Fixes
