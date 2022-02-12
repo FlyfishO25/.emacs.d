@@ -33,4 +33,8 @@
   :if flymacs-server
   :hook (after-init . server-mode))
 
+(use-package emacs-everywhere
+  :if (or (eq system-type 'darwin)
+          (eq system-type 'gnu/linux)))
+
 ;;; init-server.el ends here
