@@ -64,11 +64,11 @@
 (if flymacs-games
     (progn
       (unless (file-exists-p (expand-file-name "site-lisp/wordel.el" user-emacs-directory))
-        (url-copy-file "https://raw.fastgit.org/progfolio/wordel/main/wordel.el" (expand-file-name "site-lisp/wordel.el" user-emacs-directory))
+        (url-copy-file "https://raw.githubusercontent.com/progfolio/wordel/main/wordel.el" (expand-file-name "site-lisp/wordel.el" user-emacs-directory))
         (unless (file-directory-p (expand-file-name "site-lisp/words/" user-emacs-directory))
           (make-directory (expand-file-name "site-lisp/words/" user-emacs-directory)))
-        (url-copy-file "https://raw.fastgit.org/progfolio/wordel/main/words/scrabble" (expand-file-name "site-lisp/words/scrabble" user-emacs-directory))
-        (url-copy-file "https://raw.fastgit.org/progfolio/wordel/main/words/wordle" (expand-file-name "site-lisp/words/wordle" user-emacs-directory))
+        (url-copy-file "https://raw.githubusercontent.com/progfolio/wordel/main/words/scrabble" (expand-file-name "site-lisp/words/scrabble" user-emacs-directory))
+        (url-copy-file "https://raw.githubusercontent.com/progfolio/wordel/main/words/wordle" (expand-file-name "site-lisp/words/wordle" user-emacs-directory))
         )
       (require 'wordel)
       )
