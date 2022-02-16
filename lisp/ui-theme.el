@@ -30,5 +30,5 @@
         :config
           (setq circadian-themes flymacs-theme-auto))
       (circadian-setup))
-  (load-theme flymacs-theme-auto))
+  (load-theme flymacs-theme-auto t))
 
