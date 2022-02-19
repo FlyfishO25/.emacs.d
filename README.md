@@ -1,10 +1,8 @@
-![LOGO](./media/logo.png)
-
-## FLYMACS [![Build Status](https://github.com/FlyfishO25/.emacs.d/workflows/CI/badge.svg)](https://github.com/FlyfishO25/.emacs.d/actions?query=workflow%3ACI)
+## .emacs.d [![Build Status](https://github.com/FlyfishO25/.emacs.d/workflows/CI/badge.svg)](https://github.com/FlyfishO25/.emacs.d/actions?query=workflow%3ACI)
 
 ## Introduction
 
-Flymacs is an easy-to-use and beautiful Emacs configuration.
+This is an easy-to-use and beautiful Emacs configuration, powered by myself.
 
 ## Prerequisites
 
