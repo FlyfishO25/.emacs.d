@@ -346,6 +346,7 @@
      ;; `lsp-mode' and `treemacs' integration
      (when (>= emacs-major-version 25.2)
        (use-package lsp-treemacs
+         :if (not (> emacs-major-version 28)) ;; Workaround: wait for upstream fix
          :after lsp-mode
          :bind (:map lsp-mode-map
                 ("C-<f8>" . lsp-treemacs-errors-list)
@@ -526,8 +527,6 @@
                  (treemacs-create-icon
                   :icon (format "%s " (all-the-icons-octicon "repo" :height 1.0 :v-adjust -0.1 :face 'all-the-icons-blue))
                   :extensions (java-project))))
-             ;; Workaround: fix error in emacs29
-             (unless (> emacs-major-version 28) (setq lsp-treemacs-theme "centaur-colors"))
              ))))
 
      ;; Python: pyright
