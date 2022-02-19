@@ -33,6 +33,7 @@ jobs:
                     (run-hooks 'emacs-startup-hook)
                     (run-hooks 'window-setup-hook))" \
           --eval "(message \"Testing...done\")"; \
+          emacs -Q --batch --eval "(doom-modeline-mode)";
           echo "Time: "; \
           time -p emacs -q --batch \
           --eval "(let ((early-init-file (locate-user-emacs-file \"early-init.el\"))
