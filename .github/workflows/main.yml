@@ -19,7 +19,7 @@ jobs:
           rm -rf ~/.emacs.d; \
           mv -f ~/work/.emacs.d/.emacs.d ~; \
           emacs --version; \
-          emacs -Q --batch --eval "(concat user-emacs-directory \"lisp/packages-init.el\")" --eval "(package-install 'doom-modeline)" --eval "(doom-modeline-mode)";
+          emacs -Q --batch --eval "(load (concat user-emacs-directory \"lisp/packages-init.el\"))" --eval "(package-install 'doom-modeline)" --eval "(doom-modeline-mode)";
           emacs -q --batch \
           --eval "(message \"Testing...\")" \
           --eval "(setq package-check-signature nil
