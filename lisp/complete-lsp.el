@@ -37,7 +37,7 @@
   (setq centaur-lsp 'lsp-mode))
 (setq centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode))
 
-(when emacs/>=26p
+(when (>= emacs-major-version 26)
   (pcase centaur-lsp
     ('eglot
      (use-package eglot
@@ -346,7 +346,7 @@
            (advice-add #'lsp-ivy--format-symbol-match :override #'my-lsp-ivy--format-symbol-match))))
 
      ;; Debug
-     (when emacs/>=26p
+     (when (>= emacs-major-version 26)
        (use-package dap-mode
          :defines dap-python-executable
          :functions dap-hydra/nil
@@ -372,7 +372,7 @@
            (setq dap-python-executable "python3"))))
 
      ;; `lsp-mode' and `treemacs' integration
-     (when emacs/>=25.2p
+     (when (>= emacs-major-version 25)
        (use-package lsp-treemacs
          :after lsp-mode
          :bind (:map lsp-mode-map
@@ -599,7 +599,7 @@
        :hook (julia-mode . (lambda () (require 'lsp-julia))))
 
      ;; Java support
-     (when emacs/>=25.2p
+     (when (>= emacs-major-version 25)
        (use-package lsp-java
          :hook (java-mode . (lambda () (require 'lsp-java)))))))
 
@@ -641,7 +641,7 @@
 
     (defvar org-babel-lang-list
       '("go" "python" "ipython" "ruby" "js" "css" "sass" "c" "rust" "java" "cpp" "c++"))
-    (add-to-list 'org-babel-lang-list (if emacs/>=26p "shell" "sh"))
+    (add-to-list 'org-babel-lang-list (if (>= emacs-major-version 26) "shell" "sh"))
     (dolist (lang org-babel-lang-list)
       (eval `(lsp-org-babel-enable ,lang)))))
 
