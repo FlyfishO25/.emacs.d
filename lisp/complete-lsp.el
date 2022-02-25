@@ -591,7 +591,7 @@
          (advice-add #'lsp-execute-command :override #'my-lsp-execute-command)))
 
      ;; Swift/C/C++/Objective-C
-     (when sys/macp
+     (when (eq system-type 'darwin)
        (use-package lsp-sourcekit))
 
      ;; Julia support
