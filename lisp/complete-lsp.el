@@ -227,6 +227,7 @@
        :init (setq lsp-ui-sideline-show-diagnostics nil
                    lsp-ui-sideline-ignore-duplicate t
                    lsp-ui-doc-delay 0.1
+                   lsp-ui-doc-position 'at-point
                    lsp-ui-doc-border (face-foreground 'font-lock-comment-face nil t)
                    lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
                                          ,(face-foreground 'font-lock-string-face)
