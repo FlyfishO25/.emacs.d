@@ -37,10 +37,10 @@
   (setq centaur-lsp 'lsp-mode))
 (setq centaur-lsp-format-on-save-ignore-modes '(c-mode c++-mode))
 
-(when (>= emacs-major-version 26)
-  (pcase centaur-lsp
+(pcase centaur-lsp
     ('eglot
      (use-package eglot
+       :defer 1.9
        :hook ((prog-mode . (lambda ()
                              (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
                                (eglot-ensure))))
@@ -50,6 +50,7 @@
      ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
      (use-package lsp-mode
        :diminish
+       :defer 1.9
        :defines lsp-clients-python-library-directories
        :commands (lsp-enable-which-key-integration
                   lsp-format-buffer
@@ -135,17 +136,17 @@
 
          ;; Only display icons in GUI
          (defun my-lsp-icons-get-symbol-kind (fn &rest args)
-           (when (and centaur-icon (display-graphic-p))
+           (when (and display-icon (display-graphic-p))
              (apply fn args)))
          (advice-add #'lsp-icons-get-by-symbol-kind :around #'my-lsp-icons-get-symbol-kind)
 
          (defun my-lsp-icons-get-by-file-ext (fn &rest args)
-           (when (and centaur-icon (display-graphic-p))
+           (when (and display-icon (display-graphic-p))
              (apply fn args)))
          (advice-add #'lsp-icons-get-by-file-ext :around #'my-lsp-icons-get-by-file-ext)
 
          (defun my-lsp-icons-all-the-icons-material-icon (icon-name face fallback &optional feature)
-           (if (and centaur-icon
+           (if (and display-icon
                     (display-graphic-p)
                     (functionp 'all-the-icons-material)
                     (lsp-icons--enabled-for-feature feature))
@@ -162,6 +163,7 @@
          (lsp-install-server t)))
 
      (use-package lsp-ui
+       :after lsp-mode
        :custom-face
        (lsp-ui-sideline-code-action ((t (:inherit warning))))
        :pretty-hydra
@@ -232,36 +234,6 @@
                                          ,(face-foreground 'font-lock-variable-name-face)))
        :config
        (with-no-warnings
-         ;; Display peek in child frame if possible
-         ;; @see https://github.com/emacs-lsp/lsp-ui/issues/441
-         (defvar lsp-ui-peek--buffer nil)
-         (defun lsp-ui-peek--peek-display (fn src1 src2)
-           (if (childframe-workable-p)
-               (-let* ((win-width (frame-width))
-                       (lsp-ui-peek-list-width (/ (frame-width) 2))
-                       (string (-some--> (-zip-fill "" src1 src2)
-                                 (--map (lsp-ui-peek--adjust win-width it) it)
-                                 (-map-indexed 'lsp-ui-peek--make-line it)
-                                 (-concat it (lsp-ui-peek--make-footer)))))
-                 (setq lsp-ui-peek--buffer (get-buffer-create " *lsp-peek--buffer*"))
-                 (posframe-show lsp-ui-peek--buffer
-                                :string (mapconcat 'identity string "")
-                                :min-width (frame-width)
-                                :internal-border-color (face-foreground 'font-lock-comment-face nil t)
-                                :internal-border-width 1
-                                :poshandler #'posframe-poshandler-frame-center))
-             (funcall fn src1 src2)))
-         (defun lsp-ui-peek--peek-destroy (fn)
-           (if (childframe-workable-p)
-               (progn
-                 (when (bufferp lsp-ui-peek--buffer)
-                   (posframe-hide lsp-ui-peek--buffer))
-                 (setq lsp-ui-peek--last-xref nil))
-             (funcall fn)))
-         (advice-add #'lsp-ui-peek--peek-new :around #'lsp-ui-peek--peek-display)
-         (advice-add #'lsp-ui-peek--peek-hide :around #'lsp-ui-peek--peek-destroy)
-
-         ;; Handle docs
          (defun my-lsp-ui-doc--handle-hr-lines nil
            (let (bolp next before after)
              (goto-char 1)
@@ -372,7 +344,7 @@
            (setq dap-python-executable "python3"))))
 
      ;; `lsp-mode' and `treemacs' integration
-     (when (>= emacs-major-version 25)
+     (when (>= emacs-major-version 25.2)
        (use-package lsp-treemacs
          :after lsp-mode
          :bind (:map lsp-mode-map
@@ -579,16 +551,7 @@
        (with-eval-after-load 'projectile
          (setq projectile-project-root-files-top-down-recurring
                (append '("compile_commands.json" ".ccls")
-                       projectile-project-root-files-top-down-recurring)))
-       (with-no-warnings
-         ;; FIXME: fail to call ccls.xref
-         ;; @see https://github.com/emacs-lsp/emacs-ccls/issues/109
-         (cl-defmethod my-lsp-execute-command
-           ((_server (eql ccls)) (command (eql ccls.xref)) arguments)
-           (when-let ((xrefs (lsp--locations-to-xref-items
-                              (lsp--send-execute-command (symbol-name command) arguments))))
-             (xref--show-xrefs xrefs nil)))
-         (advice-add #'lsp-execute-command :override #'my-lsp-execute-command)))
+                       projectile-project-root-files-top-down-recurring))))
 
      ;; Swift/C/C++/Objective-C
      (when (eq system-type 'darwin)
@@ -599,7 +562,7 @@
        :hook (julia-mode . (lambda () (require 'lsp-julia))))
 
      ;; Java support
-     (when (>= emacs-major-version 25)
+     (when (>= emacs-major-version 25.2)
        (use-package lsp-java
          :hook (java-mode . (lambda () (require 'lsp-java)))))))
 
@@ -643,6 +606,6 @@
       '("go" "python" "ipython" "ruby" "js" "css" "sass" "c" "rust" "java" "cpp" "c++"))
     (add-to-list 'org-babel-lang-list (if (>= emacs-major-version 26) "shell" "sh"))
     (dolist (lang org-babel-lang-list)
-      (eval `(lsp-org-babel-enable ,lang)))))
+      (eval `(lsp-org-babel-enable ,lang))))
 
 ;;; complete-lsp.el ends here
