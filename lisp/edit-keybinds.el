@@ -68,20 +68,34 @@ to be added to `xah-fly-insert-mode-activate-hook'"
    )
   ('evil
    (use-package evil
-     :demand
-     :commands (evil-mode)
+     :diminish undo-tree-mode
+     :init
+     (setq evil-want-C-u-scroll t
+           evil-want-keybinding nil
+           evil-shift-width 4)
+     :hook (after-init . evil-mode)
+     :preface
+     (defun save-and-kill-this-buffer ()
+       (interactive)
+       (save-buffer)
+       (kill-this-buffer))
      :config
-     (evil-mode 1)
+     (with-eval-after-load 'evil-maps ; avoid conflict with company tooltip selection
+       (define-key evil-insert-state-map (kbd "C-n") nil)
+       (define-key evil-insert-state-map (kbd "C-p") nil))
+     (evil-ex-define-cmd "q" #'kill-this-buffer)
+     (evil-ex-define-cmd "wq" #'save-and-kill-this-buffer)
+     (setq dashboard-banner-logo-title "FLYMACS, but evil")
      (use-package evil-collection
-       :demand
-       :commands (evil-collection-init)
+       :after evil
        :config
+       (setq evil-collection-company-use-tng nil)
        (evil-collection-init))
-     (use-package evil-surround
-       :demand
-       :commands (global-evil-surround-mode)
-       :config
-       (global-evil-surround-mode 1)))
+     (use-package evil-commentary
+       :after evil
+       :diminish
+       :config (evil-commentary-mode +1))
+     )
    )
   ('emacs
    (message "Using default keybinding."))
