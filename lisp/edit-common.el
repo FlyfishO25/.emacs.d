@@ -124,4 +124,18 @@
   :defer 2
   :bind ("M-z" . zzz-up-to-char))
 
+;; Treat undo history as a tree ;; from https://github.com/seagle0128/.emacs.d/blob/e840ab62fd5f1a8df9818d0678e7413145e4c8d3/lisp/init-edit.el#L320
+(use-package undo-tree
+  :diminish
+  :hook (after-init . global-undo-tree-mode)
+  :init
+  (setq undo-tree-visualizer-timestamps t
+        undo-tree-enable-undo-in-region nil
+        undo-tree-auto-save-history nil)
+
+  ;; HACK: keep the diff window
+  (with-no-warnings
+    (make-variable-buffer-local 'undo-tree-visualizer-diff)
+    (setq-default undo-tree-visualizer-diff t)))
+
 ;;; edit-common.el ends here
