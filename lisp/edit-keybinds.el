@@ -1,4 +1,4 @@
-;;; edit-keybinds.el --- setup keybinds for emacs
+;;; edit-keybinds.el --- setup keybinds for emacs ;; -*- lexical-binding: t -*-
 
 ;; This file is not part of GNU Emacs.
 ;;
