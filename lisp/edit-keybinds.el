@@ -72,7 +72,8 @@ to be added to `xah-fly-insert-mode-activate-hook'"
      :init
      (setq evil-want-C-u-scroll t
            evil-want-keybinding nil
-           evil-shift-width 4)
+           evil-shift-width 4
+           evil-undo-system 'undo-tree)
      :hook (after-init . evil-mode)
      :preface
      (defun save-and-kill-this-buffer ()
