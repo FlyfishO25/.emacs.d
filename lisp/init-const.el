@@ -30,6 +30,7 @@
 
 (defconst flymacs-files-to-compile
   '((concat user-emacs-directory "config-user.el")
+    (concat user-emacs-directory "site-lisp/xah-fly-keys/xah-fly-keys.el")
     (concat user-emacs-directory "site-lisp/xah-fly-keys.el")
     (concat user-emacs-directory "init.el")
     (concat user-emacs-directory "site-lisp/ox-html5presentation.el")

@@ -1,4 +1,5 @@
-;;; edit-keybinds.el --- setup keybinds for emacs 
+;;; edit-keybinds.el --- setup keybinds for emacs -*- lexical-binding: t; -*-
+
 ;; This file is not part of GNU Emacs.
 ;;
 ;; This program is free software; you can redistribute it and/or
@@ -33,7 +34,10 @@
 (pcase flymacs-keybinding
   ('xah
    (use-package xah-fly-keys
-     :load-path "site-lisp/"
+     :load-path (lambda ()
+                  (if (file-exists-p (expand-file-name "site-lisp/xah-fly-keys/xah-fly-keys.el" user-emacs-directory))
+                      "site-lisp/xah-fly-keys"
+                    "site-lisp/xah-fly-keys.el"))
      :demand
      :commands (xah-fly-keys-set-layout
                 xah-fly-keys)

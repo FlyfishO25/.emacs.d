@@ -48,7 +48,7 @@ Otherwise, if it is not currently in the git merge state, load it."
                     (not (eq system-type 'darwin)))
           (system-packages-install "coreutils")))
     (message "Cannot auto install ripgrep executable (rg), please install it."))
-)
+  )
 
 (defun byte-compile-init-files (file)
   "Automatically compile FILE."
@@ -71,11 +71,12 @@ Otherwise, if it is not currently in the git merge state, load it."
 
 (defun flymacs-compile-file (file)
   "Byte compile FILE, you should make sure that FILE is a .el file."
-  (if (file-newer-than-file-p
-       (file-truename file)
-       (file-truename (concat (file-name-directory file) (concat (car (split-string (file-name-nondirectory file) "\\.")) ".elc"))))
-      (byte-compile-init-files file))
-  )
+  (if (file-exists-p file)
+      (if (file-newer-than-file-p
+           (file-truename file)
+           (file-truename (concat (file-name-directory file) (concat (car (split-string (file-name-nondirectory file) "\\.")) ".elc"))))
+          (byte-compile-init-files file))
+    ))
 
 (defun icons-displayable-p ()
   "Return non-nil if `all-the-icons' is displayable."
