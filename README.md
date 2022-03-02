@@ -20,6 +20,10 @@ Just clone this repo to your home directory:
 ```sh
 mv ~/.emacs.d ~/.emacs.d.bak # if you have your own Emacs configuration, then make a backup
 git clone https://github.com/Flyfish/.emacs.d ~/.emacs.d
+
+# it is suggested to run the following commands after git clone
+cd ~/.emacs.d
+git submodule update --init
 ```
 
 ## Credits
