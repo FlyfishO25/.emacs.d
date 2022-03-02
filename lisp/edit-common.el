@@ -63,27 +63,12 @@
             )
           )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Enable terminal emacs to copy and paste from system clipboard
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun osx-copy (beg end)
-  (interactive "r")
-  (call-process-region beg end  "pbcopy"))
-
-(defun osx-paste ()
-  (interactive)
-  (if (region-active-p) (delete-region (region-beginning) (region-end)) nil)
-  (call-process "pbpaste" nil t nil))
-
 (when (string= system-type "darwin")
   (unless (executable-find "gls")
     (message "We can not detect gls program in this machine, maybe you need to install homebrew and then install it."))
   (setq dired-use-ls-dired t
         insert-directory-program "/usr/local/bin/gls"
         dired-listing-switches "-aBhl --group-directories-first"))
-
-(global-set-key (kbd "C-c M-w") 'osx-copy)
-(global-set-key (kbd "C-c C-y") 'osx-paste)
 
 (use-package anzu
   :diminish

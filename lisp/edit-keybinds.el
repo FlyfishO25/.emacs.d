@@ -1,5 +1,4 @@
-;;; edit-keybinds.el --- setup keybinds for emacs ;; -*- lexical-binding: t -*-
-
+;;; edit-keybinds.el --- setup keybinds for emacs 
 ;; This file is not part of GNU Emacs.
 ;;
 ;; This program is free software; you can redistribute it and/or
@@ -120,6 +119,8 @@ to be added to `xah-fly-insert-mode-activate-hook'"
 (global-set-key (kbd "C-r") 'replace-string)
 ;; Set default C-x C-b to ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-c M-w") 'osx-copy)
+(global-set-key (kbd "C-c C-y") 'osx-paste)
 
 ;;; edit-keybinds.el ends here
 

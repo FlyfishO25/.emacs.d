@@ -53,7 +53,7 @@
   (loadpkg 'ui-flycheck)
   (loadpkg 'ui-cnfont t)
 
-  (add-hook 'after-init-hook (lambda () (loadpkg 'edit-common t)))
+  (loadpkg 'edit-common t)
   (loadpkg 'edit-autosave t)
   (auto-save-enable)
   ;; (loadpkg 'edit-xah-fly-keys t)
