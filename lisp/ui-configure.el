@@ -42,6 +42,7 @@
       )
 
 (use-package all-the-icons
+  :if (icons-displayable-p)
   :config
   (with-no-warnings
     (defun all-the-icons-reset ()

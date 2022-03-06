@@ -48,6 +48,9 @@
 
 (unless (boundp 'completion-style)
   (setq completion-style 'childframe)
-  (message "You have not set completion-style, use default option 'childframe."))
+  )
+
+(unless (boundp 'flymacs-ui)
+  (setq flymacs-ui 'rich))
 
 ;;; init-user.el ends here

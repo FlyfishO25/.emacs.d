@@ -82,6 +82,7 @@ Otherwise, if it is not currently in the git merge state, load it."
   "Return non-nil if `all-the-icons' is displayable."
   (and display-icon
        (display-graphic-p)
+       (eq flymacs-ui 'rich)
        (require 'all-the-icons nil t)))
 
 (defmacro use-package-hook! (package when &rest body)

@@ -52,6 +52,8 @@ to be added to `xah-fly-command-mode-activate-hook'"
        (interactive)
        (define-key xah-fly-command-map (kbd "n") 'swiper)
        (define-key xah-fly-command-map (kbd "2") 'delete-window)
+       (define-key xah-fly-command-map (kbd "M-<SPC>") nil)
+       (setq flymacs--xah-status "Cmd")
        ;; more here
        )
 
@@ -60,6 +62,7 @@ to be added to `xah-fly-command-mode-activate-hook'"
 to be added to `xah-fly-insert-mode-activate-hook'"
        (interactive)
        (define-key xah-fly-insert-map (kbd "M-<SPC>") 'xah-fly-command-mode-activate)
+       (setq flymacs--xah-status "Ins")
        ;; more here
        )
 

@@ -202,6 +202,7 @@
   :init (prescient-persist-mode 1))
 
 (use-package all-the-icons-ivy-rich
+  :if (icons-displayable-p)
   :init (all-the-icons-ivy-rich-mode 1))
 
 (use-package ivy-rich

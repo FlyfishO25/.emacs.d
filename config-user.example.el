@@ -26,6 +26,11 @@
 ;; You can also set it to:
 ;; (setq flymacs-theme-auto 'doom-one)
 
+;; UI
+;; (setq flymacs-ui 'rich) ; 'rich or 'simple to choose different ui type
+;; If you like a more colorful, rich UI with icons, choose 'rich.
+;; Otherwise, choose 'simple will give you a clean, simple UI.
+
 ;; C/C++
 ;; (setq flymacs-cpp-style "google") ;; see C-h v c-style-alist or google
 
