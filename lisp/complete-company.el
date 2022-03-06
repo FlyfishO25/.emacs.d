@@ -118,7 +118,7 @@
             :diminish
             :defines company-box-icons-all-the-icons
             :hook (company-mode . company-box-mode)
-            :init (setq company-box-enable-icon display-icon
+            :init (setq company-box-enable-icon (icons-displayable-p)
                         company-box-backends-colors nil
                         company-box-doc-delay 0.1)
             :config
