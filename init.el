@@ -53,7 +53,7 @@
   (loadpkg 'ui-flycheck)
   (loadpkg 'ui-cnfont t)
 
-  ;; (add-hook 'after-init-hook (lambda () (loadpkg 'edit-common t)))
+
   (add-hook 'after-init-hook (lambda ()
                                (loadpkg 'edit-common t)
                                (loadpkg 'edit-autosave t)
@@ -63,13 +63,28 @@
                                (loadpkg 'init-ivy t)
                                (loadpkg 'init-hydra t)
 
+			       (loadpkg 'edit-common t)
+			       (loadpkg 'edit-autosave t)
+			       (auto-save-enable)
+			       ;; (loadpkg 'edit-xah-fly-keys t)
+			       (loadpkg 'edit-keybinds t)
+			       
+			       (loadpkg 'init-ivy t)
+			       (loadpkg 'init-hydra t)
                                         ; code editing
-                               (loadpkg 'lang-python)
-                               (loadpkg 'lang-c)
-                               (loadpkg 'complete-lsp)
+
+			       (loadpkg 'lang-python)
+			       (loadpkg 'lang-c)
+
+                                        ; code completion
+
+                                        ; code editing
+			       (loadpkg 'lang-python)
+			       (loadpkg 'lang-c)
+			       (loadpkg 'complete-lsp)
 
                                         ; other modes
-                               (loadpkg 'init-org)
+			       (loadpkg 'init-org)
                                (add-hook 'org-mode-hook (lambda () (loadpkg 'init-roam)))
                                (loadpkg 'reading)
                                (loadpkg 'init-git)

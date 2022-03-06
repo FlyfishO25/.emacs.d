@@ -4,7 +4,7 @@
                 all-the-icons-material)
     :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
     :init
-    (setq dashboard-banner-logo-title "GNU EMACS"
+    (setq dashboard-banner-logo-title "FLYMACS"
           dashboard-startup-banner 'logo
           dashboard-page-separator "\n\f\n"
           dashboard-center-content t

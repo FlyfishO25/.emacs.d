@@ -1,3 +1,29 @@
+;;; edit-common.el --- setup basic edit configures. -*- lexical-binding: t; -*-
+
+;; This file is not part of GNU Emacs.
+;;
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 3, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+;; Floor, Boston, MA 02110-1301, USA.
+;;
+
+;;; Commentary:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Setup basic edit configures
+
+;;; Code:
+
 ;; move window
 (windmove-default-keybindings)
 ;; Overwrite region selected
@@ -63,27 +89,12 @@
             )
           )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Enable terminal emacs to copy and paste from system clipboard
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun osx-copy (beg end)
-  (interactive "r")
-  (call-process-region beg end  "pbcopy"))
-
-(defun osx-paste ()
-  (interactive)
-  (if (region-active-p) (delete-region (region-beginning) (region-end)) nil)
-  (call-process "pbpaste" nil t nil))
-
 (when (string= system-type "darwin")
   (unless (executable-find "gls")
     (message "We can not detect gls program in this machine, maybe you need to install homebrew and then install it."))
   (setq dired-use-ls-dired t
         insert-directory-program "/usr/local/bin/gls"
         dired-listing-switches "-aBhl --group-directories-first"))
-
-(global-set-key (kbd "C-c M-w") 'osx-copy)
-(global-set-key (kbd "C-c C-y") 'osx-paste)
 
 (use-package anzu
   :diminish
@@ -130,5 +141,19 @@
   (drag-stuff-global-mode 1)
   (drag-stuff-define-keys)
 )
+
+;; Treat undo history as a tree ;; from https://github.com/seagle0128/.emacs.d/blob/e840ab62fd5f1a8df9818d0678e7413145e4c8d3/lisp/init-edit.el#L320
+(use-package undo-tree
+  :diminish
+  :hook (after-init . global-undo-tree-mode)
+  :init
+  (setq undo-tree-visualizer-timestamps t
+        undo-tree-enable-undo-in-region nil
+        undo-tree-auto-save-history nil)
+
+  ;; HACK: keep the diff window
+  (with-no-warnings
+    (make-variable-buffer-local 'undo-tree-visualizer-diff)
+    (setq-default undo-tree-visualizer-diff t)))
 
 ;;; edit-common.el ends here

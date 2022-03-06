@@ -1,10 +1,10 @@
-![LOGO](./media/logo.png)
+![logo](./media/logo.png)
 
-## FLYMACS [![Build Status](https://github.com/FlyfishO25/.emacs.d/workflows/CI/badge.svg)](https://github.com/FlyfishO25/.emacs.d/actions?query=workflow%3ACI)
+## FLYmacs [![Build Status](https://github.com/FlyfishO25/.emacs.d/workflows/CI/badge.svg)](https://github.com/FlyfishO25/.emacs.d/actions?query=workflow%3ACI)
 
 ## Introduction
 
-Flymacs is an easy-to-use and beautiful Emacs configuration.
+This is an easy-to-use and beautiful Emacs configuration, powered by myself.
 
 ## Prerequisites
 
@@ -20,6 +20,10 @@ Just clone this repo to your home directory:
 ```sh
 mv ~/.emacs.d ~/.emacs.d.bak # if you have your own Emacs configuration, then make a backup
 git clone https://github.com/Flyfish/.emacs.d ~/.emacs.d
+
+# it is suggested to run the following commands after git clone
+cd ~/.emacs.d
+git submodule update --init
 ```
 
 ## Credits

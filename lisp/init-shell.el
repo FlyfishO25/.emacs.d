@@ -1,9 +1,4 @@
-;;; init-const.el --- define constants	-*- lexical-binding: t -*-
-
-;; Copyright (C) 2022 FlyfishO25
-
-;; Author: FlyfishO25 <markzhou0125@gmail.com>
-;; URL: https://github.com/FlyfishO25/.emacs.d
+;;; init-shell.el --- init shell and term functions ;; -*- lexical-binding: t -*-
 
 ;; This file is not part of GNU Emacs.
 ;;
@@ -24,19 +19,18 @@
 ;;
 
 ;;; Commentary:
-;; Define some constants used in flymacs.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; This will setup vterm.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;; Code:
 
-(defconst flymacs-files-to-compile
-  '((concat user-emacs-directory "config-user.el")
-    (concat user-emacs-directory "site-lisp/xah-fly-keys/xah-fly-keys.el")
-    (concat user-emacs-directory "site-lisp/xah-fly-keys.el")
-    (concat user-emacs-directory "init.el")
-    (concat user-emacs-directory "site-lisp/ox-html5presentation.el")
-    )
-  )
+(when (and module-file-suffix
+           (executable-find "cmake")
+           (executable-find "libtool")
+           (executable-find "make"))
+  (use-package vterm
+    :init
+    (setq vterm-always-compile-module t)))
 
-(provide 'init-const)
-
-;;; init-const.el ends here
+;;; init-shell.el ends here

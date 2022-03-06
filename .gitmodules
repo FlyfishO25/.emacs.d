@@ -1,0 +1,3 @@
+[submodule "site-lisp/xah-fly-keys"]
+	path = site-lisp/xah-fly-keys
+	url = https://github.com/xahlee/xah-fly-keys.git

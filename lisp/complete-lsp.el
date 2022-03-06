@@ -227,6 +227,7 @@
        :init (setq lsp-ui-sideline-show-diagnostics nil
                    lsp-ui-sideline-ignore-duplicate t
                    lsp-ui-doc-delay 0.1
+                   lsp-ui-doc-position 'at-point
                    lsp-ui-doc-border (face-foreground 'font-lock-comment-face nil t)
                    lsp-ui-imenu-colors `(,(face-foreground 'font-lock-keyword-face)
                                          ,(face-foreground 'font-lock-string-face)
@@ -565,5 +566,47 @@
      (when (>= emacs-major-version 25.2)
        (use-package lsp-java
          :hook (java-mode . (lambda () (require 'lsp-java)))))))
+
+  (when (memq centaur-lsp '(lsp-mode eglot))
+    ;; Enable LSP in org babel
+    ;; https://github.com/emacs-lsp/lsp-mode/issues/377
+    (cl-defmacro lsp-org-babel-enable (lang)
+      "Support LANG in org source code block."
+      (cl-check-type lang stringp)
+      (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
+             (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
+        `(progn
+           (defun ,intern-pre (info)
+             (setq buffer-file-name (or (->> info caddr (alist-get :file))
+                                        "org-src-babel.tmp"))
+             (pcase centaur-lsp
+               ('eglot
+                (when (fboundp 'eglot-ensure)
+                  (eglot-ensure)))
+               ('lsp-mode
+                (when (fboundp 'lsp-deferred)
+                  ;; Avoid headerline conflicts
+                  (setq-local lsp-headerline-breadcrumb-enable nil)
+                  (lsp-deferred)))
+               (_
+                (user-error "LSP:: invalid `centaur-lsp' type"))))
+           (put ',intern-pre 'function-documentation
+                (format "Enable `%s' in the buffer of org source block (%s)."
+                        centaur-lsp (upcase ,lang)))
+
+           (if (fboundp ',edit-pre)
+               (advice-add ',edit-pre :after ',intern-pre)
+             (progn
+               (defun ,edit-pre (info)
+                 (,intern-pre info))
+               (put ',edit-pre 'function-documentation
+                    (format "Prepare local buffer environment for org source block (%s)."
+                            (upcase ,lang))))))))
+
+    (defvar org-babel-lang-list
+      '("go" "python" "ipython" "ruby" "js" "css" "sass" "c" "rust" "java" "cpp" "c++"))
+    (add-to-list 'org-babel-lang-list (if (>= emacs-major-version 26) "shell" "sh"))
+    (dolist (lang org-babel-lang-list)
+      (eval `(lsp-org-babel-enable ,lang))))
 
 ;;; complete-lsp.el ends here

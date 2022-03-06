@@ -1,16 +1,14 @@
 ;;; xah-fly-keys.el --- ergonomic modal keybinding minor mode. -*- coding: utf-8; lexical-binding: t; -*-
 
-;; Copyright © 2013-2021, by Xah Lee
+;; Copyright © 2013-2022 by Xah Lee
 
 ;; Author: Xah Lee ( http://xahlee.info/ )
-;; Version: 15.21.20211009110616
-;; Package-Version: 20211009.1810
-;; Package-Commit: de43f45e5adc5342937a9bb66f5d00b2c02c16a7
+;; Version: 16.13.20220216220117
 ;; Created: 10 Sep 2013
 ;; Package-Requires: ((emacs "24.1"))
 ;; Keywords: convenience, emulations, vim, ergoemacs
-;; License: GPL v3
-;; Homepage: http://ergoemacs.org/misc/ergoemacs_vi_mode.html
+;; License: GPL v2. Tell your friends to buy a copy.
+;; Homepage: http://xahlee.info/emacs/misc/ergoemacs_vi_mode.html
 
 ;; This file is not part of GNU Emacs.
 
@@ -66,7 +64,7 @@
 
 ;; Important command/insert mode switch keys:
 
-;; xah-fly-command-mode-activate (press 【<home>】 or 【F8】 or 【Alt+Space】 or 【menu】)
+;; xah-fly-command-mode-activate (press <home> or F8 or Alt+Space or Ctrl+Space or menu key)
 
 ;; xah-fly-insert-mode-activate  (when in command mode, press qwerty letter key f. (Dvorak key u))
 
@@ -120,14 +118,14 @@
 ;; I highly recommend setting 【capslock】 to send 【Home】. So that it acts as `xah-fly-command-mode-activate'.
 ;; see
 ;; How to Make the CapsLock Key do Home Key
-;; http://ergoemacs.org/misc/capslock_do_home_key.html
+;; http://xahlee.info/emacs/misc/capslock_do_home_key.html
 
 ;; If you have a bug, post on github.
 
 ;; For detail about design and other info, see home page at
-;; http://ergoemacs.org/misc/ergoemacs_vi_mode.html
+;; http://xahlee.info/emacs/misc/ergoemacs_vi_mode.html
 
-;; If you like this project, Buy Xah Emacs Tutorial http://ergoemacs.org/emacs/buy_xah_emacs_tutorial.html or make a donation. Thanks.
+;; If you like this project, Buy Xah Emacs Tutorial http://xahlee.info/emacs/emacs/buy_xah_emacs_tutorial.html or make a donation. Thanks.
 
 ;; HHH___________________________________________________________________
 ;;; Code:
@@ -145,22 +143,29 @@
 (defvar xah-fly-command-mode-activate-hook nil "Hook for `xah-fly-command-mode-activate'")
 (defvar xah-fly-insert-mode-activate-hook nil "Hook for `xah-fly-insert-mode-activate'")
 
+(defvar xah-fly-command-mode-indicator "c"
+  "Character in mode line indicating command mode is active.")
+(defvar xah-fly-insert-mode-indicator "i"
+  "Character in mode line indicating insert mode is active.")
+
 (defcustom xah-fly-use-control-key t
-  "If nil, do not bind any control key. When t, standard keys for open, close, paste, are bound."
+  "If nil, do not bind any control key. When t, standard keys for open, close, copy, paste etc, are bound."
   :type 'boolean
   :group 'xah-fly-keys)
+
 (defcustom xah-fly-use-meta-key t
   "If nil, do not bind any meta key."
   :type 'boolean
   :group 'xah-fly-keys)
+
 (defcustom xah-fly-use-isearch-arrows t
-  "If nil, do not bind the arrow keys to move between matches in Isearch."
+  "If nil, no change to any key in isearch (`isearch-forward'). Otherwise, arrow keys are for moving between occurrences, and C-v is paste."
   :type 'boolean
   :group 'xah-fly-keys)
 
 (defun xah-get-bounds-of-block ()
   "Return the boundary (START . END) of current block.
-Version 2021-08-12"
+Version: 2021-08-12"
   (let ( $p1 $p2 ($blankRegex "\n[ \t]*\n"))
     (save-excursion
       (setq $p1 (if (re-search-backward $blankRegex nil 1)
@@ -173,7 +178,7 @@ Version 2021-08-12"
 
 (defun xah-get-bounds-of-block-or-region ()
   "If region is active, return its boundary, else same as `xah-get-bounds-of-block'.
-Version 2021-08-12"
+Version: 2021-08-12"
   (if (region-active-p)
       (cons (region-beginning) (region-end))
     (xah-get-bounds-of-block)))
@@ -185,8 +190,8 @@ Version 2021-08-12"
   "Move cursor to last mark position of current buffer.
 Call this repeatedly will cycle all positions in `mark-ring'.
 
-URL `http://ergoemacs.org/emacs/emacs_jump_to_previous_position.html'
-Version 2016-04-04"
+URL `http://xahlee.info/emacs/emacs/emacs_jump_to_previous_position.html'
+Version: 2016-04-04"
   (interactive)
   (set-mark-command t))
 
@@ -197,8 +202,8 @@ Version 2016-04-04"
 • When called again, move cursor backward by jumping over any sequence of whitespaces containing 2 blank lines.
 • if `visual-line-mode' is on, beginning of line means visual line.
 
-URL `http://ergoemacs.org/emacs/emacs_keybinding_design_beginning-of-line-or-block.html'
-Version 2018-06-04 2021-03-16"
+URL `http://xahlee.info/emacs/emacs/emacs_keybinding_design_beginning-of-line-or-block.html'
+Version: 2018-06-04 2021-03-16"
   (interactive)
   (let (($p (point)))
     (if (or (equal (point) (line-beginning-position))
@@ -223,8 +228,8 @@ Version 2018-06-04 2021-03-16"
 • When called again, move cursor forward by jumping over any sequence of whitespaces containing 2 blank lines.
 • if `visual-line-mode' is on, end of line means visual line.
 
-URL `http://ergoemacs.org/emacs/emacs_keybinding_design_beginning-of-line-or-block.html'
-Version 2018-06-04 2021-03-16"
+URL `http://xahlee.info/emacs/emacs/emacs_keybinding_design_beginning-of-line-or-block.html'
+Version: 2018-06-04 2021-03-16"
   (interactive)
   (if (or (equal (point) (line-end-position))
           (eq last-command this-command))
@@ -266,16 +271,16 @@ Version 2018-06-04 2021-03-16"
   "Move cursor to the next occurrence of punctuation.
 The list of punctuations to jump to is defined by `xah-punctuation-regex'
 
-URL `http://ergoemacs.org/emacs/emacs_jump_to_punctuations.html'
-Version 2017-06-26"
+URL `http://xahlee.info/emacs/emacs/emacs_jump_to_punctuations.html'
+Version: 2017-06-26"
   (interactive "p")
   (re-search-forward xah-punctuation-regex nil t n))
 
 (defun xah-backward-punct (&optional n)
   "Move cursor to the previous occurrence of punctuation.
 See `xah-forward-punct'
-URL `http://ergoemacs.org/emacs/emacs_jump_to_punctuations.html'
-Version 2017-06-26"
+URL `http://xahlee.info/emacs/emacs/emacs_jump_to_punctuations.html'
+Version: 2017-06-26"
   (interactive "p")
   (re-search-backward xah-punctuation-regex nil t n))
 
@@ -283,8 +288,8 @@ Version 2017-06-26"
   "Move cursor to the previous occurrence of left bracket.
 The list of brackets to jump to is defined by `xah-left-brackets'.
 
-URL `http://ergoemacs.org/emacs/emacs_navigating_keys_for_brackets.html'
-Version 2015-10-01"
+URL `http://xahlee.info/emacs/emacs/emacs_navigating_keys_for_brackets.html'
+Version: 2015-10-01"
   (interactive)
   (re-search-backward (regexp-opt xah-left-brackets) nil t))
 
@@ -292,8 +297,8 @@ Version 2015-10-01"
   "Move cursor to the next occurrence of right bracket.
 The list of brackets to jump to is defined by `xah-right-brackets'.
 
-URL `http://ergoemacs.org/emacs/emacs_navigating_keys_for_brackets.html'
-Version 2015-10-01"
+URL `http://xahlee.info/emacs/emacs/emacs_navigating_keys_for_brackets.html'
+Version: 2015-10-01"
   (interactive)
   (re-search-forward (regexp-opt xah-right-brackets) nil t))
 
@@ -302,8 +307,8 @@ Version 2015-10-01"
 If cursor is not on a bracket, call `backward-up-list'.
 The list of brackets to jump to is defined by `xah-left-brackets' and `xah-right-brackets'.
 
-URL `http://ergoemacs.org/emacs/emacs_navigating_keys_for_brackets.html'
-Version 2016-11-22"
+URL `http://xahlee.info/emacs/emacs/emacs_navigating_keys_for_brackets.html'
+Version: 2016-11-22"
   (interactive)
   (if (nth 3 (syntax-ppss))
       (backward-up-list 1 'ESCAPE-STRINGS 'NO-SYNTAX-CROSSING)
@@ -321,8 +326,8 @@ Version 2016-11-22"
 If there are consecutive quotes of the same char, keep moving until none.
 Returns `t' if found, else `nil'.
 
-URL `http://ergoemacs.org/emacs/emacs_navigating_keys_for_brackets.html'
-Version 2016-07-23"
+URL `http://xahlee.info/emacs/emacs/emacs_navigating_keys_for_brackets.html'
+Version: 2016-07-23"
   (interactive)
   (if (re-search-forward "\\\"+" nil t)
       t
@@ -334,8 +339,8 @@ Version 2016-07-23"
   "Call `xah-forward-quote' twice.
 Returns `t' if found, else `nil'.
 
-URL `http://ergoemacs.org/emacs/emacs_navigating_keys_for_brackets.html'
-Version 2016-07-23"
+URL `http://xahlee.info/emacs/emacs/emacs_navigating_keys_for_brackets.html'
+Version: 2016-07-23"
   (interactive)
   (when (xah-forward-quote)
     (xah-forward-quote)))
@@ -345,8 +350,8 @@ Version 2016-07-23"
 Place cursor at the position after the left quote.
 Repeated call will find the next string.
 
-URL `http://ergoemacs.org/emacs/emacs_navigating_keys_for_brackets.html'
-Version 2016-11-22"
+URL `http://xahlee.info/emacs/emacs/emacs_navigating_keys_for_brackets.html'
+Version: 2016-11-22"
   (interactive)
   (let (($pos (point)))
     (if (nth 3 (syntax-ppss))
@@ -358,6 +363,22 @@ Version 2016-11-22"
     (when (<= (point) $pos)
       (progn (re-search-forward "\\\"" nil t)))))
 
+(defun xah-sort-lines ()
+  "Like `sort-lines' but if no region, do the current block.
+Version 2022-01-22 2022-01-23"
+  (interactive)
+  (let ($p1 $p2)
+    (let (($bds (xah-get-bounds-of-block-or-region))) (setq $p1 (car $bds) $p2 (cdr $bds)))
+    (sort-lines current-prefix-arg $p1 $p2)))
+
+(defun xah-narrow-to-region ()
+  "Same as `narrow-to-region', but if no selection, narrow to the current block.
+Version 2022-01-22"
+  (interactive)
+  (let ($p1 $p2)
+    (let (($bds (xah-get-bounds-of-block-or-region))) (setq $p1 (car $bds) $p2 (cdr $bds)))
+    (narrow-to-region $p1 $p2)))
+
 ;; HHH___________________________________________________________________
 ;; editing commands
 
@@ -366,8 +387,8 @@ Version 2016-11-22"
 When called repeatedly, append copy subsequent lines.
 When `universal-argument' is called first, copy whole buffer (respects `narrow-to-region').
 
-URL `http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html'
-Version 2019-10-30"
+URL `http://xahlee.info/emacs/emacs/emacs_copy_cut_current_line.html'
+Version: 2019-10-30"
   (interactive)
   (let ((inhibit-field-text-motion nil))
     (if current-prefix-arg
@@ -402,8 +423,8 @@ Version 2019-10-30"
   "Cut current line or selection.
 When `universal-argument' is called first, cut whole buffer (respects `narrow-to-region').
 
-URL `http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html'
-Version 2015-06-10"
+URL `http://xahlee.info/emacs/emacs/emacs_copy_cut_current_line.html'
+Version: 2015-06-10"
   (interactive)
   (if current-prefix-arg
       (progn ; not using kill-region because we don't want to include previous kill
@@ -417,8 +438,8 @@ Version 2015-06-10"
   "Copy buffer or selection content to `kill-ring'.
 Respects `narrow-to-region'.
 
-URL `http://ergoemacs.org/emacs/emacs_copy_cut_all_or_region.html'
-Version 2015-08-22"
+URL `http://xahlee.info/emacs/emacs/emacs_copy_cut_all_or_region.html'
+Version: 2015-08-22"
   (interactive)
   (if (region-active-p)
       (progn
@@ -432,8 +453,8 @@ Version 2015-08-22"
   "Cut buffer or selection content to `kill-ring'.
 Respects `narrow-to-region'.
 
-URL `http://ergoemacs.org/emacs/emacs_copy_cut_all_or_region.html'
-Version 2015-08-22"
+URL `http://xahlee.info/emacs/emacs/emacs_copy_cut_all_or_region.html'
+Version: 2015-08-22"
   (interactive)
   (if (region-active-p)
       (progn
@@ -446,7 +467,7 @@ Version 2015-08-22"
 (defun xah-copy-all ()
   "Put the whole buffer content into the `kill-ring'.
 (respects `narrow-to-region')
-Version 2016-10-06"
+Version: 2016-10-06"
   (interactive)
   (kill-new (buffer-string))
   (message "Buffer content copied."))
@@ -454,7 +475,7 @@ Version 2016-10-06"
 (defun xah-cut-all ()
   "Cut the whole buffer content into the `kill-ring'.
 Respects `narrow-to-region'.
-Version 2017-01-03"
+Version: 2017-01-03"
   (interactive)
   (kill-new (buffer-string))
   (delete-region (point-min) (point-max)))
@@ -465,8 +486,8 @@ This command calls `yank', and if repeated, call `yank-pop'.
 
 When `universal-argument' is called first with a number arg, paste that many times.
 
-URL `http://ergoemacs.org/emacs/emacs_paste_or_paste_previous.html'
-Version 2017-07-25 2020-09-08"
+URL `http://xahlee.info/emacs/emacs/emacs_paste_or_paste_previous.html'
+Version: 2017-07-25 2020-09-08"
   (interactive)
   (progn
     (when (and delete-selection-mode (region-active-p))
@@ -485,8 +506,8 @@ Version 2017-07-25 2020-09-08"
 (defun xah-show-kill-ring ()
   "Insert all `kill-ring' content in a new buffer named *copy history*.
 
-URL `http://ergoemacs.org/emacs/emacs_show_kill_ring.html'
-Version 2019-12-02 2021-07-03"
+URL `http://xahlee.info/emacs/emacs/emacs_show_kill_ring.html'
+Version: 2019-12-02 2021-07-03"
   (interactive)
   (let (($buf (generate-new-buffer "*copy history*"))
         (inhibit-read-only t))
@@ -499,16 +520,24 @@ Version 2019-12-02 2021-07-03"
        kill-ring))
     (goto-char (point-min))))
 
+(defun xah-delete-left-char-or-selection ()
+  "Delete backward 1 character, or selection.
+Version: 2022-01-22"
+  (interactive)
+  (if (region-active-p)
+      (progn (delete-region (region-beginning) (region-end)))
+    (delete-char -1)))
+
 (defun xah-delete-backward-char-or-bracket-text ()
-  "Delete backward 1 character or delete quote/bracket pair and inner text.
-If the char to the left of cursor is a matching pair, delete it and inner text, push the deleted text to `kill-ring'.
+  "Delete 1 character or delete quote/bracket pair and inner text.
+If the char to the left of cursor is a matching pair, delete it alone with inner text, push the deleted text to `kill-ring'.
 
 What char is considered bracket or quote is determined by current syntax table.
 
 If `universal-argument' is called first, do not delete inner text.
 
-URL `http://ergoemacs.org/emacs/emacs_delete_backward_char_or_bracket_text.html'
-Version 2017-07-02"
+URL `http://xahlee.info/emacs/emacs/emacs_delete_backward_char_or_bracket_text.html'
+Version: 2017-07-02"
   (interactive)
   (if (and delete-selection-mode (region-active-p))
       (delete-region (region-beginning) (region-end))
@@ -542,8 +571,8 @@ This command assumes the left of cursor is a right bracket, and there is a match
 
 What char is considered bracket or quote is determined by current syntax table.
 
-URL `http://ergoemacs.org/emacs/emacs_delete_backward_char_or_bracket_text.html'
-Version 2017-09-21"
+URL `http://xahlee.info/emacs/emacs/emacs_delete_backward_char_or_bracket_text.html'
+Version: 2017-09-21"
   (interactive)
   (progn
     (forward-sexp -1)
@@ -558,8 +587,8 @@ This command assumes the left of point is a right bracket, and there is a matchi
 
 What char is considered bracket or quote is determined by current syntax table.
 
-URL `http://ergoemacs.org/emacs/emacs_delete_backward_char_or_bracket_text.html'
-Version 2017-07-02"
+URL `http://xahlee.info/emacs/emacs/emacs_delete_backward_char_or_bracket_text.html'
+Version: 2017-07-02"
   (interactive)
   (let (( $p0 (point)) $p1)
     (forward-sexp -1)
@@ -581,8 +610,8 @@ This command assumes the char to the right of point is a left bracket or quote, 
 
 What char is considered bracket or quote is determined by current syntax table.
 
-URL `http://ergoemacs.org/emacs/emacs_delete_backward_char_or_bracket_text.html'
-Version 2017-07-02"
+URL `http://xahlee.info/emacs/emacs/emacs_delete_backward_char_or_bracket_text.html'
+Version: 2017-07-02"
   (interactive)
   (if DeleteInnerTextQ
       (progn
@@ -605,8 +634,8 @@ The first and last characters are used. (the middle is for convenience in ido se
 If the string contains “,2”, then the first 2 chars and last 2 chars are used, for example  \"[[bracket,2]]\".
 If ToChars is equal to string “none”, the brackets are deleted.
 
-URL `http://ergoemacs.org/emacs/elisp_change_brackets.html'
-Version 2020-11-01 2021-08-15"
+URL `http://xahlee.info/emacs/emacs/elisp_change_brackets.html'
+Version: 2020-11-01 2021-08-15"
   (interactive
    (let (($brackets
           '("(paren)"
@@ -729,8 +758,8 @@ Version 2020-11-01 2021-08-15"
   "Toggle the letter case of current word or selection.
 Always cycle in this order: Init Caps, ALL CAPS, all lower.
 
-URL `http://ergoemacs.org/emacs/modernization_upcase-word.html'
-Version 2020-06-26"
+URL `http://xahlee.info/emacs/emacs/modernization_upcase-word.html'
+Version: 2020-06-26"
   (interactive)
   (let ( (deactivate-mark nil) $p1 $p2)
     (if (region-active-p)
@@ -761,8 +790,8 @@ Version 2020-06-26"
 (defun xah-toggle-previous-letter-case ()
   "Toggle the letter case of the letter to the left of cursor.
 
-URL `http://ergoemacs.org/emacs/modernization_upcase-word.html'
-Version 2015-12-22"
+URL `http://xahlee.info/emacs/emacs/modernization_upcase-word.html'
+Version: 2015-12-22"
   (interactive)
   (let ((case-fold-search nil))
     (left-char 1)
@@ -774,8 +803,8 @@ Version 2015-12-22"
 (defun xah-upcase-sentence ()
   "Upcase first letters of sentences of current block or selection.
 
-URL `http://ergoemacs.org/emacs/emacs_upcase_sentence.html'
-Version 2020-12-08 2020-12-24 2021-08-13"
+URL `http://xahlee.info/emacs/emacs/emacs_upcase_sentence.html'
+Version: 2020-12-08 2020-12-24 2021-08-13"
   (interactive)
   (let ($p1 $p2)
     (let (($bds (xah-get-bounds-of-block-or-region))) (setq $p1 (car $bds) $p2 (cdr $bds)))
@@ -814,8 +843,8 @@ Capitalize first letter of each word, except words like {to, of, the, a, in, or,
 
 When called in a elisp program, Begin End are region boundaries.
 
-URL `http://ergoemacs.org/emacs/elisp_title_case_text.html'
-Version 2017-01-11 2021-03-30 2021-09-19"
+URL `http://xahlee.info/emacs/emacs/elisp_title_case_text.html'
+Version: 2017-01-11 2021-03-30 2021-09-19"
   (interactive)
   (let* (($skipChars "^\"<>(){}[]“”‘’‹›«»「」『』【】〖〗《》〈〉〔〕")
          ($p0 (point))
@@ -870,11 +899,29 @@ Version 2017-01-11 2021-03-30 2021-09-19"
                (replace-match (aref $x 1) t t)))
            $strPairs))))))
 
+(defun xah-add-space-after-comma ()
+  "Add a space after comma of current block or selection.
+and highlight changes made.
+Version 2022-01-20"
+  (interactive)
+  (let ($p1 $p2)
+    (let (($bds (xah-get-bounds-of-block-or-region))) (setq $p1 (car $bds) $p2 (cdr $bds)))
+    (save-restriction
+      (narrow-to-region $p1 $p2)
+      (goto-char (point-min))
+      (while
+          (re-search-forward ",\\b" nil t)
+        (replace-match ", ")
+        (overlay-put
+         (make-overlay
+          (match-beginning 0)
+          (match-end 0)) 'face 'highlight)))))
+
 (defun xah-delete-blank-lines ()
   "Delete all newline around cursor.
 
-URL `http://ergoemacs.org/emacs/emacs_shrink_whitespace.html'
-Version 2018-04-02"
+URL `http://xahlee.info/emacs/emacs/emacs_shrink_whitespace.html'
+Version: 2018-04-02"
   (interactive)
   (let ($p3 $p4)
           (skip-chars-backward "\n")
@@ -885,7 +932,7 @@ Version 2018-04-02"
 
 (defun xah-fly-delete-spaces ()
   "Delete space, tab, IDEOGRAPHIC SPACE (U+3000) around cursor.
-Version 2019-06-13"
+Version: 2019-06-13"
   (interactive)
   (let (p1 p2)
     (skip-chars-forward " \t　")
@@ -895,43 +942,35 @@ Version 2019-06-13"
     (delete-region p1 p2)))
 
 (defun xah-shrink-whitespaces ()
-  "Remove whitespaces around cursor to just one, or none.
+  "Remove whitespaces around cursor .
 
-Shrink any neighboring space tab newline characters to 1 or none.
-If cursor neighbor has space/tab, toggle between 1 or 0 space.
-If cursor neighbor are newline, shrink them to just 1.
-If already has just 1 whitespace, delete it.
+Shrink neighboring spaces, then newlines, then spaces again, leaving one space or newline at each step, till no more white space.
 
-URL `http://ergoemacs.org/emacs/emacs_shrink_whitespace.html'
-Version 2019-06-13"
+URL `http://xahlee.info/emacs/emacs/emacs_shrink_whitespace.html'
+Version: 2014-10-21 2021-11-26 2021-11-30"
   (interactive)
-  (let* (
-         ($eol-count 0)
+  (let* (($eol-count 0)
          ($p0 (point))
          $p1 ; whitespace begin
          $p2 ; whitespace end
          ($charBefore (char-before))
-         ($charAfter (char-after ))
-         ($space-neighbor-p (or (eq $charBefore 32) (eq $charBefore 9) (eq $charAfter 32) (eq $charAfter 9)))
-         $just-1-space-p
-         )
+         ($charAfter (char-after))
+         ($space-neighbor-p (or (eq $charBefore 32) (eq $charBefore 9) (eq $charAfter 32) (eq $charAfter 9))))
     (skip-chars-backward " \n\t　")
     (setq $p1 (point))
     (goto-char $p0)
     (skip-chars-forward " \n\t　")
     (setq $p2 (point))
     (goto-char $p1)
-    (while (search-forward "\n" $p2 t )
+    (while (search-forward "\n" $p2 t)
       (setq $eol-count (1+ $eol-count)))
-    (setq $just-1-space-p (eq (- $p2 $p1) 1))
     (goto-char $p0)
     (cond
      ((eq $eol-count 0)
-      (if $just-1-space-p
-          (xah-fly-delete-spaces)
-        (progn (xah-fly-delete-spaces)
-               (insert " ")))
-      )
+      (if (> (- $p2 $p1) 1)
+          (progn
+            (delete-horizontal-space) (insert " "))
+        (progn (delete-horizontal-space))))
      ((eq $eol-count 1)
       (if $space-neighbor-p
           (xah-fly-delete-spaces)
@@ -947,11 +986,11 @@ Version 2019-06-13"
           (xah-fly-delete-spaces)
         (progn
           (goto-char $p2)
-          (search-backward "\n" )
+          (search-backward "\n")
           (delete-region $p1 (point))
           (insert "\n"))))
      (t (progn
-          (message "nothing done. logic error 40873. shouldn't reach here" ))))))
+          (message "nothing done. logic error 40873. shouldn't reach here"))))))
 
 (defun xah-toggle-read-novel-mode ()
   "Setup current frame to be suitable for reading long novel/article text.
@@ -961,8 +1000,8 @@ Version 2019-06-13"
 • Proportional width font is used.
 Call again to toggle back.
 
-URL `http://ergoemacs.org/emacs/emacs_novel_reading_mode.html'
-Version 2019-01-30 2021-01-16"
+URL `http://xahlee.info/emacs/emacs/emacs_novel_reading_mode.html'
+Version: 2019-01-30 2021-01-16"
   (interactive)
   (if (eq (frame-parameter (selected-frame) 'width) 70)
       (progn
@@ -982,8 +1021,8 @@ Version 2019-01-30 2021-01-16"
 First call will break into multiple short lines. Repeated call toggles between short and long lines.
 This commands calls `fill-region' to do its work. Set `fill-column' for short line length.
 
-URL `http://ergoemacs.org/emacs/modernization_fill-paragraph.html'
-Version 2020-11-22 2021-08-13"
+URL `http://xahlee.info/emacs/emacs/modernization_fill-paragraph.html'
+Version: 2020-11-22 2021-08-13"
   (interactive)
   ;; This command symbol has a property “'longline-p”, the possible values are t and nil. This property is used to easily determine whether to compact or uncompact, when this command is called again
   (let ( ($isLongline (if (eq last-command this-command) (get this-command 'longline-p) t))
@@ -1000,8 +1039,8 @@ Version 2020-11-22 2021-08-13"
   "Replace newline chars in current paragraph by single spaces.
 This command does the inverse of `fill-paragraph'.
 
-URL `http://ergoemacs.org/emacs/emacs_unfill-paragraph.html'
-Version 2016-07-13"
+URL `http://xahlee.info/emacs/emacs/emacs_unfill-paragraph.html'
+Version: 2016-07-13"
   (interactive)
   (let ((fill-column most-positive-fixnum))
     (fill-paragraph)))
@@ -1010,8 +1049,8 @@ Version 2016-07-13"
   "Replace newline chars in region by single spaces.
 This command does the inverse of `fill-region'.
 
-URL `http://ergoemacs.org/emacs/emacs_unfill-paragraph.html'
-Version 2016-07-13"
+URL `http://xahlee.info/emacs/emacs/emacs_unfill-paragraph.html'
+Version: 2016-07-13"
   (interactive "r")
   (let ((fill-column most-positive-fixnum))
     (fill-region Begin End)))
@@ -1019,8 +1058,8 @@ Version 2016-07-13"
 (defun xah-change-newline-chars-to-one (Begin End)
   "Replace newline char sequence by just one.
 
-URL `http://ergoemacs.org/emacs/emacs_reformat_lines.html'
-Version 2021-07-06"
+URL `http://xahlee.info/emacs/emacs/emacs_reformat_lines.html'
+Version: 2021-07-06"
   (interactive "r")
   (save-excursion
     (save-restriction
@@ -1031,31 +1070,25 @@ Version 2021-07-06"
 (defun xah-reformat-whitespaces-to-one-space (Begin End)
   "Replace whitespaces by one space.
 
-URL `http://ergoemacs.org/emacs/emacs_reformat_lines.html'
-Version 2017-01-11"
+URL `http://xahlee.info/emacs/emacs/emacs_reformat_lines.html'
+Version: 2017-01-11 2022-01-08"
   (interactive "r")
-  (save-excursion
-    (save-restriction
+  (save-restriction
       (narrow-to-region Begin End)
       (goto-char (point-min))
-      (while
-          (search-forward "\n" nil 1)
-        (replace-match " "))
+      (while (search-forward "\n" nil 1) (replace-match " "))
       (goto-char (point-min))
-      (while
-          (search-forward "\t" nil 1)
-        (replace-match " "))
+      (while (search-forward "\t" nil 1) (replace-match " "))
       (goto-char (point-min))
-      (while
-          (re-search-forward "  +" nil 1)
-        (replace-match " ")))))
+      (while (re-search-forward " +" nil 1) (replace-match " "))
+      (goto-char (point-max))))
 
 (defun xah-reformat-to-multi-lines ( &optional Begin End MinLength)
   "Replace spaces by a newline at ~70 chars, on current block or selection.
 If `universal-argument' is called first, ask user for max width.
 
-URL `http://ergoemacs.org/emacs/emacs_reformat_lines.html'
-Version 2018-12-16 2021-07-06 2021-08-12"
+URL `http://xahlee.info/emacs/emacs/emacs_reformat_lines.html'
+Version: 2018-12-16 2021-07-06 2021-08-12"
   (interactive)
   (let ( $p1 $p2 $minlen )
     (setq $minlen (if MinLength MinLength (if current-prefix-arg (prefix-numeric-value current-prefix-arg) fill-column)))
@@ -1070,18 +1103,18 @@ Version 2018-12-16 2021-07-06 2021-08-12"
           (when (> (- (point) (line-beginning-position)) $minlen)
             (replace-match "\n" )))))))
 
-(defun xah-reformat-lines ( &optional Width)
+(defun xah-reformat-lines (&optional Width)
   "Reformat current block or selection into short lines or 1 long line.
 When called for the first time, change to one long line. Second call change it to multiple short lines. Repeated call toggles.
 If `universal-argument' is called first, ask user to type max length of line. By default, it is 70.
 
-URL `http://ergoemacs.org/emacs/emacs_reformat_lines.html'
+URL `http://xahlee.info/emacs/emacs/emacs_reformat_lines.html'
 Created 2016 or before.
-Version 2021-07-05 2021-08-13"
+Version: 2021-07-05 2021-08-13"
   (interactive)
   ;; This command symbol has a property 'is-long-p, the possible values are t and nil. This property is used to easily determine whether to compact or uncompact, when this command is called again
-  (let ( $isLong $width $p1 $p2)
-    (setq $width (if Width Width (if current-prefix-arg (prefix-numeric-value current-prefix-arg) 70 )))
+  (let ($isLong $width $p1 $p2)
+    (setq $width (if Width Width (if current-prefix-arg (prefix-numeric-value current-prefix-arg) 70)))
     (setq $isLong (if (eq last-command this-command) (get this-command 'is-long-p) nil))
     (let (($bds (xah-get-bounds-of-block-or-region))) (setq $p1 (car $bds) $p2 (cdr $bds)))
     (progn
@@ -1089,52 +1122,54 @@ Version 2021-07-05 2021-08-13"
           (xah-reformat-to-multi-lines $p1 $p2 $width)
         (if $isLong
             (xah-reformat-to-multi-lines $p1 $p2 $width)
-          (xah-reformat-whitespaces-to-one-space $p1 $p2)))
+          (progn
+            (xah-reformat-whitespaces-to-one-space $p1 $p2))))
       (put this-command 'is-long-p (not $isLong)))))
 
 (defun xah-reformat-to-sentence-lines ()
   "Reformat current block or selection into multiple lines by ending period.
-HTML anchor links “<a…>…</a>” is also placed on a new line.
-After this command is called, press space to repeat it.
+After this command is called, press - to repeat it.
 
-URL `http://ergoemacs.org/emacs/elisp_reformat_to_sentence_lines.html'
-Version 2020-12-02 2021-08-31"
+URL `http://xahlee.info/emacs/emacs/elisp_reformat_to_sentence_lines.html'
+Version: 2020-12-02 2022-01-26 2022-02-04 2022-02-10 2022-02-11"
   (interactive)
   (let ($p1 $p2)
     (let (($bds (xah-get-bounds-of-block-or-region))) (setq $p1 (car $bds) $p2 (cdr $bds)))
     (save-restriction
       (narrow-to-region $p1 $p2)
       (goto-char (point-min))
-      (while (search-forward "\n" nil t) (replace-match " " ))
+      (while (re-search-forward "\\([A-Za-z0-9]+\\)[ \t]*\n[ \t]*\\([A-Za-z0-9]+\\)" nil t)
+        (replace-match "\\1 \\2"))
       (goto-char (point-min))
-      (while (re-search-forward "  +" nil t) (replace-match " " ))
+      (while (re-search-forward "\\([,]\\)[ \t]*\n[ \t]*\\([A-Za-z0-9]+\\)" nil t)
+        (replace-match "\\1 \\2"))
       (goto-char (point-min))
-      (while (re-search-forward "\\. +\\([(0-9A-Za-z]+\\)" nil t) (replace-match ".\n\\1" ))
+      (while (re-search-forward "  +" nil t) (replace-match " "))
       (goto-char (point-min))
-      (while (search-forward "<a " nil t) (replace-match "\n<a " ))
-      (goto-char (point-min))
-      (while (re-search-forward "<br */> *" nil t) (replace-match "<br />\n" ))
+      (while (re-search-forward "\\. +\\([(0-9A-Za-z]+\\)" nil t) (replace-match ".\n\\1"))
       (goto-char (point-max))
-      (while (eq (char-before ) 32) (delete-char -1))))
+      (while (eq (char-before) 32) (delete-char -1))))
   (re-search-forward "\n+" nil 1)
-  (set-transient-map (let (($kmap (make-sparse-keymap))) (define-key $kmap (kbd "SPC") 'xah-reformat-to-sentence-lines ) $kmap)))
+  (set-transient-map (let (($kmap (make-sparse-keymap))) (define-key $kmap (kbd "-") 'xah-reformat-to-sentence-lines) $kmap)))
 
 (defun xah-space-to-newline ()
   "Replace space sequence to a newline char in current block or selection.
 
-URL `http://ergoemacs.org/emacs/emacs_space_to_newline.html'
-Version 2017-08-19 2021-08-12 2021-09-12"
+URL `http://xahlee.info/emacs/emacs/emacs_space_to_newline.html'
+Version: 2017-08-19 2021-08-12 2021-09-12 2021-11-28"
   (interactive)
   (let* (($bds (xah-get-bounds-of-block-or-region))
          ($p1 (car $bds))
          ($p2 (cdr $bds)))
-    (goto-char $p1)
-    (while (re-search-forward " +" $p2 t)
-      (replace-match "\n"))))
+    (save-restriction
+      (narrow-to-region $p1 $p2)
+      (goto-char (point-min))
+      (while (re-search-forward " +" nil t)
+        (replace-match "\n")))))
 
 (defun xah-slash-to-backslash (&optional Begin End)
   "Replace slash by backslash on current line or region.
-Version 2021-07-14 2021-09-12"
+Version: 2021-07-14 2021-09-12"
   (interactive)
   (let ($p1 $p2)
     (if (and Begin End)
@@ -1151,7 +1186,7 @@ Version 2021-07-14 2021-09-12"
 
 (defun xah-backslash-to-slash (&optional Begin End)
   "Replace backslash by slash on current line or region.
-Version 2021-09-11"
+Version: 2021-09-11"
   (interactive)
   (let ($p1 $p2)
     (if (and Begin End)
@@ -1166,9 +1201,43 @@ Version 2021-09-11"
         (while (search-forward "\\" nil t)
           (replace-match "/"))))))
 
+(defun xah-double-backslash (&optional Begin End)
+  "Replace backslash by two backslash on current line or region.
+Version: 2021-11-09"
+  (interactive)
+  (let ($p1 $p2)
+    (if (and Begin End)
+        (setq $p1 Begin $p2 End)
+      (if (region-active-p)
+          (setq $p1 (region-beginning) $p2 (region-end))
+        (setq $p1 (line-beginning-position) $p2 (line-end-position))))
+    (save-restriction
+      (narrow-to-region $p1 $p2)
+      (let ((case-fold-search nil))
+        (goto-char (point-min))
+        (while (search-forward "\\" nil t)
+          (replace-match "\\\\\\\\"))))))
+
+(defun xah-double-backslash-to-single (&optional Begin End)
+  "Replace double backslash by single backslash on current line or region.
+Version: 2021-11-09"
+  (interactive)
+  (let ($p1 $p2)
+    (if (and Begin End)
+        (setq $p1 Begin $p2 End)
+      (if (region-active-p)
+          (setq $p1 (region-beginning) $p2 (region-end))
+        (setq $p1 (line-beginning-position) $p2 (line-end-position))))
+    (save-restriction
+      (narrow-to-region $p1 $p2)
+      (let ((case-fold-search nil))
+        (goto-char (point-min))
+        (while (search-forward "\\\\"  nil t)
+          (replace-match "\\\\"))))))
+
 (defun xah-slash-to-double-backslash (&optional Begin End)
   "Replace slash by double backslash on current line or region.
-Version 2021-07-14"
+Version: 2021-07-14"
   (interactive)
   (let ($p1 $p2)
     (if (and Begin End)
@@ -1185,7 +1254,7 @@ Version 2021-07-14"
 
 (defun xah-double-backslash-to-slash (&optional Begin End)
   "Replace double backslash by slash on current line or region.
-Version 2021-07-14"
+Version: 2021-07-14"
   (interactive)
   (let ($p1 $p2)
     (if (and Begin End)
@@ -1203,8 +1272,8 @@ Version 2021-07-14"
 (defun xah-comment-dwim ()
   "Like `comment-dwim', but toggle comment if cursor is not at end of line.
 
-URL `http://ergoemacs.org/emacs/emacs_toggle_comment_by_line.html'
-Version 2016-10-25"
+URL `http://xahlee.info/emacs/emacs/emacs_toggle_comment_by_line.html'
+Version: 2016-10-25"
   (interactive)
   (if (region-active-p)
       (comment-dwim nil)
@@ -1244,8 +1313,8 @@ or
 
 In lisp code, QuoteL QuoteR Sep are strings.
 
-URL `http://ergoemacs.org/emacs/emacs_quote_lines.html'
-Version 2020-06-26 2021-07-21 2021-08-15 2021-09-15"
+URL `http://xahlee.info/emacs/emacs/emacs_quote_lines.html'
+Version: 2020-06-26 2021-07-21 2021-08-15 2021-09-15"
   (interactive
    (let* (($bds (xah-get-bounds-of-block-or-region))
          ($p1 (car $bds))
@@ -1306,8 +1375,8 @@ Version 2020-06-26 2021-07-21 2021-08-15 2021-09-15"
   "Add slash before double quote in current line or selection.
 Double quote is codepoint 34.
 See also: `xah-unescape-quotes'
-URL `http://ergoemacs.org/emacs/elisp_escape_quotes.html'
-Version 2017-01-11"
+URL `http://xahlee.info/emacs/emacs/elisp_escape_quotes.html'
+Version: 2017-01-11"
   (interactive
    (if (region-active-p)
        (list (region-beginning) (region-end))
@@ -1323,8 +1392,8 @@ Version 2017-01-11"
   "Replace  「\\\"」 by 「\"」 in current line or selection.
 See also: `xah-escape-quotes'
 
-URL `http://ergoemacs.org/emacs/elisp_escape_quotes.html'
-Version 2017-01-11"
+URL `http://xahlee.info/emacs/emacs/elisp_escape_quotes.html'
+Version: 2017-01-11"
   (interactive
    (if (region-active-p)
        (list (region-beginning) (region-end))
@@ -1340,8 +1409,8 @@ Version 2017-01-11"
   "In dired, rename current or marked files by replacing space to lowline _.
 If not in `dired', do nothing.
 
-URL `http://ergoemacs.org/emacs/elisp_dired_rename_space_to_underscore.html'
-Version 2016-10-04 2020-03-03"
+URL `http://xahlee.info/emacs/emacs/elisp_dired_rename_space_to_underscore.html'
+Version: 2016-10-04 2020-03-03"
   (interactive)
   (require 'dired-aux)
   (if (eq major-mode 'dired-mode)
@@ -1359,8 +1428,8 @@ Version 2016-10-04 2020-03-03"
   "In dired, rename current or marked files by replacing space to hyphen -.
 If not in `dired', do nothing.
 
-URL `http://ergoemacs.org/emacs/elisp_dired_rename_space_to_underscore.html'
-Version 2016-10-04 2019-11-24"
+URL `http://xahlee.info/emacs/emacs/elisp_dired_rename_space_to_underscore.html'
+Version: 2016-10-04 2019-11-24"
   (interactive)
   (require 'dired-aux)
   (if (eq major-mode 'dired-mode)
@@ -1374,14 +1443,14 @@ Version 2016-10-04 2019-11-24"
 
 (defun xah-cycle-hyphen-lowline-space (&optional Begin End)
   "Cycle hyphen/lowline/space chars in selection or inside quote/bracket or line, in that order.
-After this command is called, press space to repeat it.
+After this command is called, press - to repeat it.
 The region to work on is by this order:
  1. if there is a selection, use that.
  2. If cursor is string quote or any type of bracket, and is within current line, work on that region.
  3. else, work on current line.
 
-URL `http://ergoemacs.org/emacs/elisp_change_space-hyphen_underscore.html'
-Version 2019-02-12 2021-08-20"
+URL `http://xahlee.info/emacs/emacs/elisp_change_space-hyphen_underscore.html'
+Version: 2019-02-12 2021-08-20"
   (interactive)
   ;; this function sets a property 'state. Possible values are 0 to length of $charArray.
   (let* ($p1
@@ -1412,7 +1481,7 @@ Version 2019-02-12 2021-08-20"
       (set-mark $p1)
       (setq deactivate-mark nil))
     (put 'xah-cycle-hyphen-lowline-space 'state (% (+ $nowState 1) $n)))
-  (set-transient-map (let (($kmap (make-sparse-keymap))) (define-key $kmap (kbd "SPC") 'xah-cycle-hyphen-lowline-space) $kmap)))
+  (set-transient-map (let (($kmap (make-sparse-keymap))) (define-key $kmap (kbd "-") 'xah-cycle-hyphen-lowline-space) $kmap)))
 
 (defun xah-copy-file-path (&optional DirPathOnlyQ)
   "Copy current buffer file path or dired path.
@@ -1423,8 +1492,8 @@ If in dired, copy the current or marked files.
 
 If a buffer is not file and not dired, copy value of `default-directory'.
 
-URL `http://ergoemacs.org/emacs/emacs_copy_file_path.html'
-Version 2018-06-18 2021-09-30"
+URL `http://xahlee.info/emacs/emacs/emacs_copy_file_path.html'
+Version: 2018-06-18 2021-09-30"
   (interactive "P")
   (let (($fpath
          (if (string-equal major-mode 'dired-mode)
@@ -1448,8 +1517,8 @@ Version 2018-06-18 2021-09-30"
 (defun xah-delete-current-text-block ()
   "Delete the current text block plus blank lines, or selection, and copy to `kill-ring'.
 
-URL `http://ergoemacs.org/emacs/emacs_delete_block.html'
-Version 2017-07-09 2021-08-14"
+URL `http://xahlee.info/emacs/emacs/emacs_delete_block.html'
+Version: 2017-07-09 2021-08-14"
   (interactive)
   (let ($p1 $p2)
     (if (region-active-p)
@@ -1466,8 +1535,8 @@ Version 2017-07-09 2021-08-14"
   "Clear register 1.
 See also: `xah-paste-from-register-1', `copy-to-register'.
 
-URL `http://ergoemacs.org/emacs/elisp_copy-paste_register_1.html'
-Version 2015-12-08"
+URL `http://xahlee.info/emacs/emacs/elisp_copy-paste_register_1.html'
+Version: 2015-12-08"
   (interactive)
   (progn
     (copy-to-register ?1 (point-min) (point-min))
@@ -1477,8 +1546,8 @@ Version 2015-12-08"
   "Copy current line or selection to register 1.
 See also: `xah-paste-from-register-1', `copy-to-register'.
 
-URL `http://ergoemacs.org/emacs/elisp_copy-paste_register_1.html'
-Version 2017-01-23"
+URL `http://xahlee.info/emacs/emacs/elisp_copy-paste_register_1.html'
+Version: 2017-01-23"
   (interactive)
   (let ($p1 $p2)
     (if (region-active-p)
@@ -1492,8 +1561,8 @@ Version 2017-01-23"
 When no selection, append current line, with newline char.
 See also: `xah-paste-from-register-1', `copy-to-register'.
 
-URL `http://ergoemacs.org/emacs/emacs_copy_append.html'
-Version 2015-12-08 2020-09-08"
+URL `http://xahlee.info/emacs/emacs/emacs_copy_append.html'
+Version: 2015-12-08 2020-09-08"
   (interactive)
   (let ($p1 $p2)
     (if (region-active-p)
@@ -1508,8 +1577,8 @@ Version 2015-12-08 2020-09-08"
   "Paste text from register 1.
 See also: `xah-copy-to-register-1', `insert-register'.
 
-URL `http://ergoemacs.org/emacs/elisp_copy-paste_register_1.html'
-Version 2015-12-08"
+URL `http://xahlee.info/emacs/emacs/elisp_copy-paste_register_1.html'
+Version: 2015-12-08"
   (interactive)
   (when (region-active-p)
     (delete-region (region-beginning) (region-end)))
@@ -1519,7 +1588,7 @@ Version 2015-12-08"
   "Copy region as column (rectangle region) to `kill-ring'
 See also: `kill-rectangle', `copy-to-register'.
 
-URL `http://ergoemacs.org/emacs/emacs_copy_rectangle_text_to_clipboard.html'
+URL `http://xahlee.info/emacs/emacs/emacs_copy_rectangle_text_to_clipboard.html'
 version 2016-07-17"
   ;; extract-rectangle suggested by YoungFrog, 2012-07-25
   (interactive "r")
@@ -1535,8 +1604,8 @@ Insert date in this format: yyyy-mm-dd.
 If `universal-argument' is called first, prompt for a format to use.
 If there is selection, delete it first.
 
-URL `http://ergoemacs.org/emacs/elisp_insert-date-time.html'
-version 2020-09-07"
+URL `http://xahlee.info/emacs/emacs/elisp_insert-date-time.html'
+version 2020-09-07 2021-11-07"
   (interactive)
   (let (($style
          (if current-prefix-arg
@@ -1545,14 +1614,15 @@ version 2020-09-07"
                (ido-completing-read
                 "Style:"
                 '(
-                  "1 → 2018-04-12 Thursday"
-                  "2 → 20180412224611"
+                  "1 → 20180412224611"
+                  "2 → 2018-04-12_224611"
                   "3 → 2018-04-12T22:46:11-07:00"
                   "4 → 2018-04-12 22:46:11-07:00"
-                  "5 → Thursday, April 12, 2018"
-                  "6 → Thu, Apr 12, 2018"
-                  "7 → April 12, 2018"
-                  "8 → Apr 12, 2018"
+                  "5 → 2018-04-12 Thursday"
+                  "6 → Thursday, April 12, 2018"
+                  "7 → Thu, Apr 12, 2018"
+                  "8 → April 12, 2018"
+                  "9 → Apr 12, 2018"
                   )) 0 1))
            0
            )))
@@ -1563,40 +1633,36 @@ version 2020-09-07"
        ;; "2016-10-10"
        (format-time-string "%Y-%m-%d"))
       ((= $style 1)
-       ;; "2018-04-12 Thursday"
-
-       (format-time-string "%Y-%m-%d %A"))
-      ((= $style 2)
-       ;; "20180412224015"
+       ;; "1 → 20180412224611"
        (replace-regexp-in-string ":" "" (format-time-string "%Y%m%d%T")))
+      ((= $style 2)
+       ;; "2 → 2018-04-12_224611"
+       (replace-regexp-in-string ":" "" (format-time-string "%Y-%m-%d_%T")))
       ((= $style 3)
+       ;; "3 → 2018-04-12T22:46:11-07:00"
        (concat
         (format-time-string "%Y-%m-%dT%T")
-        (funcall (lambda ($x) (format "%s:%s" (substring $x 0 3) (substring $x 3 5))) (format-time-string "%z")))
-       ;; "2018-04-12T22:45:26-07:00"
-       )
+        (funcall (lambda ($x) (format "%s:%s" (substring $x 0 3) (substring $x 3 5))) (format-time-string "%z"))))
       ((= $style 4)
+       ;; "4 → 2018-04-12 22:46:11-07:00"
        (concat
         (format-time-string "%Y-%m-%d %T")
-        (funcall (lambda ($x) (format "%s:%s" (substring $x 0 3) (substring $x 3 5))) (format-time-string "%z")))
-       ;; "2018-04-12 22:46:11-07:00"
-       )
+        (funcall (lambda ($x) (format "%s:%s" (substring $x 0 3) (substring $x 3 5))) (format-time-string "%z"))))
       ((= $style 5)
-       (format-time-string "%A, %B %d, %Y")
-       ;; "Thursday, April 12, 2018"
-       )
+       ;; "5 → 2018-04-12 Thursday"
+       (format-time-string "%Y-%m-%d %A"))
       ((= $style 6)
-       (format-time-string "%a, %b %d, %Y")
-       ;; "Thu, Apr 12, 2018"
-       )
+       ;; "6 → Thursday, April 12, 2018"
+       (format-time-string "%A, %B %d, %Y"))
       ((= $style 7)
-       (format-time-string "%B %d, %Y")
-       ;; "April 12, 2018"
-       )
+       ;; "7 → Thu, Apr 12, 2018"
+       (format-time-string "%a, %b %d, %Y"))
       ((= $style 8)
-       (format-time-string "%b %d, %Y")
-       ;; "Apr 12, 2018"
-       )
+       ;; "8 → April 12, 2018"
+       (format-time-string "%B %d, %Y"))
+      ((= $style 9)
+       ;; "9 → Apr 12, 2018"
+       (format-time-string "%b %d, %Y"))
       (t
        (format-time-string "%Y-%m-%d"))))))
 
@@ -1614,8 +1680,8 @@ version 2020-09-07"
  xyz▮ → (xyz▮)       if in one of the lisp modes.
 • wrap brackets around word if any. e.g. xy▮z → (xyz▮). Or just (▮)
 
-URL `http://ergoemacs.org/emacs/elisp_insert_brackets_by_pair.html'
-Version 2017-01-17 2021-08-12"
+URL `http://xahlee.info/emacs/emacs/elisp_insert_brackets_by_pair.html'
+Version: 2017-01-17 2021-08-12"
   (if (region-active-p)
       (progn
         (let ( ($p1 (region-beginning)) ($p2 (region-end)))
@@ -1731,8 +1797,8 @@ Version 2017-01-17 2021-08-12"
 (defun xah-show-formfeed-as-line ()
   "Display the formfeed ^L char as line.
 
-URL `http://ergoemacs.org/emacs/emacs_form_feed_section_paging.html'
-Version 2018-08-30"
+URL `http://xahlee.info/emacs/emacs/emacs_form_feed_section_paging.html'
+Version: 2018-08-30"
   (interactive)
   ;; 2016-10-11 thanks to Steve Purcell's page-break-lines.el
   (progn
@@ -1747,8 +1813,8 @@ Version 2018-08-30"
 The commpand will prompt for a start char, and number of chars to insert.
 The start char can be any char in Unicode.
 
-URL `http://ergoemacs.org/emacs/emacs_insert-alphabets.html'
-Version 2019-03-07"
+URL `http://xahlee.info/emacs/emacs/emacs_insert-alphabets.html'
+Version: 2019-03-07"
   (interactive)
   (let (
         ($startChar (string-to-char (read-string "Start char: " "a")))
@@ -1787,7 +1853,7 @@ Version 2019-03-07"
 
 (defun xah-insert-unicode ()
   "Insert a unicode from a custom list `xah-unicode-list'.
-Version 2021-01-05"
+Version: 2021-01-05"
   (interactive)
   (let (
         ($str
@@ -1804,8 +1870,8 @@ Version 2021-01-05"
   "Select the current/next block plus 1 blankline.
 If region is active, extend selection downward by block.
 
-URL `http://ergoemacs.org/emacs/modernization_mark-word.html'
-Version 2019-12-26 2021-04-04 2021-08-13"
+URL `http://xahlee.info/emacs/emacs/modernization_mark-word.html'
+Version: 2019-12-26 2021-04-04 2021-08-13"
   (interactive)
   (if (region-active-p)
       (re-search-forward "\n[ \t]*\n[ \t]*\n*" nil 1)
@@ -1820,8 +1886,8 @@ Version 2019-12-26 2021-04-04 2021-08-13"
   "Select current line. If region is active, extend selection downward by line.
 If `visual-line-mode' is on, consider line as visual line.
 
-URL `http://ergoemacs.org/emacs/modernization_mark-word.html'
-Version 2017-11-01 2021-03-19"
+URL `http://xahlee.info/emacs/emacs/modernization_mark-word.html'
+Version: 2017-11-01 2021-03-19"
   (interactive)
   (if (region-active-p)
       (if visual-line-mode
@@ -1850,8 +1916,8 @@ when there is no selection,
 
 when there is a selection, the selection extension behavior is still experimental. But when cursor is on a any type of bracket (parenthesis, quote), it extends selection to outer bracket.
 
-URL `http://ergoemacs.org/emacs/modernization_mark-word.html'
-Version 2020-02-04"
+URL `http://xahlee.info/emacs/emacs/modernization_mark-word.html'
+Version: 2020-02-04"
   (interactive)
   (if (region-active-p)
       (progn
@@ -1946,16 +2012,15 @@ Version 2020-02-04"
 
 (defun xah-select-text-in-quote ()
   "Select text between the nearest left and right delimiters.
-Delimiters here includes the following chars: \"`<>(){}[]“”‘’‹›«»「」『』【】〖〗《》〈〉〔〕（）
-This command select between any bracket chars, does not consider nesting. For example, if text is
+Delimiters here includes the following chars: \" ` and anything in `xah-brackets'.
+This command ignores nesting. For example, if text is
 (a(b)c▮)
 the selected char is “c”, not “a(b)c”.
 
-URL `http://ergoemacs.org/emacs/modernization_mark-word.html'
-Version 2020-11-24 2021-07-11"
+URL `http://xahlee.info/emacs/emacs/modernization_mark-word.html'
+Version: 2020-11-24 2021-07-11 2021-12-21"
   (interactive)
-  (let ( $skipChars $p1 )
-    (setq $skipChars "^\"`<>(){}[]“”‘’‹›«»「」『』【】〖〗《》〈〉〔〕（）〘〙")
+  (let (($skipChars (concat "^\"`" xah-brackets)) $p1)
     (skip-chars-backward $skipChars)
     (setq $p1 (point))
     (skip-chars-forward $skipChars)
@@ -1964,12 +2029,12 @@ Version 2020-11-24 2021-07-11"
 ;; HHH___________________________________________________________________
 ;; misc
 
-(defun xah-user-buffer-q ()
+(defun xah-user-buffer-p ()
   "Return t if current buffer is a user buffer, else nil.
 Typically, if buffer name starts with *, it is not considered a user buffer.
 This function is used by buffer switching command and close buffer command, so that next buffer shown is a user buffer.
 You can override this function to get your idea of “user buffer”.
-Version 2016-06-18"
+Version: 2016-06-18"
   (interactive)
   (cond
    ((string-equal "*" (substring (buffer-name) 0 1)) nil)
@@ -1979,30 +2044,30 @@ Version 2016-06-18"
 
 (defun xah-next-user-buffer ()
   "Switch to the next user buffer.
-“user buffer” is determined by `xah-user-buffer-q'.
+“user buffer” is determined by `xah-user-buffer-p'.
 
-URL `http://ergoemacs.org/emacs/elisp_next_prev_user_buffer.html'
-Version 2016-06-19"
+URL `http://xahlee.info/emacs/emacs/elisp_next_prev_user_buffer.html'
+Version: 2016-06-19"
   (interactive)
   (next-buffer)
   (let ((i 0))
     (while (< i 20)
-      (if (not (xah-user-buffer-q))
+      (if (not (xah-user-buffer-p))
           (progn (next-buffer)
                  (setq i (1+ i)))
         (progn (setq i 100))))))
 
 (defun xah-previous-user-buffer ()
   "Switch to the previous user buffer.
-“user buffer” is determined by `xah-user-buffer-q'.
+“user buffer” is determined by `xah-user-buffer-p'.
 
-URL `http://ergoemacs.org/emacs/elisp_next_prev_user_buffer.html'
-Version 2016-06-19"
+URL `http://xahlee.info/emacs/emacs/elisp_next_prev_user_buffer.html'
+Version: 2016-06-19"
   (interactive)
   (previous-buffer)
   (let ((i 0))
     (while (< i 20)
-      (if (not (xah-user-buffer-q))
+      (if (not (xah-user-buffer-p))
           (progn (previous-buffer)
                  (setq i (1+ i)))
         (progn (setq i 100))))))
@@ -2011,8 +2076,8 @@ Version 2016-06-19"
   "Switch to the next emacs buffer.
 “emacs buffer” here is buffer whose name starts with *.
 
-URL `http://ergoemacs.org/emacs/elisp_next_prev_user_buffer.html'
-Version 2016-06-19"
+URL `http://xahlee.info/emacs/emacs/elisp_next_prev_user_buffer.html'
+Version: 2016-06-19"
   (interactive)
   (next-buffer)
   (let ((i 0))
@@ -2023,8 +2088,8 @@ Version 2016-06-19"
   "Switch to the previous emacs buffer.
 “emacs buffer” here is buffer whose name starts with *.
 
-URL `http://ergoemacs.org/emacs/elisp_next_prev_user_buffer.html'
-Version 2016-06-19"
+URL `http://xahlee.info/emacs/emacs/elisp_next_prev_user_buffer.html'
+Version: 2016-06-19"
   (interactive)
   (previous-buffer)
   (let ((i 0))
@@ -2037,8 +2102,8 @@ New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”,
 
 It returns the buffer (for elisp programing).
 
-URL `http://ergoemacs.org/emacs/emacs_new_empty_buffer.html'
-Version 2017-11-01"
+URL `http://xahlee.info/emacs/emacs/emacs_new_empty_buffer.html'
+Version: 2017-11-01"
   (interactive)
   (let (($buf (generate-new-buffer "untitled")))
     (switch-to-buffer $buf)
@@ -2065,8 +2130,8 @@ Similar to `kill-buffer', with the following addition:
 • If the buffer is editing a source file in an `org-mode' file, prompt the user to save before closing.
 • If the buffer is a file, add the path to the list `xah-recently-closed-buffers'.
 
-URL `http://ergoemacs.org/emacs/elisp_close_buffer_open_last_closed.html'
-Version 2018-06-11 2021-07-01"
+URL `http://xahlee.info/emacs/emacs/elisp_close_buffer_open_last_closed.html'
+Version: 2018-06-11 2021-07-01"
   (interactive)
   (let (($isOrgMode (string-match "^*Org Src" (buffer-name))))
     (if (active-minibuffer-window) ; if the buffer is minibuffer
@@ -2075,7 +2140,7 @@ Version 2018-06-11 2021-07-01"
       (progn
         ;; Offer to save buffers that are non-empty and modified, even for non-file visiting buffer. (Because `kill-buffer' does not offer to save buffers that are not associated with files.)
         (when (and (buffer-modified-p)
-                   (xah-user-buffer-q)
+                   (xah-user-buffer-p)
                    (not (string-equal major-mode "dired-mode"))
                    (if (equal (buffer-file-name) nil)
                        (if (string-equal "" (save-restriction (widen) (buffer-string))) nil t)
@@ -2099,8 +2164,8 @@ Version 2018-06-11 2021-07-01"
 (defun xah-open-last-closed ()
   "Open the last closed file.
 
-URL `http://ergoemacs.org/emacs/elisp_close_buffer_open_last_closed.html'
-Version 2016-06-19"
+URL `http://xahlee.info/emacs/emacs/elisp_close_buffer_open_last_closed.html'
+Version: 2016-06-19"
   (interactive)
   (if (> (length xah-recently-closed-buffers) 0)
       (find-file (cdr (pop xah-recently-closed-buffers)))
@@ -2110,16 +2175,16 @@ Version 2016-06-19"
   "Open recently closed file.
 Prompt for a choice.
 
-URL `http://ergoemacs.org/emacs/elisp_close_buffer_open_last_closed.html'
-Version 2016-06-19"
+URL `http://xahlee.info/emacs/emacs/elisp_close_buffer_open_last_closed.html'
+Version: 2016-06-19 2021-10-27"
   (interactive)
-  (find-file (ido-completing-read "open:" (mapcar (lambda (f) (cdr f)) xah-recently-closed-buffers))))
+  (find-file (ido-completing-read "Open:" (mapcar (lambda (f) (cdr f)) xah-recently-closed-buffers))))
 
 (defun xah-list-recently-closed ()
   "List recently closed file.
 
-URL `http://ergoemacs.org/emacs/elisp_close_buffer_open_last_closed.html'
-Version 2016-06-19"
+URL `http://xahlee.info/emacs/emacs/elisp_close_buffer_open_last_closed.html'
+Version: 2016-06-19"
   (interactive)
   (let (($buf (generate-new-buffer "*recently closed*")))
     (switch-to-buffer $buf)
@@ -2134,13 +2199,15 @@ Version 2016-06-19"
   "Prompt to open a file from bookmark `bookmark-bmenu-list'.
 This command is similar to `bookmark-jump', but use `ido-mode' interface, and ignore cursor position in bookmark.
 
-URL `http://ergoemacs.org/emacs/emacs_hotkey_open_file_fast.html'
-Version 2019-02-26"
+URL `http://xahlee.info/emacs/emacs/emacs_hotkey_open_file_fast.html'
+Version: 2019-02-26"
   (interactive)
   (require 'bookmark)
   (bookmark-maybe-load-default-file)
   (let (($thisBookmark (ido-completing-read "Open bookmark:" (mapcar (lambda ($x) (car $x)) bookmark-alist))))
     (find-file (bookmark-get-filename $thisBookmark))))
+
+(defvar xah-open-file-at-cursor-pre-hook nil "Hook for `xah-open-file-at-cursor'. Functions in the hook will be called in order, each given the path as arg. The first return non-nil, its value is given to `xah-open-file-at-cursor' as input. This is useful for transforming certain url into file path (your website url), so instead of opening in browser, it opens in emacs as file.")
 
 (defun xah-open-file-at-cursor ()
   "Open the file path under cursor.
@@ -2149,10 +2216,13 @@ If the path starts with “http://”, open the URL in browser.
 Input path can be {relative, full path, URL}.
 Path may have a trailing “:‹n›” that indicates line number, or “:‹n›:‹m›” with line and column number. If so, jump to that line number.
 If path does not have a file extension, automatically try with “.el” for elisp files.
+
+See also `xah-open-file-at-cursor-pre-hook'.
+
 This command is similar to `find-file-at-point' but without prompting for confirmation.
 
-URL `http://ergoemacs.org/emacs/emacs_open_file_path_fast.html'
-Version 2020-10-17 2021-02-24 2021-08-14 2021-09-19"
+URL `http://xahlee.info/emacs/emacs/emacs_open_file_path_fast.html'
+Version: 2020-10-17 2021-02-24 2021-08-14 2021-09-19 2021-10-16"
   (interactive)
   (let* (($input
           (if (region-active-p)
@@ -2166,14 +2236,16 @@ Version 2020-10-17 2021-02-24 2021-08-14 2021-09-19"
               (setq $p2 (point))
               (goto-char $p0)
               (buffer-substring-no-properties $p1 $p2))))
-         ($path (replace-regexp-in-string "^/C:/" "/" (replace-regexp-in-string "^file://" "" (replace-regexp-in-string ":\\'" "" $input)))))
+         $input2 $path
+         )
+    (setq $input2
+          (if (> (length xah-open-file-at-cursor-pre-hook) 0)
+              (let (($x (run-hook-with-args-until-success 'xah-open-file-at-cursor-pre-hook $input)))
+                (if $x $x $input))
+            $input))
+    (setq $path (replace-regexp-in-string "^/C:/" "/" (replace-regexp-in-string "^file://" "" (replace-regexp-in-string ":\\'" "" $input2))))
     (if (string-match-p "\\`https?://" $path)
-        (if (fboundp 'xahsite-url-to-filepath)
-            (let (($x (xahsite-url-to-filepath $path)))
-              (if (string-match "^http" $x)
-                  (browse-url $x)
-                (find-file $x)))
-          (progn (browse-url $path)))
+        (browse-url $path)
       (progn ; not starting “http://”
         (if (string-match "#" $path)
             (let (($fpath (substring $path 0 (match-beginning 0)))
@@ -2219,7 +2291,7 @@ Version 2020-10-17 2021-02-24 2021-08-14 2021-09-19"
 (defun xah-fly-M-x ()
   "Calls `execute-extended-command' or an alternative.
 If `xah-fly-M-x-command' is non-nil, call it, else call one of the following, in order: `smex', `helm-M-x', `counsel-M-x', `execute-extended-command'.
-Version 2020-04-09 2021-02-24"
+Version: 2020-04-09 2021-02-24"
   (interactive)
   (command-execute
    (cond
@@ -2241,13 +2313,13 @@ Version 2020-04-09 2021-02-24"
 (defun xah-run-current-go-file ()
   "Run or build current golang file.
 To build, call `universal-argument' first.
-Version 2018-10-12"
+Version: 2018-10-12"
   (interactive)
   (when (not (buffer-file-name)) (save-buffer))
   (when (buffer-modified-p) (save-buffer))
   (let* (
          ($outputb "*xah-run output*")
-         (resize-mini-windows nil)
+         ;; (resize-mini-windows nil)
          ($fname (buffer-file-name))
          ;; ($fSuffix (file-name-extension $fname))
          ($progName "go")
@@ -2265,83 +2337,96 @@ Version 2018-10-12"
       ;;
       )))
 
-(defvar xah-run-current-file-map nil "A association list that maps file extension to program path, used by `xah-run-current-file'. First element is file suffix, second is program name or path. You can add items to it.")
-(setq
- xah-run-current-file-map
- '(
-   ("clj" . "clj")
-   ("go" . "go run")
-   ("hs" . "runhaskell")
-   ("java" . "javac")
-   ("js" . "deno run")
-   ("latex" . "pdflatex")
-   ("mjs" . "node --experimental-modules ")
-   ("ml" . "ocaml")
-   ("php" . "php")
-   ("pl" . "perl")
-   ("ps1" . "pwsh")
-   ("py" . "python")
-   ("py2" . "python2")
-   ("py3" . "python3")
-   ("rb" . "ruby")
-   ("rkt" . "racket")
-   ("sh" . "bash")
-   ("tex" . "pdflatex")
-   ("ts" . "deno run") ; TypeScript
-   ("tsx" . "tsc")
-   ("vbs" . "cscript")
-   ;; ("pov" . "/usr/local/bin/povray +R2 +A0.1 +J1.2 +Am2 +Q9 +H480 +W640")
-   ))
+(defvar xah-run-current-file-hashtable nil "A hashtable. key is file name extension, value is string of program name/path. Used by `xah-run-current-file'. A file path will be appended to the program path to run the program. You can modify the hashtable for customization.")
+
+(setq xah-run-current-file-hashtable
+      #s(hash-table
+         size 100
+         test equal
+         data
+         (
+          "clj" "clj"
+          "go" "go run"
+          "hs" "runhaskell"
+          "java" "javac"
+          "js" "deno run"
+          "latex" "pdflatex"
+          "m" "wolframscript -file"
+          "mjs" "node --experimental-modules "
+          "ml" "ocaml"
+          "php" "php"
+          "pl" "perl"
+          "ps1" "pwsh"
+          "py" "python"
+          "py2" "python2"
+          "py3" "python3"
+          "rb" "ruby"
+          "rkt" "racket"
+          "sh" "bash"
+          "tex" "pdflatex"
+          "ts" "deno run"
+          "tsx" "tsc"
+          "vbs" "cscript"
+          "wl" "wolframscript -file"
+          "wls" "wolframscript -file"
+          ;; "pov" "/usr/local/bin/povray +R2 +A0.1 +J1.2 +Am2 +Q9 +H480 +W640"
+          )))
 
 (defun xah-run-current-file ()
   "Execute the current file.
 For example, if the current buffer is x.py, then it'll call [python x.py] in a shell.
 Output is printed to buffer “*xah-run output*”.
-File suffix is used to determine which program to run, set in the variable `xah-run-current-file-map'.
+File suffix is used to determine which program to run, set in the variable `xah-run-current-file-hashtable'.
 
 If the file is modified or not saved, save it automatically before run.
 
-URL `http://ergoemacs.org/emacs/elisp_run_current_file.html'
-Version 2020-09-24 2021-01-21"
+URL `http://xahlee.info/emacs/emacs/elisp_run_current_file.html'
+Version: 2020-09-24 2021-01-21 2021-10-27 2022-02-12"
   (interactive)
-  (let (
-        ($outBuffer "*xah-run output*")
-        (resize-mini-windows nil)
-        ($suffixMap xah-run-current-file-map )
-        $fname
-        $fSuffix
-        $progName
-        $cmdStr)
+  (let (($outBuffer "*xah-run output*")
+        ;; (resize-mini-windows nil)
+        ($extHash xah-run-current-file-hashtable)
+        $fname $fExt $progName $cmdStr)
     (when (not (buffer-file-name)) (save-buffer))
-    (when (buffer-modified-p) (save-buffer))
     (setq $fname (buffer-file-name))
-    (setq $fSuffix (file-name-extension $fname))
-    (setq $progName (cdr (assoc $fSuffix $suffixMap)))
+    (setq $fExt (file-name-extension $fname))
+    (setq $progName (gethash $fExt $extHash))
     (setq $cmdStr (concat $progName " \""   $fname "\" &"))
+
+    (when (buffer-modified-p) (save-buffer))
     (run-hooks 'xah-run-current-file-before-hook)
     (cond
-     ((string-equal $fSuffix "el")
+     ((string-equal $fExt "el")
       (load $fname))
-     ((string-equal $fSuffix "go")
+     ((string-equal $fExt "go")
       (xah-run-current-go-file))
-     ((string-equal $fSuffix "java")
+     ((string-match "wsl\\|wl\\|m\\|nb" $fExt)
+      (if (fboundp 'xah-run-wolfram-script)
+          (progn
+            (xah-run-wolfram-script nil current-prefix-arg))
+        (if $progName
+            (progn
+              (message "Running")
+              (shell-command $cmdStr $outBuffer))
+          (error "Unknown file extension: %s" $fExt))))
+     ((string-equal $fExt "java")
       (progn
-        (shell-command (format "javac %s" $fname) $outBuffer )
+        (shell-command (format "javac %s" $fname) $outBuffer)
         (shell-command (format "java %s" (file-name-sans-extension
-                                          (file-name-nondirectory $fname))) $outBuffer )))
+                                          (file-name-nondirectory $fname))) $outBuffer)))
      (t (if $progName
             (progn
               (message "Running")
-              (shell-command $cmdStr $outBuffer ))
-          (error "No recognized program file suffix for this file."))))
+              (shell-command $cmdStr $outBuffer))
+          (error "Unknown file extension: %s" $fExt))))
     (run-hooks 'xah-run-current-file-after-hook)))
 
 (defun xah-clean-empty-lines ()
   "Replace repeated blank lines to just 1, in whole buffer or selection.
 Respects `narrow-to-region'.
 
-URL `http://ergoemacs.org/emacs/elisp_compact_empty_lines.html'
-Version 2017-09-22 2020-09-08"
+URL `http://xahlee.info/emacs/emacs/elisp_compact_empty_lines.html'
+Version: 2017-09-22 2020-09-08"
   (interactive)
   (let ($begin $end)
     (if (region-active-p)
@@ -2360,8 +2445,8 @@ Version 2017-09-22 2020-09-08"
 Only space and tab is considered whitespace here.
 Works on whole buffer or selection, respects `narrow-to-region'.
 
-URL `http://ergoemacs.org/emacs/elisp_compact_empty_lines.html'
-Version 2017-09-22 2021-08-27"
+URL `http://xahlee.info/emacs/emacs/elisp_compact_empty_lines.html'
+Version: 2017-09-22 2021-08-27"
   (interactive)
   (let ($begin $end)
     (if (region-active-p)
@@ -2386,22 +2471,22 @@ The backup file name is in this format
 in the same dir. If such a file already exist, it is overwritten.
 If the current buffer is not associated with a file, nothing's done.
 
-URL `http://ergoemacs.org/emacs/elisp_make-backup.html'
-Version 2018-06-06 2020-12-18"
+URL `http://xahlee.info/emacs/emacs/elisp_make-backup.html'
+Version: 2018-06-06 2020-12-18"
   (interactive)
   (let (($fname (buffer-file-name))
-        ($date-time-format "%Y%m%d_%H%M%S"))
+        ($dateTimeFormat "%Y%m%d_%H%M%S"))
     (if $fname
-        (let (($backup-name
-               (concat $fname "~" (format-time-string $date-time-format) "~")))
-          (copy-file $fname $backup-name t)
-          (message (concat "Backup saved at: " $backup-name)))
+        (let (($backupName
+               (concat $fname "~" (format-time-string $dateTimeFormat) "~")))
+          (copy-file $fname $backupName t)
+          (message (concat "Backup saved at: " $backupName)))
       (if (eq major-mode 'dired-mode)
           (progn
             (mapc (lambda ($x)
-                    (let (($backup-name
-                           (concat $x "~" (format-time-string $date-time-format) "~")))
-                      (copy-file $x $backup-name t)))
+                    (let (($backupName
+                           (concat $x "~" (format-time-string $dateTimeFormat) "~")))
+                      (copy-file $x $backupName t)))
                   (dired-get-marked-files))
             (revert-buffer))
         (user-error "buffer not file nor dired")))))
@@ -2411,8 +2496,8 @@ Version 2018-06-06 2020-12-18"
 For detail, see `xah-make-backup'.
 If the current buffer is not associated with a file nor dired, nothing's done.
 
-URL `http://ergoemacs.org/emacs/elisp_make-backup.html'
-Version 2015-10-14"
+URL `http://xahlee.info/emacs/emacs/elisp_make-backup.html'
+Version: 2015-10-14"
   (interactive)
   (if (buffer-file-name)
       (progn
@@ -2430,8 +2515,8 @@ Backup filename is “‹name›~‹dateTimeStamp›~”. Existing file of the s
 
 Call `xah-open-last-closed' to open the backup file.
 
-URL `http://ergoemacs.org/emacs/elisp_delete-current-file.html'
-Version 2018-05-15 2021-08-31 2021-09-27"
+URL `http://xahlee.info/emacs/emacs/elisp_delete-current-file.html'
+Version: 2018-05-15 2021-08-31 2021-09-27"
   (interactive)
   (if (string-equal 'dired-mode major-mode)
       (message "In dired. Nothing is done.")
@@ -2458,8 +2543,8 @@ Version 2018-05-15 2021-08-31 2021-09-27"
   "Call `isearch' on current word or selection.
 “word” here is A to Z, a to z, and hyphen [-] and lowline [_], independent of syntax table.
 
-URL `http://ergoemacs.org/emacs/modernization_isearch.html'
-Version 2015-04-09"
+URL `http://xahlee.info/emacs/emacs/modernization_isearch.html'
+Version: 2015-04-09"
   (interactive)
   (let ($p1 $p2)
     (if (region-active-p)
@@ -2480,29 +2565,30 @@ Version 2015-04-09"
 
 (defun xah-show-in-desktop ()
   "Show current file in desktop.
- (Mac Finder, Windows Explorer, Linux file manager)
+ (Mac Finder, File Explorer, Linux file manager)
 This command can be called when in a file buffer or in `dired'.
 
-URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
-Version 2020-11-20 2021-01-31"
+URL `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_ext_apps.html'
+Version: 2020-11-20 2021-01-31 2021-11-12 2021-11-22"
   (interactive)
   (let (($path (if (eq major-mode 'dired-mode)
-                   (if (eq nil (dired-get-marked-files ))
+                   (if (eq nil (dired-get-marked-files))
                        default-directory
-                     (car (dired-get-marked-files )))
+                     (car (dired-get-marked-files)))
                  (if (buffer-file-name) (buffer-file-name) default-directory))))
     (cond
      ((string-equal system-type "windows-nt")
-      (shell-command (format "PowerShell -Command invoke-item '%s'" (expand-file-name default-directory )))
-      ;; (let ( ($cmd (format "Explorer /select,%s"  (shell-quote-argument (replace-regexp-in-string "/" "\\" $path t t )))))
-      ;;   (shell-command $cmd))
-      )
+      ;; (shell-command (format "PowerShell -Command invoke-item '%s'" (expand-file-name default-directory )))
+      (let (($cmd (format "Explorer /select,%s"
+                          (replace-regexp-in-string "/" "\\" $path t t)
+                          ;; (shell-quote-argument (replace-regexp-in-string "/" "\\" $path t t ))
+                          )))
+        (shell-command $cmd)))
      ((string-equal system-type "darwin")
       (shell-command
        (concat "open -R " (shell-quote-argument $path))))
      ((string-equal system-type "gnu/linux")
-      (let (
-            (process-connection-type nil)
+      (let ((process-connection-type nil)
             (openFileProgram (if (file-exists-p "/usr/bin/gvfs-open")
                                  "/usr/bin/gvfs-open"
                                "/usr/bin/xdg-open")))
@@ -2513,8 +2599,8 @@ Version 2020-11-20 2021-01-31"
 (defun xah-open-in-vscode ()
   "Open current file or dir in vscode.
 
-URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
-Version 2020-02-13 2021-01-18"
+URL `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_ext_apps.html'
+Version: 2020-02-13 2021-01-18"
   (interactive)
   (let (($path (if (buffer-file-name) (buffer-file-name) (expand-file-name default-directory ))))
     (message "path is %s" $path)
@@ -2543,8 +2629,8 @@ Version 2020-02-13 2021-01-18"
   "Open the current file or dired marked files in external app.
 When called in emacs lisp, if Fname is given, open that.
 
-URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
-Version 2019-11-04 2021-07-21"
+URL `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_ext_apps.html'
+Version: 2019-11-04 2021-07-21"
   (interactive)
   (let ($fileList $doIt )
     (setq $fileList
@@ -2572,8 +2658,8 @@ Version 2019-11-04 2021-07-21"
   "Open the current dir in a new terminal window.
 On Microsoft Windows, it starts cross-platform PowerShell pwsh. You need to have it installed.
 
-URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
-Version 2020-11-21 2021-07-21"
+URL `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_ext_apps.html'
+Version: 2020-11-21 2021-07-21"
   (interactive)
   (cond
    ((string-equal system-type "windows-nt")
@@ -2593,7 +2679,7 @@ Version 2020-11-21 2021-07-21"
   "Switch to next window or frame.
 If current frame has only one window, switch to next frame.
 If `universal-argument' is called first, do switch frame.
-Version 2017-01-27"
+Version: 2017-01-27"
   (interactive)
   (if current-prefix-arg
       (other-frame 1)
@@ -2603,7 +2689,7 @@ Version 2017-01-27"
 
 (defun xah-unsplit-window-or-next-frame ()
   "Unsplit window. If current frame has only one window, switch to next frame.
-Version 2017-01-29"
+Version: 2017-01-29"
   (interactive)
   (if (one-window-p)
       (other-frame 1)
@@ -3440,7 +3526,7 @@ If the value is nil, it is automatically set to \"dvorak\"."
 
 (defvar xah-fly--current-layout-kmap nil
   "The current keyboard layout key map. Value is a alist. e.g. the value of `xah--dvorak-to-qwerty-kmap'.
-Value is automatically set from value of `xah-fly-key-current-layout'. Do not manually set this variable. Version 2019-02-12."
+Value is automatically set from value of `xah-fly-key-current-layout'. Do not manually set this variable. Version: 2019-02-12."
   )
 (setq xah-fly--current-layout-kmap
       (symbol-value
@@ -3454,18 +3540,18 @@ Value is automatically set from value of `xah-fly-key-current-layout'. Do not ma
 (defun xah-fly--key-char (Charstr)
   "Return the corresponding char Charstr according to `xah-fly--current-layout-kmap'.
 Charstr must be a string of single char. If more than 1 char, return it unchanged.
-Version 2020-04-18"
+Version: 2020-04-18"
   (interactive)
   (if (> (length Charstr) 1)
       Charstr
     (let (($result (assoc Charstr xah-fly--current-layout-kmap)))
       (if $result (cdr $result) Charstr ))))
 
-(defmacro xah-fly--define-keys (Keymap-name Key-cmd-alist &optional Direct-q)
-  "Map `define-key' over a alist Key-cmd-alist, with key layout remap.
+(defmacro xah-fly--define-keys (KeymapName KeyCmdAlist &optional DirectQ)
+  "Map `define-key' over a alist KeyCmdAlist, with key layout remap.
 The key is remapped from Dvorak to the current keyboard layout
 by `xah-fly--key-char'.
-If Direct-q is t, do not remap key to current keyboard layout.
+If DirectQ is t, do not remap key to current keyboard layout.
 Example usage:
 ;; (xah-fly--define-keys
 ;;  (define-prefix-command 'xah-fly-dot-keymap)
@@ -3474,25 +3560,24 @@ Example usage:
 ;;    (\".\" . isearch-forward-symbol-at-point)
 ;;    (\"1\" . hi-lock-find-patterns)
 ;;    (\"w\" . isearch-forward-word)))
-Version 2020-04-18"
-  (let (($keymap-name (make-symbol "keymap-name")))
-    `(let ((,$keymap-name , Keymap-name))
+Version: 2020-04-18"
+  (let (($keymapName (make-symbol "keymap-name")))
+    `(let ((,$keymapName , KeymapName))
        ,@(mapcar
           (lambda ($pair)
             `(define-key
-               ,$keymap-name
-               (kbd (,(if Direct-q #'identity #'xah-fly--key-char) ,(car $pair)))
+               ,$keymapName
+               (kbd (,(if DirectQ #'identity #'xah-fly--key-char) ,(car $pair)))
                ,(list 'quote (cdr $pair))))
-          (cadr Key-cmd-alist)))))
+          (cadr KeyCmdAlist)))))
 
 ;; HHH___________________________________________________________________
 ;; keymaps
 
 (defvar xah-fly-key-map (make-sparse-keymap)
   "Backward-compatibility map for `xah-fly-keys' minor mode.
+If `xah-fly-insert-state-p' is true, point to `xah-fly-insert-map', else, point to points to `xah-fly-command-map'.")
 
-Points to `xah-fly-insert-map' when `xah-fly-insert-state-q' is non-nil,
-and points to `xah-fly-command-map' otherwise (which see).")
 (make-obsolete-variable
  'xah-fly-key-map
  "Put bindings for command mode in `xah-fly-command-map', bindings for
@@ -3578,6 +3663,7 @@ minor modes loaded later may override bindings in this map.")
    ("b" . isearch-forward)
    ("c" . previous-line)
    ("d" . xah-beginning-of-line-or-block)
+   ;; ("e" . xah-delete-left-char-or-selection)
    ("e" . xah-delete-backward-char-or-bracket-text)
    ("f" . undo)
    ("g" . backward-word)
@@ -3609,7 +3695,7 @@ minor modes loaded later may override bindings in this map.")
  xah-fly-shared-map
  '(("<home>" . xah-fly-command-mode-activate)
    ("<menu>" . xah-fly-command-mode-activate)
-   ("<f8>" . xah-fly-command-mode-activate-no-hook))
+   ("<f8>" . xah-fly-command-mode-activate))
  :direct)
 
 (when xah-fly-use-meta-key
@@ -3675,7 +3761,8 @@ minor modes loaded later may override bindings in this map.")
   ;;    ;; etc
   ;;    )
   ;;  :direct)
-  ;; this is a problem. because the control key and meta are not supposed to change by keyboard layout such as dvorak. They should be letter direct. Also, by setting them with xah-fly-shared-map, it becomes unchangeable, that is, if a major mode set a key for C-t, it will have no effect. Current solution is just to use global-set-key. The disadvantage is that these changes leak, that is, xah-fly-keys is turned off, these ctrl keys are still changed. Still, this is better, because xah fly keys is not really meant to be turned off. You learn it, like it, use it, or leave it. Removing the tons of default emacs control and meta keys is desirable. because there are hundres of them, confusing, and mostly useless.
+
+  ;; this is a problem. because the control keybinding and meta keybinding are not supposed to change by keyboard layout such as dvorak. They should be letter direct. Also, by setting them with xah-fly-shared-map, it becomes unchangeable, that is, if a major mode set a key for C-t, it will have no effect. Current solution is just to use global-set-key. The disadvantage is that these changes leak, that is, xah-fly-keys is turned off, these ctrl keys are still changed. Still, this is better, because xah fly keys is not really meant to be turned off. You learn it, like it, use it, or leave it. Removing the tons of default emacs control and meta keys is desirable. because there are hundres of them, confusing, and mostly useless.
   (global-set-key (kbd "<C-S-prior>") 'xah-previous-emacs-buffer)
   (global-set-key (kbd "<C-S-next>") 'xah-next-emacs-buffer)
 
@@ -3702,6 +3789,8 @@ minor modes loaded later may override bindings in this map.")
   (global-set-key (kbd "C--") 'text-scale-decrease)
   (global-set-key (kbd "C-=") 'text-scale-increase)
 
+  (global-set-key (kbd "C-SPC") 'xah-fly-command-mode-activate)
+
   (global-set-key (kbd "C-S-n") 'make-frame-command)
   (global-set-key (kbd "C-S-s") 'write-file)
   (global-set-key (kbd "C-S-t") 'xah-open-last-closed)
@@ -3717,7 +3806,7 @@ minor modes loaded later may override bindings in this map.")
   ;; (global-set-key (kbd "C-g") 'nil)
   ;; (global-set-key (kbd "C-h") 'nil)
   ;; (global-set-key (kbd "C-i") 'nil)
-  (global-set-key (kbd "C-j") 'nil)
+  ;; (global-set-key (kbd "C-j") 'nil)
   (global-set-key (kbd "C-k") 'nil)
   (global-set-key (kbd "C-l") 'nil)
   ;; (global-set-key (kbd "C-m") 'nil)
@@ -3727,13 +3816,15 @@ minor modes loaded later may override bindings in this map.")
   ;; (global-set-key (kbd "C-q") 'nil)
   ;; (global-set-key (kbd "C-r") 'nil)
   (global-set-key (kbd "C-s") 'save-buffer)
-  (global-set-key (kbd "C-t") 'nil)
+  (global-set-key (kbd "C-t") 'hippie-expand)
   ;; (global-set-key (kbd "C-u") 'nil)
   (global-set-key (kbd "C-v") 'yank)
   (global-set-key (kbd "C-w") 'xah-close-current-buffer)
   ;; (global-set-key (kbd "C-x") 'nil)
   ;; (global-set-key (kbd "C-y") 'nil)
   (global-set-key (kbd "C-z") 'undo)
+
+
   ;;
   )
 
@@ -3743,7 +3834,8 @@ minor modes loaded later may override bindings in this map.")
    '(("<up>" . isearch-ring-retreat)
      ("<down>" . isearch-ring-advance)
      ("<left>" . isearch-repeat-backward)
-     ("<right>" . isearch-repeat-forward))
+     ("<right>" . isearch-repeat-forward)
+     ( "C-v" . isearch-yank-kill))
    :direct)
   (xah-fly--define-keys
    minibuffer-local-isearch-map
@@ -3773,7 +3865,7 @@ minor modes loaded later may override bindings in this map.")
  ;; The TAB key is not in a very good ergonomic position on average keyboards, so 【leader tab ‹somekey›】 probably should not be used much.
  ;; Currently (2018-03-13), these are commands related to completion or indent, and I basically never use any of these (except sometimes complete-symbol).
  ;; For average user, the way it is now is probably justified, because most emacs users don't use these commands.
- ;; To customize this keymap see http://ergoemacs.org/misc/xah-fly-keys_customization.html.
+ ;; To customize this keymap see http://xahlee.info/emacs/misc/xah-fly-keys_customization.html.
  '(
    ("TAB" . indent-for-tab-command)
 
@@ -3904,7 +3996,7 @@ minor modes loaded later may override bindings in this map.")
    ("k" . menu-bar-open)
    ("l" . toggle-word-wrap)
    ("m" . jump-to-register)
-   ("n" . narrow-to-region)
+   ("n" . xah-narrow-to-region)
    ("o" . variable-pitch-mode)
    ("p" . read-only-mode)
    ;; q
@@ -3954,8 +4046,7 @@ minor modes loaded later may override bindings in this map.")
 
 (xah-fly--define-keys
  (define-prefix-command 'xah-fly-t-keymap)
- '(
-   ("SPC" . xah-clean-whitespace)
+ '(("SPC" . xah-clean-whitespace)
    ("TAB" . move-to-column)
 
    ("1" . xah-append-to-register-1)
@@ -3967,7 +4058,7 @@ minor modes loaded later may override bindings in this map.")
    ("8" . xah-clear-register-1)
    ("7" . xah-append-to-register-1)
 
-   ("." . sort-lines)
+   ("." . xah-sort-lines)
    ("," . sort-numeric-fields)
    ("'" . reverse-region)
    ;; a
@@ -3975,15 +4066,15 @@ minor modes loaded later may override bindings in this map.")
    ("c" . goto-char)
    ("d" . mark-defun)
    ("e" . list-matching-lines)
-   ("f" . goto-line )
+   ("f" . goto-line)
    ;; g
-   ;; ("h" . xah-close-current-buffer )
+   ("h" . repeat-complex-command)
    ("i" . delete-non-matching-lines)
    ("j" . copy-to-register)
    ("k" . insert-register)
    ("l" . xah-escape-quotes)
    ("m" . xah-make-backup-and-save)
-   ("n" . repeat-complex-command)
+   ;; n
    ;; o
    ("p" . query-replace-regexp)
    ;; q
@@ -3996,7 +4087,7 @@ minor modes loaded later may override bindings in this map.")
    ;; x
    ("y" . delete-duplicate-lines)
    ;; z
-))
+   ))
 
 (xah-fly--define-keys
  (define-prefix-command 'xah-fly-w-keymap)
@@ -4230,10 +4321,10 @@ minor modes loaded later may override bindings in this map.")
 
 ;; HHH___________________________________________________________________
 
-(defvar xah-fly-insert-state-q t "Boolean value. true means insertion mode is on.")
+(defvar xah-fly-insert-state-p t "non-nil means insertion mode is on.")
 
 (defun xah-fly--update-key-map ()
-  (setq xah-fly-key-map (if xah-fly-insert-state-q
+  (setq xah-fly-key-map (if xah-fly-insert-state-p
                             xah-fly-insert-map
                           xah-fly-command-map)))
 
@@ -4266,7 +4357,7 @@ Argument must be one of:
 
 In elisp, those should be strings.
 
-Version 2021-05-19 2021-09-17"
+Version: 2021-05-19 2021-09-17"
   (interactive
    (list
     (widget-prompt-value
@@ -4278,21 +4369,21 @@ Version 2021-05-19 2021-09-17"
 
 (defun xah-fly-command-mode-init ()
   "Set command mode keys.
-Version 2020-04-28"
+Version: 2020-04-28"
   (interactive)
-  (setq xah-fly-insert-state-q nil)
+  (setq xah-fly-insert-state-p nil)
   (xah-fly--update-key-map)
   (setq xah-fly--deactivate-command-mode-func
         (set-transient-map xah-fly-command-map (lambda () t)))
   (modify-all-frames-parameters (list (cons 'cursor-type 'box)))
   ;; (set-face-background 'cursor "red")
-  (setq mode-line-front-space "c")
+  (setq mode-line-front-space xah-fly-command-mode-indicator)
   (force-mode-line-update))
 
 (defun xah-fly-space-key ()
   "Switch to command mode if the char before cursor is a space.
 experimental
-Version 2018-05-07"
+Version: 2018-05-07"
   (interactive)
   (if (eq (char-before ) 32)
       (xah-fly-command-mode-activate)
@@ -4301,19 +4392,19 @@ Version 2018-05-07"
 (defun xah-fly-insert-mode-init (&optional no-indication)
   "Enter insertion mode."
   (interactive)
-  (setq xah-fly-insert-state-q t)
+  (setq xah-fly-insert-state-p t)
   (xah-fly--update-key-map)
   (funcall xah-fly--deactivate-command-mode-func)
   (unless no-indication
     (modify-all-frames-parameters '((cursor-type . bar)))
     ;; (set-face-background 'cursor "black")
-    (setq mode-line-front-space "i"))
+    (setq mode-line-front-space xah-fly-insert-mode-indicator))
   (force-mode-line-update))
 
 (defun xah-fly-mode-toggle ()
   "Switch between {insertion, command} modes."
   (interactive)
-  (if xah-fly-insert-state-q
+  (if xah-fly-insert-state-p
       (xah-fly-command-mode-activate)
     (xah-fly-insert-mode-activate)))
 
@@ -4325,20 +4416,20 @@ Version 2018-05-07"
 
 (defun xah-fly-command-mode-activate ()
   "Activate command mode and run `xah-fly-command-mode-activate-hook'
-Version 2017-07-07"
+Version: 2017-07-07"
   (interactive)
   (xah-fly-command-mode-init)
   (run-hooks 'xah-fly-command-mode-activate-hook))
 
 (defun xah-fly-command-mode-activate-no-hook ()
   "Activate command mode. Does not run `xah-fly-command-mode-activate-hook'
-Version 2017-07-07"
+Version: 2017-07-07"
   (interactive)
   (xah-fly-command-mode-init))
 
 (defun xah-fly-insert-mode-activate ()
   "Activate insertion mode.
-Version 2017-07-07"
+Version: 2017-07-07"
   (interactive)
   (xah-fly-insert-mode-init)
   (run-hooks 'xah-fly-insert-mode-activate-hook))
@@ -4367,12 +4458,14 @@ Version 2017-07-07"
 (define-minor-mode xah-fly-keys
   "A modal keybinding set, like vim, but based on ergonomic principles, like Dvorak layout.
 
-URL `http://ergoemacs.org/misc/ergoemacs_vi_mode.html'"
+URL `http://xahlee.info/emacs/misc/ergoemacs_vi_mode.html'"
   :group 'xah-fly-keys
   :global t
   :lighter " ∑flykeys"
   :keymap xah-fly-insert-map
   (delete-selection-mode 1)
+  (setq shift-select-mode nil)
+
   (if xah-fly-keys
       ;; Construction:
       (progn
@@ -4385,14 +4478,18 @@ URL `http://ergoemacs.org/misc/ergoemacs_vi_mode.html'"
           (set-keymap-parent xah-fly-key-map xah-fly-shared-map)
           (setq xah-fly-shared-map xah-fly-key-map))
         (xah-fly-command-mode-activate))
-    ;; Teardown:
-    (remove-hook 'minibuffer-setup-hook 'xah-fly-insert-mode-activate)
-    (remove-hook 'minibuffer-exit-hook 'xah-fly-command-mode-activate)
-    (remove-hook 'isearch-mode-end-hook 'xah-fly-command-mode-activate)
-    (remove-hook 'eshell-mode-hook 'xah-fly-insert-mode-activate)
-    (remove-hook 'shell-mode-hook 'xah-fly-insert-mode-activate)
-    (xah-fly-insert-mode-init :no-indication)
-    (setq mode-line-front-space '(:eval (if (display-graphic-p) " " "-")))))
+    (progn
+      ;; Teardown:
+      (remove-hook 'minibuffer-setup-hook 'xah-fly-insert-mode-activate)
+      (remove-hook 'minibuffer-exit-hook 'xah-fly-command-mode-activate)
+      (remove-hook 'isearch-mode-end-hook 'xah-fly-command-mode-activate)
+      (remove-hook 'eshell-mode-hook 'xah-fly-insert-mode-activate)
+      (remove-hook 'shell-mode-hook 'xah-fly-insert-mode-activate)
+      (xah-fly-insert-mode-init :no-indication)
+      (setq mode-line-front-space '(:eval (if (display-graphic-p) " " "-")))
+
+      ;;
+      )))
 
 (provide 'xah-fly-keys)
 

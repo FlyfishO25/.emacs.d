@@ -8,7 +8,6 @@ jobs:
         emacs-version:
           - 27.1
           - 27.2
-          - snapshot
     steps:
       - uses: actions/checkout@v1
       - uses: purcell/setup-emacs@master
@@ -19,6 +18,7 @@ jobs:
           rm -rf ~/.emacs.d; \
           mv -f ~/work/.emacs.d/.emacs.d ~; \
           emacs --version; \
+          emacs -Q --batch --eval "(load (concat user-emacs-directory \"lisp/packages-init.el\"))" --eval "(package-install 'doom-modeline)" --eval "(doom-modeline-mode)";
           emacs -q --batch \
           --eval "(message \"Testing...\")" \
           --eval "(setq package-check-signature nil
