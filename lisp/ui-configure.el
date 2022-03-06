@@ -1,4 +1,35 @@
-;;; -*- lexical-binding: t; -*-
+;;; ui-configure.el --- basic config of user interfaces. -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2022 FlyfishO25
+
+;; Author: FlyfishO25 <markzhou0125@gmail.com>
+;; URL: https://github.com/FlyfishO25/.emacs.d
+
+
+;; This file is not part of GNU Emacs.
+;;
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 3, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+;; Floor, Boston, MA 02110-1301, USA.
+;;
+
+;;; Commentary:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Basic config of user interfaces.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 (require 'init-funcs)
 
 (setq frame-title-format
@@ -232,3 +263,10 @@
       :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
       :hook (global-linum-mode . hlinum-activate)
       :init (setq linum-highlight-in-all-buffersp t))))
+
+(use-package neotree
+  :config
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+
+(global-set-key [f7] 'neotree-toggle)
+;;; ui-configure.el ends here.

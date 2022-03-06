@@ -22,4 +22,4 @@
  '(lsp-headerline-breadcrumb-symbols-info-face ((t :inherit lsp-headerline-breadcrumb-symbols-face :underline (:style wave :color "#50a14f"))))
  '(lsp-headerline-breadcrumb-symbols-warning-face ((t :inherit lsp-headerline-breadcrumb-symbols-face :underline (:style wave :color "#986801"))))
  '(lsp-ui-sideline-code-action ((t (:inherit warning))))
- '(org-ellipsis ((t (:foreground nil)))))
+ '(org-ellipsis ((t (:foreground nil))))))

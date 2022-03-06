@@ -1,3 +1,31 @@
+;;; edit-autosave.el --- provide auto save functions -*- lexical-binding: t; -*-
+
+;; This file is not part of GNU Emacs.
+;;
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 3, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+;; Floor, Boston, MA 02110-1301, USA.
+;;
+
+;;; Commentary:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; to enable autosave
+;; (require 'edit-autosave)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; Code:
+
 ;; defgroup 关键字的意思是定义一个工作组，执行 Alt + x customize-group 命令的时候可以进行图形化的模块配置
 ;; 第一个参数是模块的名字， 比如 auto-save
 ;; 第二个参数是模块默认开启的状态， 在 elisp 中， t 表示 true, nil 表示 false
@@ -67,11 +95,8 @@
                    (mapconcat 'identity autosave-buffer-list ", ")))))
       )))
 
-(defun auto-save-enable ()
-  (interactive)
-  ;; run-with-idle-timer 函数的意思就是在 auto-save-idle 定义的描述以后自动执行 auto-save-buffers 函数
-  ;; #' 的意思就是在 runtime 执行的时候再展开 auto-save-buffers 函数
-  (run-with-idle-timer auto-save-idle t #'auto-save-buffers)
-  )
+;; run-with-idle-timer 函数的意思就是在 auto-save-idle 定义的描述以后自动执行 auto-save-buffers 函数
+;; #' 的意思就是在 runtime 执行的时候再展开 auto-save-buffers 函数
+(run-with-idle-timer auto-save-idle t #'auto-save-buffers)
 
-(provide 'edit-autosave)
+;;; edit-autosave.el ends here

@@ -1,5 +1,11 @@
 ;;; edit-common.el --- setup basic edit configures. -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2022 FlyfishO25
+
+;; Author: FlyfishO25 <markzhou0125@gmail.com>
+;; URL: https://github.com/FlyfishO25/.emacs.d
+
+
 ;; This file is not part of GNU Emacs.
 ;;
 ;; This program is free software; you can redistribute it and/or
@@ -21,6 +27,7 @@
 ;;; Commentary:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup basic edit configures
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;; Code:
 
