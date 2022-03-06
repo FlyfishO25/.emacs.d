@@ -44,7 +44,6 @@
   (loadpkg 'init-misc t)
 
   (loadpkg 'ui-configure t)
-  (loadpkg 'ui-tree)
   (loadpkg 'ui-modeline t)
   ;; (loadpkg 'ui-tab)
   (loadpkg 'ui-configure t)
@@ -55,8 +54,6 @@
 
   (loadpkg 'edit-common t)
   (loadpkg 'edit-autosave t)
-  (auto-save-enable)
-  ;; (loadpkg 'edit-xah-fly-keys t)
   (loadpkg 'edit-keybinds t)
   
   (loadpkg 'init-ivy t)
