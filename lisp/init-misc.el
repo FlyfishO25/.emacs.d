@@ -45,16 +45,12 @@
 (defun restart-emacs ()
   "Restart Emacs from within Emacs."
   (interactive)
-  (catch 'is-windows
-  (if (eq 'system-type 'windows-nt)
-      (progn
-        (message "Sorry, this function does not support windows. QAQ")
-        (throw 'is-windows 1)))
-  (let ((kill-emacs-hook (append kill-emacs-hook (list (if (display-graphic-p)
-                                                           #'launch-separate-emacs-under-gui
-                                                         #'launch-separate-emacs-in-terminal)))))
-    (save-buffers-kill-emacs))
-  0))
+    (if (eq system-type 'windows-nt)
+          (message "Sorry, this function does not support windows. QAQ")
+      (let ((kill-emacs-hook (append kill-emacs-hook (list (if (display-graphic-p)
+                                                               #'launch-separate-emacs-under-gui
+                                                             #'launch-separate-emacs-in-terminal)))))
+        (save-buffers-kill-emacs))))
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
