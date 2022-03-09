@@ -46,7 +46,6 @@
   (loadpkg 'ui-configure t)
   (loadpkg 'ui-modeline t)
   ;; (loadpkg 'ui-tab)
-  (loadpkg 'ui-configure t)
   (loadpkg 'ui-dashboard)
   (loadpkg 'ui-theme t)
   (loadpkg 'ui-flycheck)
