@@ -56,7 +56,7 @@
   (loadpkg 'edit-keybinds t)
   
   (loadpkg 'init-ivy t)
-  (loadpkg 'init-hydra t)
+  (loadpkg 'init-hydra)
                                         ; code editing
 
   (loadpkg 'lang-python)
