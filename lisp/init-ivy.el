@@ -176,27 +176,6 @@
         )
   )
 
-;; (use-package all-the-icons-ivy
-;;   :if (icons-displayable-p)
-;;   :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
-
-;; (use-package all-the-icons-ivy-rich
-;;   :hook (ivy-mode . all-the-icons-ivy-rich-mode)
-;;   :init (setq all-the-icons-ivy-rich-icon display-icon)
-;;   :config
-;;   (plist-put all-the-icons-ivy-rich-display-transformers-list
-;;              'load-theme
-;;              '(:columns
-;;                ((all-the-icons-ivy-rich-theme-icon)
-;;                 (ivy-rich-candidate))
-;;                :delimiter "\t"))
-;;   (all-the-icons-ivy-rich-reload))
-
-;; (use-package ivy-rich
-;;   :config
-;;   (ivy-rich-mode 1)
-;;   )
-
 (use-package prescient
   :commands prescient-persist-mode
   :init (prescient-persist-mode 1))
@@ -210,6 +189,8 @@
 
 (use-package ivy-prescient
   :commands ivy-prescient-re-builder
+  :custom-face
+  (ivy-minibuffer-match-face-1 ((t (:foreground ,(face-foreground 'font-lock-doc-face nil t)))))
   :init
   ;; See https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-ivy.el#397
   (defun ivy-prescient-rebuilder (str)
@@ -292,3 +273,5 @@
 (add-hook 'minibuffer-exit-hook
           (lambda ()
             (remove-hook 'pre-command-hook 'ivy-fly-back t)))
+
+;;; init-ivy.el ends here

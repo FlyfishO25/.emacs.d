@@ -156,4 +156,7 @@
     (make-variable-buffer-local 'undo-tree-visualizer-diff)
     (setq-default undo-tree-visualizer-diff t)))
 
+(use-package crux
+  :diminish)
+
 ;;; edit-common.el ends here

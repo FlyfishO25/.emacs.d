@@ -128,6 +128,13 @@ to be added to `xah-fly-insert-mode-activate-hook'"
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-c M-w") 'osx-copy)
 (global-set-key (kbd "C-c C-y") 'osx-paste)
+;; Use crux keys as replacement of origin key to provide better experience
+(global-set-key (kbd "C-c o") 'crux-open-with)
+(global-set-key (kbd "C-k") 'crux-smart-kill-line)
+(global-set-key (kbd "C-c C-e") 'curx-eval-and-replace)
+(global-set-key (kbd "C-c M-r") 'curx-rename-buffer)
+(global-set-key [remap move-beginning-of-line] #'crux-move-beginning-of-line)
+(global-set-key [remap kill-whole-line] #'crux-kill-whole-line)
 
 ;;; edit-keybinds.el ends here
 
