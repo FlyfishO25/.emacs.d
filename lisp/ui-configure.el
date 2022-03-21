@@ -218,6 +218,7 @@
 ;;              the goal is to make it easy to find the cursor
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package beacon
+  :disabled
   :diminish
   :init
   (defun beacon ())
