@@ -81,7 +81,7 @@ Otherwise, if it is not currently in the git merge state, load it."
 (defun icons-displayable-p ()
   "Return non-nil if `all-the-icons' is displayable."
   (and display-icon
-       (display-graphic-p)
+       (or (display-graphic-p) (daemonp))
        (eq flymacs-ui 'rich)
        (require 'all-the-icons nil t)))
 
