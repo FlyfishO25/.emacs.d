@@ -50,7 +50,9 @@
         dashboard-heading-icons '((recents   . "file-text")
                                   (bookmarks . "bookmark")
                                   (agenda    . "calendar")))
-  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+  (setq initial-buffer-choice (lambda () (if (get-buffer "*dashboard*")
+                                             (get-buffer "*dashboard*")
+                                              (get-buffer "*scratch*"))
   (dashboard-setup-startup-hook)
   )
 
