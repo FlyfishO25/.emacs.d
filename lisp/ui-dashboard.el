@@ -52,7 +52,7 @@
                                   (agenda    . "calendar")))
   (setq initial-buffer-choice (lambda () (if (get-buffer "*dashboard*")
                                              (get-buffer "*dashboard*")
-                                              (get-buffer "*scratch*"))
+                                              (get-buffer "*scratch*")))
   (dashboard-setup-startup-hook)
   )
 
