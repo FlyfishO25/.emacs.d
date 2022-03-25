@@ -36,7 +36,6 @@
   :functions (all-the-icons-faicon
               all-the-icons-material)
   :custom-face (dashboard-heading ((t (:inherit (font-lock-string-face bold)))))
-  :hook (window-setup . (dashboard-refresh-buffer))
   :init
   (setq dashboard-banner-logo-title "F L Y M A C S"
         dashboard-startup-banner 'logo
@@ -51,7 +50,7 @@
         dashboard-heading-icons '((recents   . "file-text")
                                   (bookmarks . "bookmark")
                                   (agenda    . "calendar")))
-
+  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   (dashboard-setup-startup-hook)
   )
 
