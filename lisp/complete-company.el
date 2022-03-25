@@ -51,7 +51,7 @@
   :init
   (setq company-tooltip-align-annotations t
         company-tooltip-limit 12
-        company-idle-delay 0
+        company-idle-delay 0.1
         company-echo-delay (if (display-graphic-p) nil 0)
         company-minimum-prefix-length 1
         company-require-match nil
@@ -120,7 +120,7 @@
             :hook (company-mode . company-box-mode)
             :init (setq company-box-enable-icon (icons-displayable-p)
                         company-box-backends-colors nil
-                        company-box-doc-delay 0.1)
+                        company-box-doc-delay 0.2)
             :config
             (with-no-warnings
               ;; Prettify icons
