@@ -31,7 +31,7 @@
 
 (defun ns-auto-titlebar-set-all-frames (&rest _)
   "Set ns-appearance frame parameter for all frames to match their background-mode parameter."
-    (mapc 'ns-auto-titlebar-set-frame (frame-list)))
+  (mapc 'ns-auto-titlebar-set-frame (frame-list)))
 
 (when (eq system-type 'darwin) (progn
                                  (add-hook 'after-init-hook 'ns-auto-titlebar-set-all-frames)

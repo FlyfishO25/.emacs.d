@@ -31,51 +31,23 @@
 (setq flymacs--file-name-handler-alist-old file-name-handler-alist)
 
 (let* ((file-name-handler-alist nil))
-                                        ; customize and function defination
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
-                                        ; basic setup
+
+					; basic setup
   (require 'init-funcs)
+  
   (loadpkg 'init-performance t)
   (loadpkg 'packages-init t)
   (loadpkg 'init-user t)
   (loadpkg 'init-server)
   (loadpkg 'init-compile t)
   (loadpkg 'init-misc t)
-
-  (loadpkg 'ui-configure t)
-  (loadpkg 'ui-modeline t)
-  ;; (loadpkg 'ui-tab)
-  (loadpkg 'ui-dashboard)
-  (loadpkg 'ui-theme t)
-  (loadpkg 'ui-flycheck)
-  (loadpkg 'ui-cnfont t)
-
-  (loadpkg 'edit-common t)
-  (loadpkg 'edit-autosave t)
-  (loadpkg 'edit-keybinds t)
+    
   
-  (loadpkg 'init-ivy t)
-  (loadpkg 'init-hydra)
-                                        ; code editing
+  (require 'option-handler)
 
-  (loadpkg 'lang-python)
-  (loadpkg 'lang-c)
-
-                                        ; code completion
-
-  (loadpkg 'complete-company t)
-  (loadpkg 'complete-lsp)
-
-                                        ; other modes
-  (loadpkg 'init-org)
-  (add-hook 'org-mode-hook (lambda () (loadpkg 'init-roam)))
-  (loadpkg 'reading)
-  (loadpkg 'init-git)
-
-                                        ; games
-  (loadpkg 'init-games)
-  (flymacs-post-install)
+  (flymacs-handle-normal-startup)
   )
 
 (setq file-name-handler-alist flymacs--file-name-handler-alist-old)

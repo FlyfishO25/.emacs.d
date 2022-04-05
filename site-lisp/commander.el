@@ -33,8 +33,10 @@
 
 
 (require 'cl-lib)
-(require 'f)
-(require 's)
+(use-package f
+  :demand)
+(use-package s
+  :demand)
 (require 'dash)
 
 

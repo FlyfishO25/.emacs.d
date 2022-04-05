@@ -26,6 +26,11 @@ cd ~/.emacs.d
 git submodule update --init
 ```
 
+## CLI
+
+You can use the following CLI arguments:
+* ```--``` => minimal setup
+
 ## Credits
 
 * [Centaur Emacs](https://github.com/seagle0128/.emacs.d)
