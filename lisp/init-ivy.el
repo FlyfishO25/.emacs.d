@@ -44,14 +44,6 @@
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
   )
 
-
-(use-package swiper
-  :ensure t
-  :after ivy
-  :bind (("C-s" . swiper)
-         ("C-r" . swiper))
-  )
-
 (use-package counsel
   :ensure t
   :after ivy
@@ -82,6 +74,14 @@
           is recommended you install ripgrep.")
     )
   )
+
+(use-package ctrlf
+  ;; use ctrlf as a replace of swiper
+  :demand
+  :after counsel
+  :config
+  (ctrlf-mode +1)
+)
 
 ;; Use universal ctags to build the tags database for the project.
 ;; When you first want to build a TAGS database run 'touch TAGS'
