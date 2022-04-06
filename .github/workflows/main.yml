@@ -32,7 +32,6 @@ jobs:
                     (run-hooks 'after-init-hook)
                     (run-hooks 'emacs-startup-hook)
                     (run-hooks 'window-setup-hook))" \
-          --eval "(message \"Testing...done\")"; \
           echo "Time: "; \
           time -p emacs -q --batch \
           --eval "(let ((early-init-file (locate-user-emacs-file \"early-init.el\"))
