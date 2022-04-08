@@ -123,7 +123,7 @@ to be added to `xah-fly-insert-mode-activate-hook'"
 (global-set-key (kbd "C-/") 'undo)
 ;; Find file in project
 (global-set-key (kbd "C-x M-f") 'project-find-file)
-(global-set-key (kbd "C-r") 'replace-string)
+;;(global-set-key (kbd "C-r") 'replace-string)
 ;; Set default C-x C-b to ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-c M-w") 'osx-copy)
