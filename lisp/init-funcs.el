@@ -113,6 +113,23 @@ WARNINGS:
                'append)))
 
 
+;; Update
+;; function fron https://github.com/seagle0128/.emacs.d/blob/754eb554ca2dd22807898bd5a4257a57f6ab5cfd/lisp/init-funcs.el#L426
+(defun update-config ()
+  "Update Centaur Emacs configurations to the latest version."
+  (interactive)
+  (let ((temp-dir (expand-file-name user-emacs-directory)))
+    (if (file-exists-p temp-dir)
+        (progn
+          (message "Updating configurations...")
+          (cd temp-dir)
+          (shell-command "git pull")
+          (shell-command "git submodule update --remote")
+          (message "Updating configurations...done"))
+      (message "\"%s\" doesn't exist" temp-dir))))
+
+(defalias 'update-packages #'auto-package-update-now)
+
 (provide 'init-funcs)
 
 ;;; init-funcs.el ends here

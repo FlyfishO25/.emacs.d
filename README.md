@@ -23,13 +23,20 @@ git clone https://github.com/Flyfish/.emacs.d ~/.emacs.d
 
 # it is suggested to run the following commands after git clone
 cd ~/.emacs.d
-git submodule update --init
+git submodule update --init --remote
 ```
 
-## CLI
+## Minimal configure & troubleshooting
+```sh
+emacs -Q --l ~/.emacs.d/init-mini.el # minimal startup, more features included
+emacs -Q --l ~/.emacs.d/init-down.el # just for troubleshooting, use when emacs down completely
+```
 
-You can use the following CLI arguments:
-* ```--``` => minimal setup
+## Update
+```elisp
+(update-config) ; update configures
+(update-packages) ; update packages
+```
 
 ## Credits
 
