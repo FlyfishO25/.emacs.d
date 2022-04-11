@@ -162,14 +162,16 @@
 (use-package tree-sitter
   :demand
   :config
-  (add-hook 'prog-mode-hook #'tree-sitter-mode)
-  (add-hook 'prog-mode-hook #'tree-sitter-hl-mode)
+  (add-hook 'c-mode-hook #'tree-sitter-mode)
+  (add-hook 'c++-mode-hook #'tree-sitter-mode)
+  (add-hook 'c-mode-hook #'tree-sitter-hl-mode)
+  (add-hook 'c++-mode-hook #'tree-sitter-hl-mode)
 )
 
 (use-package tree-sitter-langs
   :after tree-sitter)
 
 (use-package color-identifiers-mode
-  :hook (prog-mode . color-identifiers-mode)f
+  :hook (prog-mode . color-identifiers-mode)
   )
 ;;; edit-common.el ends here
