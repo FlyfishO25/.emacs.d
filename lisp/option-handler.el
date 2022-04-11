@@ -25,11 +25,6 @@
 
 ;;; Code:
 
-(use-package commander
-  :load-path "site-lisp/"
-  :demand
-  )
-
 (defun flymacs-handle-normal-startup ()
   "Handle startup when -minimal is not passed to Emacs."
                                         ; basic setup
@@ -93,8 +88,5 @@
 
   (flymacs-post-install)
   )
-
-(commander
- (command "mini" "Mini" flymacs-handle-minimal-startup))
 
 (provide 'option-handler)
