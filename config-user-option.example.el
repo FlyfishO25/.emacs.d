@@ -13,6 +13,8 @@
 ;; flymacs-package-archives-tencent
 ;; flymacs-package-archives-origin (default)
 ;; (setq package-archives flymacs-package-archives-bfsu)
+;; Or use straight.el
+;; (setq flymacs-use-straight t)
 
 ;; Compile
 ;; (setq my:compile-command "")
@@ -56,5 +58,5 @@
 ;; Server
 ;; (setq flymacs-server t) ;; non-nil to enable server-mode at startup
 
-(provide 'config-user)
-;;; config-user.el ends here
+(provide 'config-user-option)
+;;; config-user-option.el ends here

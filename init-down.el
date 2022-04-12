@@ -78,8 +78,10 @@
 
 					; basic setup
   (require 'init-funcs)
+  (require 'init-const)
   
   (loadpkg 'init-performance t)
+  (loadpkg 'init-option t)
   (loadpkg 'packages-init t)
   (loadpkg 'init-user t)
   (loadpkg 'init-server)

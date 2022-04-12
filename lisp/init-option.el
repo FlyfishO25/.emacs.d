@@ -1,4 +1,4 @@
-;;; init.el --- Emacs init file.	-*- lexical-binding: t -*-
+;;; init-user.el --- Load user configures. -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2022 FlyfishO25
 
@@ -24,34 +24,33 @@
 ;;
 
 ;;; Commentary:
-;; main configure of flymacs
+;; Load user configures, just require.
 
 ;;; Code:
 
-(setq flymacs--file-name-handler-alist-old file-name-handler-alist)
+(unless (file-exists-p (expand-file-name "config-user-option.el" user-emacs-directory))
+  (copy-file (expand-file-name "config-user-option.example.el" user-emacs-directory)
+             (expand-file-name "config-user-option.el"         user-emacs-directory)))
 
-(let* ((file-name-handler-alist nil))
-  (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-  (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
+(load (expand-file-name "config-user-option.el" user-emacs-directory))
 
-					; basic setup
-  (require 'init-funcs)
-  
-  (loadpkg 'init-const t)
-  (loadpkg 'init-performance t)
-  (loadpkg 'init-option t)
-  (loadpkg 'packages-init t)
-  (loadpkg 'init-user t)
-  (loadpkg 'init-server)
-  (loadpkg 'init-compile t)
-  (loadpkg 'init-misc t)
-    
-  
-  (require 'option-handler)
+(unless (boundp 'my:compile-command)
+  (setq my:compile-command ""))
 
-  (flymacs-handle-normal-startup)
+(unless (boundp 'flymacs-cpp-google-style)
+  (setq flymacs-cpp-google-style nil))
+
+(unless (boundp 'flymacs-server)
+  (setq flymacs-server nil))
+
+(unless (boundp 'display-icon)
+  (setq display-icon t))
+
+(unless (boundp 'completion-style)
+  (setq completion-style 'childframe)
   )
 
-(setq file-name-handler-alist flymacs--file-name-handler-alist-old)
+(unless (boundp 'flymacs-ui)
+  (setq flymacs-ui 'rich))
 
-;;; init.el ends here
+;;; init-user.el ends here
