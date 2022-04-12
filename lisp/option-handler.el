@@ -28,46 +28,42 @@
 (defun flymacs-handle-normal-startup ()
   "Handle startup when -minimal is not passed to Emacs."
                                         ; basic setup
-  (unless (boundp 'flymacs--initialized)
+  (loadpkg 'ui-configure t)
+  (loadpkg 'ui-modeline t)
+  ;; (loadpkg 'ui-tab)
+  (loadpkg 'ui-dashboard)
+  (loadpkg 'ui-theme t)
+  (loadpkg 'ui-flycheck)
+  (loadpkg 'ui-cnfont t)
 
-    (loadpkg 'ui-configure t)
-    (loadpkg 'ui-modeline t)
-    ;; (loadpkg 'ui-tab)
-    (loadpkg 'ui-dashboard)
-    (loadpkg 'ui-theme t)
-    (loadpkg 'ui-flycheck)
-    (loadpkg 'ui-cnfont t)
-
-    (loadpkg 'edit-common t)
-    (loadpkg 'edit-autosave t)
-    (loadpkg 'edit-keybinds t)
-    
-    (loadpkg 'init-ivy t)
-    (loadpkg 'init-hydra)
+  (loadpkg 'edit-common t)
+  (loadpkg 'edit-autosave t)
+  (loadpkg 'edit-keybinds t)
+  
+  (loadpkg 'init-ivy t)
+  (loadpkg 'init-hydra)
                                         ; code editing
 
-    (loadpkg 'lang-python)
-    (loadpkg 'lang-c)
+  (loadpkg 'lang-python)
+  (loadpkg 'lang-c)
 
                                         ; code completion
 
-    (loadpkg 'complete-company t)
-    (loadpkg 'complete-lsp)
+  (loadpkg 'complete-company t)
+  (loadpkg 'complete-lsp)
 
                                         ; other modes
-    (loadpkg 'init-org)
-    (add-hook 'org-mode-hook (lambda () (loadpkg 'init-roam)))
-    (loadpkg 'reading)
-    (loadpkg 'init-git)
+  (loadpkg 'init-org)
+  (add-hook 'org-mode-hook (lambda () (loadpkg 'init-roam)))
+  (loadpkg 'reading)
+  (loadpkg 'init-git)
                                         ; games
-    (loadpkg 'init-games)
-    (flymacs-post-install)
-    )
+  (loadpkg 'init-games)
+  (flymacs-post-install)
   )
 
 (defun flymacs-handle-minimal-startup ()
   "Handle startup when -minimal OPTION is passed to Emacs."
-  (setq flymacs--initialized t)
 
   (loadpkg 'ui-configure t)
   (loadpkg 'ui-modeline t)
@@ -79,6 +75,7 @@
   (loadpkg 'edit-keybinds t)
   
   (loadpkg 'init-ivy t)
+  (loadpkg 'init-hydra)
                                         ; code completion
 
   (loadpkg 'complete-company t)

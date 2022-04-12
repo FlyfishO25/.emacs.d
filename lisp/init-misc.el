@@ -71,4 +71,11 @@
   :config
   (winner-mode 1))
 
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+(setq adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*")
+(setq adaptive-fill-first-line-regexp "^* *$")
+(setq delete-by-moving-to-trash t)
+(setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
+(setq sentence-end-double-space nil)
+
 ;;; init-misc.el ends here
