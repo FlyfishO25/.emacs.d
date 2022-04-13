@@ -60,7 +60,6 @@
 (use-package powerline
   :ensure t
   :if (eq flymacs-ui 'simple)
-  :demand
   :config
   ;; fix window algorithm problems in powerline. (by doom-modeline)
   (defun my/pl--get-current-window (&optional frame)

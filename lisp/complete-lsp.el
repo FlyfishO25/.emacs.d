@@ -40,7 +40,7 @@
 (pcase centaur-lsp
     ('eglot
      (use-package eglot
-       :defer 1.9
+       :defer t
        :hook ((prog-mode . (lambda ()
                              (unless (derived-mode-p 'emacs-lisp-mode 'lisp-mode 'makefile-mode)
                                (eglot-ensure))))
@@ -48,9 +48,9 @@
     ('lsp-mode
      ;; Emacs client for the Language Server Protocol
      ;; https://github.com/emacs-lsp/lsp-mode#supported-languages
-     (use-package lsp-mode
+     (use-package lsp-mode 
        :diminish
-       :defer 1.9
+       :defer t
        :defines lsp-clients-python-library-directories
        :commands (lsp-enable-which-key-integration
                   lsp-format-buffer

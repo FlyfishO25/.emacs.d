@@ -77,7 +77,6 @@
 
 (use-package ctrlf
   ;; use ctrlf as a replace of swiper
-  :demand
   :after counsel
   :config
   (ctrlf-mode +1)
@@ -181,11 +180,12 @@
   :init (prescient-persist-mode 1))
 
 (use-package all-the-icons-ivy-rich
-  :if (icons-displayable-p)
-  :init (all-the-icons-ivy-rich-mode 1))
+  :hook (after-init . all-the-icons-ivy-rich-mode)
+  :if (icons-displayable-p))
 
 (use-package ivy-rich
-  :init (ivy-rich-mode 1))
+  :hook (after-init . ivy-rich-mode)
+  )
 
 (use-package ivy-prescient
   :commands ivy-prescient-re-builder
