@@ -31,21 +31,27 @@
 
 ;;; Code:
 (use-package doom-modeline
-  :ensure t
-  :defer t
-  :if (eq flymacs-ui 'rich)
-  :hook (after-init . doom-modeline-mode)
-  :init
-  (setq doom-modeline-minor-modes t)
-  (setq doom-modeline-height 30)
-  :config
-  (if (boundp 'flymacs-latitude)
-    (require 'sky-color-clock)
-    (sky-color-clock-initialize flymacs-latitude)
-    (push '(:eval (sky-color-clock)) (default-value 'mode-line-misc-info))
-    (setq sky-color-clock-format "%m/%d %H:%M")
-    (setq sky-color-clock-enable-emoji-icon nil))
-  )
+      :ensure t
+      :defer t
+      :if (eq flymacs-ui 'rich)
+      :hook (after-init . doom-modeline-mode)
+      :init
+      (setq doom-modeline-minor-modes t)
+      (setq doom-modeline-height 30)
+      :config
+      (use-package sky-color-clock
+        :load-path "site-lisp/"
+        :if (boundp 'flymacs-latitude)
+        :demand
+        :commands (sky-color-clock-initialize)
+        :config
+        (sky-color-clock-initialize flymacs-latitude)
+        (if (and (boundp 'flymacs-sky-clock-api-key) (boundp 'flymacs-sky-color-city))
+            (sky-color-clock-initialize-openweathermap-client flymacs-sky-clock-api-key flymacs-sky-color-city))
+        (push '(:eval (sky-color-clock)) (default-value 'mode-line-misc-info))
+        (setq sky-color-clock-format "%m/%d %H:%M")
+        (setq sky-color-clock-enable-emoji-icon nil))
+)
 
 (when (>= emacs-major-version 25.2)
   (use-package minions
@@ -60,6 +66,7 @@
 (use-package powerline
   :ensure t
   :if (eq flymacs-ui 'simple)
+  :demand
   :config
   ;; fix window algorithm problems in powerline. (by doom-modeline)
   (defun my/pl--get-current-window (&optional frame)

@@ -1,4 +1,5 @@
 ;; Example configure
+;; Warning: DO NOT use use-package here! Put them in config-user.el instead!
 
 ;; Proxies
 ;; (setq url-proxy-services '(("http"     . "example.proxy.com:port")
@@ -40,13 +41,9 @@
 ;; (setq flymacs-games t) ;; t or nil means need games or not
 
 ;; Plugins
-;; (setq flymacs-latitude {your-latitude}) ;; set your latitude if you want to enable sky-color-clock plugin
-
-;; (use-package vterm) ;; you can use (use-package) macro
-
-;; (use-package-hook! lsp-mode ;; use use-package-hook! macro to hook configured packages (from doom-emacs)
-;;   :post-config
-;;   (setq lsp-headerline-breadcrumb-enable t))
+;; (setq flymacs-latitude 23) ;; set your latitude if you want to enable sky-color-clock plugin
+;; (setq flymacs-sky-clock-api-key "API-key")"cd1ff2c003a45c5acf4bb27803e4aabb"
+;; (setq flymacs-sky-color-city city-code)
 
 ;; UI
 ;; (setq display-icon t) ;; non-nil if you want to display icons (from centaur emacs)

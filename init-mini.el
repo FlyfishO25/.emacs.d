@@ -84,7 +84,6 @@
   (loadpkg 'init-performance t)
   (loadpkg 'init-option t)
   (loadpkg 'packages-init t)
-  (loadpkg 'init-user t)
   (loadpkg 'init-server)
   (loadpkg 'init-compile t)
   (loadpkg 'init-misc t)    
@@ -92,6 +91,8 @@
   (require 'option-handler)
 
   (flymacs-handle-minimal-startup)
+  
+  (loadpkg 'init-user t)  
   )
 
 (setq file-name-handler-alist flymacs--file-name-handler-alist-old)

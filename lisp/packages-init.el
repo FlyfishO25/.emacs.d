@@ -33,121 +33,99 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (require 'init-const)
 
-(if flymacs-use-straight
-    (progn
-      (defvar bootstrap-version)
-      (let ((bootstrap-file
-             (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-            (bootstrap-version 5))
-        (unless (file-exists-p bootstrap-file)
-          (with-current-buffer
-              (url-retrieve-synchronously
-               "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-               'silent 'inhibit-cookies)
-            (goto-char (point-max))
-            (eval-print-last-sexp)))
-        (load bootstrap-file nil 'nomessage))
-      (straight-use-package 'use-package)
-      (setq straight-use-package-by-default t)
-      (setq straight-vc-git-default-clone-depth 1)
-      )
-  (progn
-    (setq package-archives flymacs-package-archives-origin)
+(setq package-archives flymacs-package-archives-origin)
 
-    (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
-      (setq package-enable-at-startup nil)          ; To prevent initializing twice
-      (package-initialize))
+(unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
+  (setq package-enable-at-startup nil)          ; To prevent initializing twice
+  (package-initialize))
 
-    (require 'package)
+(require 'package)
 
-    ;; From https://irreal.org/blog/?p=8243
-    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+;; From https://irreal.org/blog/?p=8243
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
-    ;; From https://github.com/hlissner/doom-emacs/blob/5dacbb7cb1c6ac246a9ccd15e6c4290def67757c/core/core-packages.el#L102
-    (setq gnutls-verify-error (not (getenv "INSECURE")) ; you shouldn't use this
-          tls-checktrust gnutls-verify-error
-          tls-program (list "gnutls-cli --x509cafile %t -p %p %h"
-                            ;; compatibility fallbacks
-                            "gnutls-cli -p %p %h"
-                            "openssl s_client -connect %h:%p -no_ssl2 -no_ssl3 -ign_eof"))
+;; From https://github.com/hlissner/doom-emacs/blob/5dacbb7cb1c6ac246a9ccd15e6c4290def67757c/core/core-packages.el#L102
+(setq gnutls-verify-error (not (getenv "INSECURE")) ; you shouldn't use this
+      tls-checktrust gnutls-verify-error
+      tls-program (list "gnutls-cli --x509cafile %t -p %p %h"
+                        ;; compatibility fallbacks
+                        "gnutls-cli -p %p %h"
+                        "openssl s_client -connect %h:%p -no_ssl2 -no_ssl3 -ign_eof"))
 
-    ;; Setup `use-package'
-    (unless (package-installed-p 'use-package)
-      (package-refresh-contents)
-      (package-install 'use-package))
+;; Setup `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-    (eval-and-compile
-      (setq use-package-always-ensure t)
-      (setq use-package-always-defer t)
-      (setq use-package-expand-minimally t)
-      (setq use-package-enable-imenu-support t))
+(eval-and-compile
+  (setq use-package-always-ensure t)
+  (setq use-package-always-defer t)
+  (setq use-package-expand-minimally t)
+  (setq use-package-enable-imenu-support t))
 
-    (eval-when-compile
-      (require 'use-package))
+(eval-when-compile
+  (require 'use-package))
 
-    ;; Required by `use-package'
-    (use-package diminish)
-    (use-package bind-key)
+;; Required by `use-package'
+(use-package diminish)
+(use-package bind-key)
 
-    ;; (require 'benchmark-init)
-    ;; To disable collection of benchmark data after init is done.
-    ;; (add-hook 'after-init-hook 'benchmark-init/deactivate)
+;; (require 'benchmark-init)
+;; To disable collection of benchmark data after init is done.
+;; (add-hook 'after-init-hook 'benchmark-init/deactivate)
 
-    ;; Update GPG keyring for GNU ELPA
-    (use-package gnu-elpa-keyring-update)
+;; Update GPG keyring for GNU ELPA
+(use-package gnu-elpa-keyring-update)
 
-    ;; A modern Packages Menu
-    (use-package paradox
-      :hook (after-init . paradox-enable)
-      :init (setq paradox-execute-asynchronously t
-                  paradox-github-token t
-                  paradox-display-star-count nil)
-      :config
-      (when (fboundp 'page-break-lines-mode)
-        (add-hook 'paradox-after-execute-functions
-                  (lambda (&rest _)
-                    "Display `page-break-lines' in \"*Paradox Report*\"."
-                    (let ((buf (get-buffer "*Paradox Report*"))
-                          (inhibit-read-only t))
-                      (when (buffer-live-p buf)
-                        (with-current-buffer buf
-                          (page-break-lines-mode 1)))))
-                  t)))
+;; A modern Packages Menu
+(use-package paradox
+  :hook (after-init . paradox-enable)
+  :init (setq paradox-execute-asynchronously t
+              paradox-github-token t
+              paradox-display-star-count nil)
+  :config
+  (when (fboundp 'page-break-lines-mode)
+    (add-hook 'paradox-after-execute-functions
+              (lambda (&rest _)
+                "Display `page-break-lines' in \"*Paradox Report*\"."
+                (let ((buf (get-buffer "*Paradox Report*"))
+                      (inhibit-read-only t))
+                  (when (buffer-live-p buf)
+                    (with-current-buffer buf
+                      (page-break-lines-mode 1)))))
+              t)))
 
-    ;; @see https://github.com/jwiegley/use-package/issues/383
-    (defun flymacs-package--save-selected-packages (&optional value)
-      "Set and (don't!) save `package-selected-packages' to VALUE."
-      (when value
-        (setq package-selected-packages value))
-      (unless after-init-time
-        (add-hook 'after-init-hook #'package--save-selected-packages)))
+;; @see https://github.com/jwiegley/use-package/issues/383
+(defun flymacs-package--save-selected-packages (&optional value)
+  "Set and (don't!) save `package-selected-packages' to VALUE."
+  (when value
+    (setq package-selected-packages value))
+  (unless after-init-time
+    (add-hook 'after-init-hook #'package--save-selected-packages)))
 
-    (advice-add 'package--save-selected-packages :override #'flymacs-package--save-selected-packages)
+(advice-add 'package--save-selected-packages :override #'flymacs-package--save-selected-packages)
 
-    (use-package async
-      :ensure t)
+(use-package async
+  :ensure t)
 
-    (use-package s
-      :ensure t)
+(use-package s
+  :ensure t)
 
-    (use-package system-packages)
+(use-package system-packages)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;; auto-package-update
+;; auto-package-update
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;; Auto update packages once a week
-    (use-package auto-package-update
-      :ensure t
-      :commands (auto-package-update-maybe)
-      :config
-      (setq auto-package-update-delete-old-versions t)
-      (setq auto-package-update-hide-results t)
-      (auto-package-update-maybe)
-      (add-hook 'auto-package-update-before-hook
-                (lambda () (message "I will update packages now")))
-      )
-
-    )
+;; Auto update packages once a week
+(use-package auto-package-update
+  :ensure t
+  :commands (auto-package-update-maybe)
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-hide-results t)
+  (auto-package-update-maybe)
+  (add-hook 'auto-package-update-before-hook
+            (lambda () (message "I will update packages now")))
   )
 
 ;;; packages-init.el ends here
