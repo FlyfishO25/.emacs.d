@@ -30,6 +30,7 @@
 (unless (boundp 'flymacs-use-straight)
   (setq flymacs-use-straight nil))
 
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (require 'init-const)
 
 (if flymacs-use-straight
