@@ -77,9 +77,9 @@
 
 (use-package ctrlf
   ;; use ctrlf as a replace of swiper
-  :after counsel
+  :demand
   :config
-  (ctrlf-mode +1)
+  (ctrlf-mode)
 )
 
 ;; Use universal ctags to build the tags database for the project.

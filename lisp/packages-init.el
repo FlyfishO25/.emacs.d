@@ -30,6 +30,8 @@
 (unless (boundp 'flymacs-use-straight)
   (setq flymacs-use-straight nil))
 
+(require 'init-const)
+
 (if flymacs-use-straight
     (progn
       (defvar bootstrap-version)
