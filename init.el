@@ -33,6 +33,7 @@
 (let* ((file-name-handler-alist nil))
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/mu4e"))
 
 					; basic setup
   (require 'init-funcs)
