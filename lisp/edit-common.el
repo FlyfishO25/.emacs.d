@@ -160,6 +160,7 @@
   :diminish)
 
 (use-package tree-sitter
+  :demand
   :config
   (add-hook 'c-mode-hook #'tree-sitter-mode)
   (add-hook 'c++-mode-hook #'tree-sitter-mode)
