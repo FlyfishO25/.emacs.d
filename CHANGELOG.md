@@ -1,4 +1,4 @@
-# [](https://github.com/FlyfishO25/.emacs.d/compare/v1.3.0...v) (2022-03-21)
+# [1.4.0](https://github.com/FlyfishO25/.emacs.d/compare/v1.3.0...v1.4.0) (2022-04-14)
 
 
 ### Bug Fixes
@@ -6,24 +6,37 @@
 * Beacon will not work ([324ecac](https://github.com/FlyfishO25/.emacs.d/commit/324ecace79b4aa384ef30cd5449352e8387adc16))
 * Change url of wordel.el ([debd1e2](https://github.com/FlyfishO25/.emacs.d/commit/debd1e2321cd10e38668a799e2c18f3e4079b02d))
 * Company will still display icons although flymacs-ui is 'simple ([72d9681](https://github.com/FlyfishO25/.emacs.d/commit/72d968116d5c588d3ad8aade1fe8a2547a84b29d))
+* dashboard error on windows ([b60c00c](https://github.com/FlyfishO25/.emacs.d/commit/b60c00c5cac50ec05cd02a6631a4941df4672720))
 * Dashboard will display ^L character ([2c4125d](https://github.com/FlyfishO25/.emacs.d/commit/2c4125d72f0e684fbd36a83ec333e32273a7a108))
 * evil mode error ([880a8e8](https://github.com/FlyfishO25/.emacs.d/commit/880a8e84da95161338b04a9702d98931eaf92a32))
+* Fix config-user.el not found error ([6e56bb4](https://github.com/FlyfishO25/.emacs.d/commit/6e56bb407d272b12823b559acc742d850b0003f4))
+* Fix init-const can't be found ([f2a8a81](https://github.com/FlyfishO25/.emacs.d/commit/f2a8a81884d4e1d92a636098b07ef629997262a2))
+* Icons will not display in daemon mode ([6c9bd15](https://github.com/FlyfishO25/.emacs.d/commit/6c9bd15716f21cc2f9344246316553d5e031b1a8))
+* init-mini and init-down have tool-bar and menu-bar ([27ba7ac](https://github.com/FlyfishO25/.emacs.d/commit/27ba7acd15c96bdb2dca64e5cc8274cb783f0b9a))
 * LSP miniframe error ([1b0a41b](https://github.com/FlyfishO25/.emacs.d/commit/1b0a41be9a71eb2e4fe7216dc39c93a74f39e74f))
 * lsp-treemacs error in emacs 29 ([1efc992](https://github.com/FlyfishO25/.emacs.d/commit/1efc9928f87b011b61d4e98e018677c0a86c8d17))
+* packages-init.el error and ctrlf won't load ([1e6ec4c](https://github.com/FlyfishO25/.emacs.d/commit/1e6ec4caa3b8d5394f51ad140b4a197a469a437c))
 * Remove repeated code ([de80794](https://github.com/FlyfishO25/.emacs.d/commit/de807949137888cad2230f705413b265f0988e42))
 * Remove rubbish beacon-mode ([c4566ba](https://github.com/FlyfishO25/.emacs.d/commit/c4566bae05e1c15404661908c78f7ed0d7e37c3e))
+* Remove straight.el because it sucks and modified documents ([a6567f2](https://github.com/FlyfishO25/.emacs.d/commit/a6567f2190a5d02361caca35faf54f71c851d7bf))
 * restart-emacs function error in windows ([6d9d27a](https://github.com/FlyfishO25/.emacs.d/commit/6d9d27a0914d17df7787304515618197f3ab266e))
 * theme needs user permit ([f350cc1](https://github.com/FlyfishO25/.emacs.d/commit/f350cc1460e3ddcf94f177c8b64a6e8fe35069c1))
 * treemacs-lsp error in emacs 29 ([e4836ff](https://github.com/FlyfishO25/.emacs.d/commit/e4836ff1ff0d3256d58761ad2fce6bcea5412da5))
+* UI problem ([15614e4](https://github.com/FlyfishO25/.emacs.d/commit/15614e48e636987da3e282b98c39a0a04c5e27e4))
 * xah-fly-keys might not the latest version ([0534db1](https://github.com/FlyfishO25/.emacs.d/commit/0534db191e1d0b9fc92f0d2dda089e8e435cf514))
+* xah-fly-keys won't work when using straight.el ([c75b1a6](https://github.com/FlyfishO25/.emacs.d/commit/c75b1a61994c9d03b8f58a6373c2cbad59cbfb57))
 
 
 ### Features
 
+* Add a CLI argument ([32c33e2](https://github.com/FlyfishO25/.emacs.d/commit/32c33e2ca02c4ff6246b8a790cb21eaee90d9315))
 * Add a new UI style option ([8508327](https://github.com/FlyfishO25/.emacs.d/commit/8508327f084fdd9f48f32efdbf2befd3e661c18b))
+* Add mail function ([85316e8](https://github.com/FlyfishO25/.emacs.d/commit/85316e839fe9f3c6183dbe222daa16df4acec159))
 * Add some useful tools ([fab8a5b](https://github.com/FlyfishO25/.emacs.d/commit/fab8a5bd2413e2cb3b95186318cf788402d98dda))
 * Add some useful tools (belong to previous commit) ([7b6455a](https://github.com/FlyfishO25/.emacs.d/commit/7b6455a5b6403d1e24d47576cf6a0416e8b7909a))
+* Add straight.el as alternative of package.el ([d2b0cd3](https://github.com/FlyfishO25/.emacs.d/commit/d2b0cd393cc04f12554019787327571aae833087))
 * Add undo-tree ([48913ba](https://github.com/FlyfishO25/.emacs.d/commit/48913ba49d24ca16cd251aed41beeee8abe601af))
+* Add update function ([191157b](https://github.com/FlyfishO25/.emacs.d/commit/191157b242afdac6d9747333370f1397b500535d))
 * Add vterm ([6ddfb16](https://github.com/FlyfishO25/.emacs.d/commit/6ddfb1696da5f49b39bd505bcb339f90869a6183))
 * Restore window layout ([ec8e6dd](https://github.com/FlyfishO25/.emacs.d/commit/ec8e6dd24ee6e7747fab47470972c52804c5ffba))
 
