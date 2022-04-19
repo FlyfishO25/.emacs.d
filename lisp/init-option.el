@@ -32,7 +32,7 @@
   (copy-file (expand-file-name "config-user-option.example.el" user-emacs-directory)
              (expand-file-name "config-user-option.el"         user-emacs-directory)))
 
-(load (expand-file-name "config-user-option.el" user-emacs-directory))
+(load (expand-file-name "config-user-option" user-emacs-directory))
 
 (unless (boundp 'my:compile-command)
   (setq my:compile-command ""))
