@@ -49,7 +49,7 @@
 
                                         ; code completion
 
-  (loadpkg 'complete-company t)
+  (loadpkg 'complete-completion t)
   (loadpkg 'complete-lsp)
 
                                         ; other modes
@@ -79,7 +79,7 @@
   (loadpkg 'init-hydra)
                                         ; code completion
 
-  (loadpkg 'complete-company t)
+  (loadpkg 'complete-completion t)
                                         ; other modes
   (loadpkg 'init-org)
   (loadpkg 'init-git)

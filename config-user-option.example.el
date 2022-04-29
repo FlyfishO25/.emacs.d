@@ -1,4 +1,5 @@
 ;; Example configure
+;; Values here is the default value of these variables, feel free to change them.
 ;; Warning: DO NOT use use-package here! Put them in config-user.el instead!
 
 ;; Proxies
@@ -14,8 +15,6 @@
 ;; flymacs-package-archives-tencent
 ;; flymacs-package-archives-origin (default)
 ;; (setq package-archives flymacs-package-archives-bfsu)
-;; Or use straight.el
-;; (setq flymacs-use-straight t)
 
 ;; Compile
 ;; (setq my:compile-command "")
@@ -48,6 +47,7 @@
 ;; UI
 ;; (setq display-icon t) ;; non-nil if you want to display icons (from centaur emacs)
 ;; (setq completion-style 'childframe) ;; 'childframe or 'minibuffer to set different type of flycheck errors (from centaur emacs)
+;; (setq flymacs-use-corfu nil) ;; non-nil to use corfu instead of company
 
 ;; LSP
 ;; (setq centaur-lsp 'lsp-mode) ;; 'lsp-mode or 'eglot to set lsp client (from centaur emacs)

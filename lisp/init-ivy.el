@@ -78,6 +78,8 @@
 (use-package ctrlf
   ;; use ctrlf as a replace of swiper
   :demand
+  :custom-face
+  (ctrlf-highlight-active ((t (:weight bold :foreground "medium blue" :background "#5AC896"))))
   :config
   (ctrlf-mode)
 )
