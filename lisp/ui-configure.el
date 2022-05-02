@@ -214,17 +214,6 @@
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Beacon-mode: flash the cursor when switching buffers or scrolling
-;;              the goal is to make it easy to find the cursor
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package beacon
-  :disabled
-  :diminish
-  :init
-  (defun beacon ())
-  :hook (after-init . beacon-mode))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; which-key: when you pause on a keyboard shortcut it provides
 ;;            suggestions in a popup buffer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -266,9 +255,8 @@
       :hook (global-linum-mode . hlinum-activate)
       :init (setq linum-highlight-in-all-buffersp t))))
 
-(use-package neotree
+(use-package dirvish
   :config
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
-
-(global-set-key [f7] 'neotree-toggle)
+  (global-set-key (kbd "<f7>") 'dirvish-side)
+  (defalias 'dired 'dirvish-dired))
 ;;; ui-configure.el ends here.
