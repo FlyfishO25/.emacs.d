@@ -130,6 +130,20 @@ WARNINGS:
 
 (defalias 'update-packages #'auto-package-update-now)
 
+(defun rename-this-file (new-name)
+  ;; from https://github.com/seagle0128/.emacs.d/blob/754eb554ca2dd22807898bd5a4257a57f6ab5cfd/lisp/init-funcs.el#L97
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (unless filename
+      (error "Buffer '%s' is not visiting a file!" name))
+    (progn
+      (when (file-exists-p filename)
+        (rename-file filename new-name 1))
+      (set-visited-file-name new-name)
+      (rename-buffer new-name))))
+
 (provide 'init-funcs)
 
 ;;; init-funcs.el ends here
