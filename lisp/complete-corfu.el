@@ -28,6 +28,7 @@
 ;;; Code:
 
 (use-package corfu
+  :ensure t
   ;; Optional customizations
   :custom
   (corfu-auto t)                 ;; Enable auto completion
@@ -43,11 +44,7 @@
   :init
   (global-corfu-mode)
   :config
-  (use-package orderless
-    :init
-    (setq completion-styles '(orderless basic)
-          completion-category-defaults nil
-          completion-category-overrides '((file (styles . (partial-completion))))))
+  
   (use-package kind-icon
     :demand
     :custom
@@ -56,7 +53,7 @@
     (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
   
   (use-package corfu-doc
-    :demand
+    :after corfu
     :hook (corfu-mode-hook . corfu-doc-mode)
     :config
     (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down) ;; corfu-next
@@ -64,4 +61,12 @@
     (define-key corfu-map (kbd "M-d") #'corfu-doc-toggle)
     )
   )
+
+(use-package yasnippet
+  :diminish yas-minor-mode
+  :hook ((prog-mode . yas-minor-mode)
+         (org-mode . yas-minor-mode)))
+
+(use-package yasnippet-snippets
+  :after yasnippet)
 ;;; complete-corfu.el ends here

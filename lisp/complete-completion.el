@@ -31,8 +31,9 @@
 (unless (boundp 'flymacs-use-corfu)
   (setq flymacs-use-corfu nil))
 
-(if flymacs-use-corfu
-    (loadpkg 'complete-corfu t)
-  (loadpkg 'complete-company t))
+(if (and flymacs-use-corfu (childframe-workable-p))
+    (load "complete-corfu")
+  (load "complete-company")
+  )
 
 ;;; complete-completion.el ends here
