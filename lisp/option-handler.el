@@ -46,6 +46,7 @@
 
   (loadpkg 'lang-python)
   (loadpkg 'lang-c)
+  (loadpkg 'lang-go)
 
                                         ; code completion
 
