@@ -37,6 +37,7 @@
 
 					; basic setup
   (require 'init-funcs)
+  (require 'on)
   
   (loadpkg 'init-const t)
   (loadpkg 'init-performance t)
@@ -50,6 +51,8 @@
   (require 'option-handler)
 
   (flymacs-handle-normal-startup)
+
+  (on-init-ui-h)
   
   (loadpkg 'init-user t)
   )
