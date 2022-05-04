@@ -53,4 +53,6 @@
 (unless (boundp 'flymacs-ui)
   (setq flymacs-ui 'rich))
 
+(unless (boundp 'centaur-lsp)
+  (setq centaur-lsp 'lsp-mode))
 ;;; init-user.el ends here

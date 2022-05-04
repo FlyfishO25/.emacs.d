@@ -257,6 +257,10 @@
 
 (use-package dirvish
   :config
-  (global-set-key (kbd "<f7>") 'dirvish-side)
-  (defalias 'dired 'dirvish-dired))
+  (global-set-key (kbd "<f7>") 'dirvish-side))
+
+(defface posframe-border
+  `((t (:background ,(face-foreground 'shadow nil t))))
+  (custom-set-faces
+   `(posframe-border ((t (:background ,(face-foreground 'shadow nil t)))))))
 ;;; ui-configure.el ends here.

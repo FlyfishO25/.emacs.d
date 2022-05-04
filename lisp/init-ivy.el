@@ -257,7 +257,7 @@
   :init
   (setq completion-styles '(orderless basic)
         completion-category-defaults nil
-        completion-category-overrides '((file (styles . (partial-completion)))))
+        completion-category-overrides '((file (styles . (partial-completion))) (eglot (styles . (orderless flex)))))
   :config
   (defun flex-if-twiddle (pattern _index _total)
     (when (string-suffix-p "~" pattern)
