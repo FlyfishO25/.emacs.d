@@ -49,10 +49,8 @@
         dashboard-set-init-info t
         dashboard-heading-icons '((recents   . "file-text")
                                   (bookmarks . "bookmark")
-                                  (agenda    . "calendar")))
-  (setq initial-buffer-choice (lambda () (if (get-buffer "*dashboard*")
-                                             (get-buffer "*dashboard*")
-                                              (get-buffer "*scratch*"))))
+                                  (agenda    . "calendar"))
+        initial-buffer-choice nil)
   (dashboard-setup-startup-hook)
   )
 
