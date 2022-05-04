@@ -32,6 +32,7 @@
 ;;; Code:
 
 (use-package flycheck
+  :defer t
   :diminish
   :commands flycheck-redefine-standard-error-levels
   :hook (after-init . global-flycheck-mode)

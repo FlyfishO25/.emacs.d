@@ -12,3 +12,4 @@
   (if (region-active-p) (delete-region (region-beginning) (region-end)) nil)
   (call-process "pbpaste" nil t nil))
 
+

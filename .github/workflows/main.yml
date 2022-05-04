@@ -8,6 +8,7 @@ jobs:
         emacs-version:
           - 27.1
           - 27.2
+          - 28.1
     steps:
       - uses: actions/checkout@v1
       - uses: purcell/setup-emacs@master
@@ -31,16 +32,5 @@ jobs:
                     (load user-init-file)
                     (run-hooks 'after-init-hook)
                     (run-hooks 'emacs-startup-hook)
-                    (run-hooks 'window-setup-hook))" \
-          --eval "(message \"Testing...done\")"; \
-          echo "Time: "; \
-          time -p emacs -q --batch \
-          --eval "(let ((early-init-file (locate-user-emacs-file \"early-init.el\"))
-                        (user-init-file (locate-user-emacs-file \"init.el\")))
-                    (and (>= emacs-major-version 27) (load early-init-file))
-                    (load user-init-file)
-                    (run-hooks 'after-init-hook)
-                    (run-hooks 'emacs-startup-hook)
-                    (run-hooks 'window-setup-hook))" \
-          -e kill-emacs ;
+                    (run-hooks 'window-setup-hook))"
         

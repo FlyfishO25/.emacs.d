@@ -1,5 +1,11 @@
 ;;; edit-common.el --- setup basic edit configures. -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2022 FlyfishO25
+
+;; Author: FlyfishO25 <markzhou0125@gmail.com>
+;; URL: https://github.com/FlyfishO25/.emacs.d
+
+
 ;; This file is not part of GNU Emacs.
 ;;
 ;; This program is free software; you can redistribute it and/or
@@ -21,6 +27,7 @@
 ;;; Commentary:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup basic edit configures
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;; Code:
 
@@ -156,4 +163,23 @@
     (make-variable-buffer-local 'undo-tree-visualizer-diff)
     (setq-default undo-tree-visualizer-diff t)))
 
+(use-package crux
+  :diminish)
+
+(use-package tree-sitter
+  :defer t
+  :config
+  (add-hook 'c-mode-hook #'tree-sitter-mode)
+  (add-hook 'c++-mode-hook #'tree-sitter-mode)
+  (add-hook 'c-mode-hook #'tree-sitter-hl-mode)
+  (add-hook 'c++-mode-hook #'tree-sitter-hl-mode)
+)
+
+(use-package tree-sitter-langs
+  :after tree-sitter)
+
+(use-package color-identifiers-mode
+  :defer 1.5
+  :hook (prog-mode . color-identifiers-mode)
+  )
 ;;; edit-common.el ends here

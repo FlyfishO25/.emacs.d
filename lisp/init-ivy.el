@@ -44,14 +44,6 @@
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
   )
 
-
-(use-package swiper
-  :ensure t
-  :after ivy
-  :bind (("C-s" . swiper)
-         ("C-r" . swiper))
-  )
-
 (use-package counsel
   :ensure t
   :after ivy
@@ -78,10 +70,17 @@
             counsel-rg-base-command
             "rg -i -M 120 --no-heading --line-number --color never %s ."
             )
-    (warn "\nWARNING: Could not find the ripgrep executable. It 
-          is recommended you install ripgrep.")
+    (warn "\nWARNING: Could not find the ripgrep executable. It is recommended to install ripgrep.")
     )
   )
+
+(use-package ctrlf
+  ;; use ctrlf as a replace of swiper
+  :custom-face
+  (ctrlf-highlight-active ((t (:weight bold :foreground "medium blue" :background "#5AC896"))))
+  :init
+  (ctrlf-mode 1)
+)
 
 ;; Use universal ctags to build the tags database for the project.
 ;; When you first want to build a TAGS database run 'touch TAGS'
@@ -176,62 +175,23 @@
         )
   )
 
-;; (use-package all-the-icons-ivy
-;;   :if (icons-displayable-p)
-;;   :init (add-hook 'after-init-hook 'all-the-icons-ivy-setup))
-
-;; (use-package all-the-icons-ivy-rich
-;;   :hook (ivy-mode . all-the-icons-ivy-rich-mode)
-;;   :init (setq all-the-icons-ivy-rich-icon display-icon)
-;;   :config
-;;   (plist-put all-the-icons-ivy-rich-display-transformers-list
-;;              'load-theme
-;;              '(:columns
-;;                ((all-the-icons-ivy-rich-theme-icon)
-;;                 (ivy-rich-candidate))
-;;                :delimiter "\t"))
-;;   (all-the-icons-ivy-rich-reload))
-
-;; (use-package ivy-rich
-;;   :config
-;;   (ivy-rich-mode 1)
-;;   )
-
 (use-package prescient
   :commands prescient-persist-mode
   :init (prescient-persist-mode 1))
 
 (use-package all-the-icons-ivy-rich
-  :init (all-the-icons-ivy-rich-mode 1))
+  :hook (after-init . all-the-icons-ivy-rich-mode)
+  :if (icons-displayable-p))
 
 (use-package ivy-rich
-  :init (ivy-rich-mode 1))
+  :hook (after-init . ivy-rich-mode)
+  )
 
 (use-package ivy-prescient
-  :commands ivy-prescient-re-builder
+  :custom-face
+  (ivy-minibuffer-match-face-1 ((t (:foreground ,(face-foreground 'font-lock-doc-face nil t)))))
   :init
-  ;; See https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-ivy.el#397
-  (defun ivy-prescient-rebuilder (str)
-    "Generate an regexp for STR by `ivy-prescient-re-builder'."
-    (let ((prescient-filter-method '(literal regexp)))
-      (ivy-prescient-re-builder str)
-      ))
-  (setq ivy-prescient-retain-classic-highlighting t
-        ivy-re-builders-alist
-        '((counsel-ag . ivy-prescient-rebuilder)
-          (counsel-pt . ivy-prescient-rebuilder)
-          (counsel-grep . ivy-prescient-rebuilder)
-          (counsel-fzf . ivy-prescient-rebuilder)
-          (counsel-imenu . ivy-prescient-rebuilder)
-          (counsel-yank-pop . ivy-prescient-rebuilder)
-          (swiper . ivy-prescient-rebuilder)
-          (swiper-isearch . ivy-prescient-rebuilder)
-          (swiper-all . ivy-prescient-rebuilder)
-          (lsp-ivy-workspace-symbol . ivy-prescient-rebuilder)
-          (lsp-ivy-global-workspace-symbol . ivy-prescient-rebuilder)
-          (insert-char . ivy-prescient-rebuilder)
-          (counsel-unicode-char . ivy-prescient-rebuilder)
-          (t . ivy-prescient-re-builder))
+  (setq ivy-prescient-retain-classic-highlighting nil
         ivy-prescient-sort-commands
         '(:not swiper swiper-isearch ivy-switch-buffer
                lsp-ivy-workspace-symbol ivy-resume ivy--restore-session
@@ -291,3 +251,67 @@
 (add-hook 'minibuffer-exit-hook
           (lambda ()
             (remove-hook 'pre-command-hook 'ivy-fly-back t)))
+
+(use-package orderless
+  :demand
+  :init
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles . (partial-completion))) (eglot (styles . (orderless flex)))))
+  :config
+  (defun flex-if-twiddle (pattern _index _total)
+    (when (string-suffix-p "~" pattern)
+      `(orderless-flex . ,(substring pattern 0 -1))))
+
+  (defun without-if-bang (pattern _index _total)
+    (cond
+     ((equal "!" pattern)
+      '(orderless-literal . ""))
+     ((string-prefix-p "!" pattern)
+      `(orderless-without-literal . ,(substring pattern 1)))))
+
+  (setq orderless-matching-styles '(orderless-literal orderless-regexp)
+        orderless-style-dispatchers '(flex-if-twiddle
+                                      without-if-bang))
+  (setq ivy-re-builders-alist '((t . orderless-ivy-re-builder)))
+  (add-to-list 'ivy-highlight-functions-alist '(orderless-ivy-re-builder . orderless-ivy-highlight))
+  )
+
+(use-package embark
+  :ensure t
+
+  :bind
+  (("C-." . embark-act)         ;; pick some comfortable binding
+   ("C-;" . embark-dwim)        ;; good alternative: M-.
+   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+
+  :init
+
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+
+  :config
+
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+;; Consult users will also want the embark-consult package.
+(use-package embark-consult
+  :ensure t
+  :after (embark consult)
+  :demand t ; only necessary if you have the hook below
+  ;; if you want to have consult previews as you move around an
+  ;; auto-updating embark collect buffer
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
+;; Enable richer annotations using the Marginalia package
+(use-package marginalia
+  :bind (:map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+  :init
+  (marginalia-mode))
+;;; init-ivy.el ends here

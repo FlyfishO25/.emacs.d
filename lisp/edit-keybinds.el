@@ -50,8 +50,10 @@
        "Modify keys for xah fly key command mode keys
 to be added to `xah-fly-command-mode-activate-hook'"
        (interactive)
-       (define-key xah-fly-command-map (kbd "n") 'swiper)
+       (define-key xah-fly-command-map (kbd "n") 'ctrlf-forward-default)
        (define-key xah-fly-command-map (kbd "2") 'delete-window)
+       (define-key xah-fly-command-map (kbd "M-<SPC>") nil)
+       (setq flymacs--xah-status "Cmd")
        ;; more here
        )
 
@@ -60,6 +62,7 @@ to be added to `xah-fly-command-mode-activate-hook'"
 to be added to `xah-fly-insert-mode-activate-hook'"
        (interactive)
        (define-key xah-fly-insert-map (kbd "M-<SPC>") 'xah-fly-command-mode-activate)
+       (setq flymacs--xah-status "Ins")
        ;; more here
        )
 
@@ -120,11 +123,18 @@ to be added to `xah-fly-insert-mode-activate-hook'"
 (global-set-key (kbd "C-/") 'undo)
 ;; Find file in project
 (global-set-key (kbd "C-x M-f") 'project-find-file)
-(global-set-key (kbd "C-r") 'replace-string)
+;;(global-set-key (kbd "C-r") 'replace-string)
 ;; Set default C-x C-b to ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-c M-w") 'osx-copy)
 (global-set-key (kbd "C-c C-y") 'osx-paste)
+;; Use crux keys as replacement of origin key to provide better experience
+(global-set-key (kbd "C-c o") 'crux-open-with)
+(global-set-key (kbd "C-k") 'crux-smart-kill-line)
+(global-set-key (kbd "C-c C-e") 'curx-eval-and-replace)
+(global-set-key (kbd "C-c M-r") 'curx-rename-buffer)
+(global-set-key [remap move-beginning-of-line] #'crux-move-beginning-of-line)
+(global-set-key [remap kill-whole-line] #'crux-kill-whole-line)
 
 ;;; edit-keybinds.el ends here
 

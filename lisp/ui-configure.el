@@ -1,4 +1,35 @@
-;;; -*- lexical-binding: t; -*-
+;;; ui-configure.el --- basic config of user interfaces. -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2022 FlyfishO25
+
+;; Author: FlyfishO25 <markzhou0125@gmail.com>
+;; URL: https://github.com/FlyfishO25/.emacs.d
+
+
+;; This file is not part of GNU Emacs.
+;;
+;; This program is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU General Public License as
+;; published by the Free Software Foundation; either version 3, or
+;; (at your option) any later version.
+;;
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+;;
+;; You should have received a copy of the GNU General Public License
+;; along with this program; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+;; Floor, Boston, MA 02110-1301, USA.
+;;
+
+;;; Commentary:
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Basic config of user interfaces.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 (require 'init-funcs)
 
 (setq frame-title-format
@@ -11,6 +42,7 @@
       )
 
 (use-package all-the-icons
+  :if (icons-displayable-p)
   :config
   (with-no-warnings
     (defun all-the-icons-reset ()
@@ -182,15 +214,6 @@
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Beacon-mode: flash the cursor when switching buffers or scrolling
-;;              the goal is to make it easy to find the cursor
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package beacon
-  :diminish
-  :config
-  (beacon-mode))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; which-key: when you pause on a keyboard shortcut it provides
 ;;            suggestions in a popup buffer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -221,7 +244,6 @@
       :hook ((prog-mode yaml-mode) . display-line-numbers-mode)
       :init (setq display-line-numbers-width-start t))
   (use-package linum-off
-    :demand
     :defines linum-format
     :hook (after-init . global-linum-mode)
     :init (setq linum-format "%4d ")
@@ -232,3 +254,29 @@
       :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
       :hook (global-linum-mode . hlinum-activate)
       :init (setq linum-highlight-in-all-buffersp t))))
+
+(use-package dirvish
+  :config
+  (global-set-key (kbd "<f7>") 'dirvish-side))
+
+(defface posframe-border
+  `((t (:background ,(face-foreground 'shadow nil t))))
+  (custom-set-faces
+   `(posframe-border ((t (:background ,(face-foreground 'shadow nil t)))))))
+
+(defun ns-auto-titlebar-set-frame (frame &rest _)
+  "Set ns-appearance frame parameter for FRAME to match its background-mode parameter."
+  (when (display-graphic-p frame)
+    (let ((mode (frame-parameter frame 'background-mode)))
+      (modify-frame-parameters frame `((ns-transparent-titlebar . t) (ns-appearance . ,mode))))))
+
+(defun ns-auto-titlebar-set-all-frames (&rest _)
+  "Set ns-appearance frame parameter for all frames to match their background-mode parameter."
+  (mapc 'ns-auto-titlebar-set-frame (frame-list)))
+
+(when (eq system-type 'darwin) (progn
+                                 (add-hook 'after-init-hook 'ns-auto-titlebar-set-all-frames)
+                                 (add-hook 'after-make-frame-functions 'ns-auto-titlebar-set-frame)
+                                 (advice-add 'frame-set-background-mode :after 'ns-auto-titlebar-set-frame)
+                                 ))
+;;; ui-configure.el ends here.

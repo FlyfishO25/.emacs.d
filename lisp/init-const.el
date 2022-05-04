@@ -30,12 +30,25 @@
 
 (defconst flymacs-files-to-compile
   '((concat user-emacs-directory "config-user.el")
+    (concat user-emacs-directory "config-user-option.el")
     (concat user-emacs-directory "site-lisp/xah-fly-keys/xah-fly-keys.el")
     (concat user-emacs-directory "site-lisp/xah-fly-keys.el")
     (concat user-emacs-directory "init.el")
     (concat user-emacs-directory "site-lisp/ox-html5presentation.el")
     )
   )
+
+(setq flymacs-package-archives-tsinghua '(("mepla" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+                                             ("elpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
+      
+      flymacs-package-archives-bfsu '(("elpa" . "https://mirrors.bfsu.edu.cn/elpa/gnu/")
+                                         ("melpa" . "https://mirrors.bfsu.edu.cn/elpa/melpa/"))
+
+      flymacs-package-archives-tencent '(("elpa" . "https://mirrors.cloud.tencent.com/elpa/gnu/")
+                                            ("melpa" . "https://mirrors.cloud.tencent.com/elpa/melpa/"))
+
+      flymacs-package-archives-origin '(("melpa" . "https://melpa.org/packages/")
+                                        ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (provide 'init-const)
 

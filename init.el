@@ -31,71 +31,26 @@
 (setq flymacs--file-name-handler-alist-old file-name-handler-alist)
 
 (let* ((file-name-handler-alist nil))
-                                        ; customize and function defination
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
   (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp"))
-                                        ; basic setup
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/mu4e"))
+
+					; basic setup
   (require 'init-funcs)
+  
+  (loadpkg 'init-const t)
   (loadpkg 'init-performance t)
+  (loadpkg 'init-option t)
   (loadpkg 'packages-init t)
-  (loadpkg 'init-user t)
   (loadpkg 'init-server)
   (loadpkg 'init-compile t)
   (loadpkg 'init-misc t)
-
-  (loadpkg 'ui-configure t)
-  (loadpkg 'ui-tree)
-  (loadpkg 'ui-modeline t)
-  ;; (loadpkg 'ui-tab)
-  (loadpkg 'ui-configure t)
-  (loadpkg 'ui-dashboard)
-  (loadpkg 'ui-theme t)
-  (loadpkg 'ui-flycheck)
-  (loadpkg 'ui-cnfont t)
-
-
-  (add-hook 'after-init-hook (lambda ()
-                               (loadpkg 'edit-common t)
-                               (loadpkg 'edit-autosave t)
-                               (auto-save-enable)
-                               ;; (loadpkg 'edit-xah-fly-keys t)
-                               (loadpkg 'edit-keybinds t)
-                               (loadpkg 'init-ivy t)
-                               (loadpkg 'init-hydra t)
-
-			       (loadpkg 'edit-common t)
-			       (loadpkg 'edit-autosave t)
-			       (auto-save-enable)
-			       ;; (loadpkg 'edit-xah-fly-keys t)
-			       (loadpkg 'edit-keybinds t)
-			       
-			       (loadpkg 'init-ivy t)
-			       (loadpkg 'init-hydra t)
-                                        ; code editing
-
-			       (loadpkg 'lang-python)
-			       (loadpkg 'lang-c)
-
-                                        ; code completion
-
-                                        ; code editing
-			       (loadpkg 'lang-python)
-			       (loadpkg 'lang-c)
-			       (loadpkg 'complete-lsp)
-
-                                        ; other modes
-			       (loadpkg 'init-org)
-                               (add-hook 'org-mode-hook (lambda () (loadpkg 'init-roam)))
-                               (loadpkg 'reading)
-                               (loadpkg 'init-git)
-
-                                        ; games
-                               (loadpkg 'init-games)
-                               (flymacs-post-install)
-                               ))
-                                        ; code completion
   
-  (loadpkg 'complete-company t)
+  (require 'option-handler)
+
+  (flymacs-handle-normal-startup)
+  
+  (loadpkg 'init-user t)
   )
 
 (setq file-name-handler-alist flymacs--file-name-handler-alist-old)
