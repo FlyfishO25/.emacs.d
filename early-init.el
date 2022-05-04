@@ -22,19 +22,3 @@
 (push '(vertical-scroll-bars) default-frame-alist)
 ;; (when (featurep 'ns)
 ;;   (push '(ns-transparent-titlebar . t) default-frame-alist))
-
-(defun ns-auto-titlebar-set-frame (frame &rest _)
-  "Set ns-appearance frame parameter for FRAME to match its background-mode parameter."
-  (when (display-graphic-p frame)
-    (let ((mode (frame-parameter frame 'background-mode)))
-      (modify-frame-parameters frame `((ns-transparent-titlebar . t) (ns-appearance . ,mode))))))
-
-(defun ns-auto-titlebar-set-all-frames (&rest _)
-  "Set ns-appearance frame parameter for all frames to match their background-mode parameter."
-  (mapc 'ns-auto-titlebar-set-frame (frame-list)))
-
-(when (eq system-type 'darwin) (progn
-                                 (add-hook 'after-init-hook 'ns-auto-titlebar-set-all-frames)
-                                 (add-hook 'after-make-frame-functions 'ns-auto-titlebar-set-frame)
-                                 (advice-add 'frame-set-background-mode :after 'ns-auto-titlebar-set-frame)
-                                 ))

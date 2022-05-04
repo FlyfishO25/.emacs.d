@@ -28,6 +28,7 @@
 ;; Magit
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package magit
+  :defer 1.5
   :ensure t
   :requires dash
   :after (ivy)
@@ -57,31 +58,10 @@
                             (when (bound-and-true-p git-timemachine-mode)
                               (user-error "Cannot revert the timemachine buffer"))))))
 
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; diff-hl (instead of git-gutter)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (use-package git-gutter
-;;   :ensure t
-;;   :init
-;;   (eval-when-compile
-;;     ;; Silence missing function warnings
-;;     (declare-function global-git-gutter-mode "git-gutter.el"))
-;;   :config
-;;   ;; If you enable global minor mode
-;;   (global-git-gutter-mode t)
-;;   ;; Auto update every 5 seconds
-;;   (custom-set-variables
-;;    '(git-gutter:update-interval 5))
-
-;;   ;; Set the foreground color of modified lines to something obvious
-;;   (set-face-foreground 'git-gutter:modified "purple")
-;;   )
-
 ;; Highlight uncommitted changes using VC
 ;; @see https://github.com/seagle0128/.emacs.d/blob/e840ab62fd5f1a8df9818d0678e7413145e4c8d3/lisp/init-highlight.el#L223
 (use-package diff-hl
+  :after magit
   :custom-face
   (diff-hl-change ((t (:foreground ,(face-background 'highlight) :background nil))))
   (diff-hl-insert ((t (:inherit diff-added :background nil))))
@@ -129,5 +109,4 @@
       (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))))
 
 (setq vc-follow-symlinks t)
-
 ;;; init-git.el ends here

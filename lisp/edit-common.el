@@ -160,7 +160,7 @@
   :diminish)
 
 (use-package tree-sitter
-  :demand
+  :defer t
   :config
   (add-hook 'c-mode-hook #'tree-sitter-mode)
   (add-hook 'c++-mode-hook #'tree-sitter-mode)
@@ -172,6 +172,7 @@
   :after tree-sitter)
 
 (use-package color-identifiers-mode
+  :defer 1.5
   :hook (prog-mode . color-identifiers-mode)
   )
 ;;; edit-common.el ends here

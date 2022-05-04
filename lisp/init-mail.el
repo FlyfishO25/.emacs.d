@@ -2,6 +2,7 @@
 ;;; Code:
 
 (use-package mu4e
+  :defer t
   :load-path "site-lisp/mu4e/"
   :commands (mu4e))
 (setq mail-user-agent 'mu4e-user-agent)
