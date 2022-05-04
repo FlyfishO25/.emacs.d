@@ -110,10 +110,10 @@
          :map isearch-mode-map
          ([remap isearch-query-replace] . anzu-isearch-query-replace)
          ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
-  :hook (after-init . global-anzu-mode))
+  :hook (on-first-input . global-anzu-mode))
 
 (use-package multiple-cursors
-  :defer 3
+  :defer t
   :bind (("M-n" . mc/mark-next-like-this)
          ("M-p" . mc/mark-previous-like-this)
          ("C-c a" . mc/mark-all-like-this)
@@ -124,7 +124,7 @@
 ;; avy: always fast jump to char inside the current view buffer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package avy
-  :defer 2
+  :defer t
   :bind (("M-c" . avy-goto-char)
          ("M-s" . avy-goto-word-1))
   ;; Set keys for Dvorak mode instead of qwerty
@@ -139,13 +139,13 @@
 ;;              replacement options
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package zzz-to-char
-  :defer 2
+  :defer t
   :bind ("M-z" . zzz-up-to-char))
 
 ;; Treat undo history as a tree ;; from https://github.com/seagle0128/.emacs.d/blob/e840ab62fd5f1a8df9818d0678e7413145e4c8d3/lisp/init-edit.el#L320
 (use-package undo-tree
   :diminish
-  :hook (after-init . global-undo-tree-mode)
+  :hook (on-first-input . global-undo-tree-mode)
   :init
   (setq undo-tree-visualizer-timestamps t
         undo-tree-enable-undo-in-region nil
@@ -158,18 +158,6 @@
 
 (use-package crux
   :diminish)
-
-(use-package tree-sitter
-  :defer t
-  :config
-  (add-hook 'c-mode-hook #'tree-sitter-mode)
-  (add-hook 'c++-mode-hook #'tree-sitter-mode)
-  (add-hook 'c-mode-hook #'tree-sitter-hl-mode)
-  (add-hook 'c++-mode-hook #'tree-sitter-hl-mode)
-)
-
-(use-package tree-sitter-langs
-  :after tree-sitter)
 
 (use-package color-identifiers-mode
   :defer 1.5

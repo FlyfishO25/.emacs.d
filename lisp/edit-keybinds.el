@@ -69,7 +69,7 @@ to be added to `xah-fly-insert-mode-activate-hook'"
      (add-hook 'xah-fly-command-mode-activate-hook 'my-config-xah-fly-key-command)
      (add-hook 'xah-fly-insert-mode-activate-hook 'my-config-xah-fly-key-insert)
      
-     (xah-fly-keys 1)
+     :hook (on-first-input . xah-fly-keys)
      )
    )
   ('evil
@@ -80,7 +80,7 @@ to be added to `xah-fly-insert-mode-activate-hook'"
            evil-want-keybinding nil
            evil-shift-width 4
            evil-undo-system 'undo-tree)
-     :hook (after-init . evil-mode)
+     :hook (on-first-input . evil-mode)
      :preface
      (defun save-and-kill-this-buffer ()
        (interactive)

@@ -133,11 +133,11 @@
   )
 
 (use-package diredfl
-  :init (diredfl-global-mode 1))
+  :init (diredfl-global-mode))
 
 (use-package all-the-icons-ibuffer
   :if (icons-displayable-p)
-  :init (all-the-icons-ibuffer-mode 1))
+  :hook (on-init-ui . all-the-icons-ibuffer-mode))
 
 (when (and (not (eq system-type 'darwin)) (fboundp 'menu-bar-mode))
   (menu-bar-mode -1))
@@ -150,6 +150,7 @@
            (not (display-graphic-p)))))
 
 (setq x-stretch-cursor t)
+(setq echo-keystrokes 0.02)
 
 ;; Suppress GUI features
 (setq use-file-dialog nil
@@ -193,13 +194,12 @@
 
 (use-package page-break-lines
   :diminish
-  :hook (after-init . global-page-break-lines-mode))
+  :hook (on-init-ui . global-page-break-lines-mode))
 
 (use-package solaire-mode
-  :defer t
+  :demand
   :diminish
-  :config
-  (solaire-global-mode +1)
+  :hook (on-init-ui . solaire-global-mode)
   )
 
 (setq inhibit-splash-screen t)
@@ -218,12 +218,11 @@
 ;;            suggestions in a popup buffer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package which-key
-  :defer 0.3
+  :defer t
   :diminish
   :custom (which-key-idle-delay 0.5)
+  :hook (on-first-input . which-key-mode)
   )
-
-(which-key-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Window numbering
@@ -231,9 +230,7 @@
 ;; Package window-numbering installed from package list
 ;; Allows switching between buffers using meta-(# key)
 (use-package window-numbering
-  :defer 0.8
-  :config
-  (window-numbering-mode 1))
+  :hook (on-init-ui . window-numbering-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Display line numbers

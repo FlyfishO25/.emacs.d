@@ -55,6 +55,7 @@
 
 (when (>= emacs-major-version 25.2)
   (use-package minions
+    :after doom-modeline
     :if (eq flymacs-ui 'rich)
     :hook (doom-modeline-mode . minions-mode)))
 

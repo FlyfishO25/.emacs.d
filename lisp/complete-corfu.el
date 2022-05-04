@@ -100,9 +100,9 @@
 (use-package yasnippet-snippets
   :after yasnippet)
 
-(dolist (pkg '(company-box company-prescient company-quickhelp company-quickhelp-terminal company))
+(dolist (pkg '(company-box company-prescient company-quickhelp-terminal company-quickhelp company))
   (when (package-installed-p pkg)
-    (package-delete (car (cdr (assoc pkg package-alist))))))
+    (package-delete (car (cdr (assoc pkg package-alist))) t)))
 
 (unless (eq centaur-lsp 'eglot)
   (message "It is recommanded to use eglot instead of lsp-mode with corfu."))

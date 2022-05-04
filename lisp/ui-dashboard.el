@@ -32,6 +32,7 @@
 ;;; Code:
 
 (use-package dashboard
+  :if (not (eq flymacs-ui 'simple))
   :diminish dashboard-mode
   :functions (all-the-icons-faicon
               all-the-icons-material)
@@ -52,6 +53,32 @@
                                   (agenda    . "calendar"))
         initial-buffer-choice nil)
   (dashboard-setup-startup-hook)
+  )
+
+(use-package maple-scratch
+  :load-path "site-lisp/"
+  :if (eq flymacs-ui 'simple)
+  :demand
+  :config
+  (setq maple-scratch-source nil
+        maple-scratch-number 5
+        maple-scratch-center t
+        maple-scratch-empty t
+        maple-scratch-anywhere nil
+        maple-scratch-write-mode 'emacs-lisp-mode
+        maple-scratch-items '(maple-scratch-banner
+                              maple-scratch-navbar
+                              maple-scratch-default
+                              maple-scratch-startup)
+        maple-scratch-banner
+        '(":::::::::: :::     :::   ::: ::::    ::::      :::      ::::::::   ::::::::"
+          ":+:        :+:     :+:   :+: +:+:+: :+:+:+   :+: :+:   :+:    :+: :+:    :+:"
+          "+:+        +:+      +:+ +:+  +:+ +:+:+ +:+  +:+   +:+  +:+        +:+"
+          ":#::+::#   +#+       +#++:   +#+  +:+  +#+ +#++:++#++: +#+        +#++:++#++"
+          "+#+        +#+        +#+    +#+       +#+ +#+     +#+ +#+               +#+"
+          "#+#        #+#        #+#    #+#       #+# #+#     #+# #+#    #+# #+#    #+#"
+          "###        ########## ###    ###       ### ###     ###  ########   ########"))
+  (maple-scratch-init)
   )
 
 ;;; ui-dashboard.el ends here.

@@ -28,7 +28,7 @@
 ;; Magit
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package magit
-  :defer 1.5
+  :defer t
   :ensure t
   :requires dash
   :after (ivy)
