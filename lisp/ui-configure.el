@@ -210,8 +210,23 @@
 (use-package rainbow-delimiters
   :defer 1
   :diminish
-  :hook (prog-mode-hook . rainbow-delimiters-mode)
+  :hook (prog-mode . rainbow-delimiters-mode)
   )
+
+(use-package highlight-parentheses
+    :defer t
+    :custom
+    (highlight-parentheses-delay 0.2)
+    (highlight-parentheses-colors '("Springgreen3"
+                                    "IndianRed1"
+                                    "IndianRed3"
+                                    "IndianRed4"))
+    :custom-face (highlight-parentheses-highlight ((nil (:weight ultra-bold))))
+    :commands highlight-parentheses-minibuffer-setup
+    :init
+    (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
+    (add-hook 'minibuffer-setup-hook #'highlight-parentheses-minibuffer-setup)
+    )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; which-key: when you pause on a keyboard shortcut it provides

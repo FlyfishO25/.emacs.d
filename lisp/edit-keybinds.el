@@ -69,7 +69,7 @@ to be added to `xah-fly-insert-mode-activate-hook'"
      (add-hook 'xah-fly-command-mode-activate-hook 'my-config-xah-fly-key-command)
      (add-hook 'xah-fly-insert-mode-activate-hook 'my-config-xah-fly-key-insert)
      
-     :hook (on-first-input . xah-fly-keys)
+     (xah-fly-keys 1)
      )
    )
   ('evil

@@ -47,7 +47,7 @@
 (setq-default case-fold-search t ;case insensitive searches by default
               search-highlight t) ;hilit matches when searching
 ;; Highlight the line we are currently on
-(global-hl-line-mode -1)
+(global-hl-line-mode 1)
 ;; Disable the toolbar at the top since it's useless
 ;; (if (functionp 'tool-bar-mode) (tool-bar-mode -1))
 ;; (tool-bar-mode 0)                     
@@ -57,14 +57,14 @@
 (electric-pair-mode 1)
 (setq-default indent-tabs-mode nil)
 (setq indent-line-function 'insert-tab)
-(show-paren-mode 1)
-(define-advice show-paren-function (:around (fn) fix-show-paren-function)
-  "Highlight enclosing parens."
-  (cond ((looking-at-p "\\s(") (funcall fn))
-	(t (save-excursion
-	     (ignore-errors (backward-up-list))
-	     (funcall fn)))))
-(setq show-paren-style 'parenthesis)
+;; (show-paren-mode 1)
+;; (define-advice show-paren-function (:around (fn) fix-show-paren-function)
+;;   "Highlight enclosing parens."
+;;   (cond ((looking-at-p "\\s(") (funcall fn))
+;; 	(t (save-excursion
+;; 	     (ignore-errors (backward-up-list))
+;; 	     (funcall fn)))))
+;; (setq show-paren-style 'parenthesis)
 
 ;; Remove trailing white space upon saving
 ;; Note: because of a bug in EIN we only delete trailing whitespace
