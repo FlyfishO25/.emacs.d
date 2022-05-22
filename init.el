@@ -40,19 +40,48 @@
   (require 'on)
   
   (loadpkg 'init-const t)
-  (loadpkg 'init-performance t)
   (loadpkg 'init-option t)
+  (loadpkg 'init-performance t)
   (loadpkg 'packages-init t)
   (loadpkg 'init-server)
   (loadpkg 'init-compile t)
   (loadpkg 'init-misc t)
     
+  (loadpkg 'ui-configure t)
+  (loadpkg 'ui-modeline t)
+  ;; (loadpkg 'ui-tab)
+  (loadpkg 'ui-dashboard)
+  (loadpkg 'ui-theme t)
+  (loadpkg 'ui-flycheck)
+  (loadpkg 'ui-cnfont t)
+
+  (loadpkg 'edit-common t)
+  (loadpkg 'edit-autosave t)
+  (loadpkg 'edit-keybinds t)
   
-  (require 'option-handler)
-
-  (flymacs-handle-normal-startup)
-
+  (loadpkg 'init-ivy t)
+  (loadpkg 'init-hydra)
+  
   (on-init-ui-h)
+                                        ; code editing
+
+  (loadpkg 'lang-python)
+  (loadpkg 'lang-c)
+  (loadpkg 'lang-go)
+                                        ; code completion
+
+  (loadpkg 'complete-completion t)
+  (loadpkg 'complete-lsp)
+
+                                        ; other modes
+  (loadpkg 'init-org)
+  (add-hook 'org-mode-hook (lambda () (loadpkg 'init-roam)))
+  (loadpkg 'reading)
+  (loadpkg 'init-git)
+  (loadpkg 'init-mail)
+                                        ; games
+  (loadpkg 'init-games)
+  (flymacs-post-install)
   
   (loadpkg 'init-user t)
   )
