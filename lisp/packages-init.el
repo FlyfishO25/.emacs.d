@@ -33,7 +33,9 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (require 'init-const)
 
-(setq package-archives flymacs-package-archives-origin)
+(if (equal package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                              ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+  (setq package-archives flymacs-package-archives-origin))
 
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
