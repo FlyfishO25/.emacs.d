@@ -33,15 +33,15 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (require 'init-const)
 
-(if (equal package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                              ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-  (setq package-archives flymacs-package-archives-origin))
-
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
 
 (require 'package)
+
+(if (equal package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                              ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+  (setq package-archives flymacs-package-archives-origin))
 
 ;; From https://irreal.org/blog/?p=8243
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
