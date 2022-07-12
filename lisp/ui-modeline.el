@@ -64,6 +64,6 @@
   :demand
   :if (and (file-exists-p (expand-file-name "site-lisp/awesome-tray/awesome-tray.el" user-emacs-directory)) (eq flymacs-ui 'simple))
   :load-path "site-lisp/awesome-tray/"
-  :config (awesome-tray-mode)
+  :hook (after-init . awesome-tray-mode)
   )
 ;;; ui-modeline.el ends here.
