@@ -59,14 +59,11 @@
     :if (eq flymacs-ui 'rich)
     :hook (doom-modeline-mode . minions-mode)))
 
-(use-package smart-mode-line
-  :if (eq flymacs-ui 'simple)
-  :config
-  (sml/setup)
-  (use-package mini-modeline
-    :after smart-mode-line
-    :config
-    (mini-modeline-mode t)))
-
-
+(use-package awesome-tray
+  :ensure nil
+  :demand
+  :if (and (file-exists-p (expand-file-name "site-lisp/awesome-tray/awesome-tray.el" user-emacs-directory)) (eq flymacs-ui 'simple))
+  :load-path "site-lisp/awesome-tray/"
+  :config (awesome-tray-mode)
+  )
 ;;; ui-modeline.el ends here.
