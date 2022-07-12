@@ -42,6 +42,8 @@
 (if (or (equal package-archives flymacs-package-archives-tsinghua) (or (equal package-archives flymacs-package-archives-bfsu) (equal package-archives flymacs-package-archives-tencent)))
   (setq package-archives flymacs-package-archives-origin))
 
+(message package-archives)
+
 ;; From https://irreal.org/blog/?p=8243
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
