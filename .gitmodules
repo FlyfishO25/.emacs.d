@@ -1,9 +1,6 @@
 [submodule "site-lisp/xah-fly-keys"]
 	path = site-lisp/xah-fly-keys
 	url = https://github.com/xahlee/xah-fly-keys.git
-[submodule "site-lisp/emacs-maple-modeline"]
-	path = site-lisp/emacs-maple-modeline
-	url = https://github.com/honmaple/emacs-maple-modeline.git
-[submodule "site-lisp/emacs-maple-xpm"]
-	path = site-lisp/emacs-maple-xpm
-	url = https://github.com/honmaple/emacs-maple-xpm.git
+[submodule "site-lisp/awesome-tray"]
+	path = site-lisp/awesome-tray
+	url = https://github.com/manateelazycat/awesome-tray.git
