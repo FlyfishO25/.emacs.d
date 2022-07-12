@@ -39,8 +39,10 @@
 
 (require 'package)
 
-(if (or (equal package-archives flymacs-package-archives-tsinghua) (or (equal package-archives flymacs-package-archives-bfsu) (equal package-archives flymacs-package-archives-tencent)))
+(if (equal package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                              ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
   (setq package-archives flymacs-package-archives-origin))
+
 
 (message package-archives)
 
