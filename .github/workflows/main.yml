@@ -19,7 +19,7 @@ jobs:
           rm -rf ~/.emacs.d; \
           mv -f ~/work/.emacs.d/.emacs.d ~; \
           cd ~/.emacs.d; \
-          git submodules update --init; \
+          git submodule update --init; \
           emacs --version; \
           emacs -Q --batch --eval "(load (concat user-emacs-directory \"lisp/packages-init.el\"))" --eval "(package-install 'doom-modeline)" --eval "(doom-modeline-mode)";
           emacs -q --batch \
