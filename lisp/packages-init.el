@@ -37,11 +37,12 @@
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
 
-(require 'package)
+(if (boundp 'flymacs-package-archives)
+    (setq package-archives flymacs-package-archives)
+  (setq package-archives flymacs-package-archives-origin)
+)
 
-(if (equal package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                              ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-  (setq package-archives flymacs-package-archives-origin))
+(require 'package)
 
 ;; From https://irreal.org/blog/?p=8243
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")

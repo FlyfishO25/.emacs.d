@@ -37,14 +37,14 @@
           (lambda ()
             (setq tab-width 4)))
 (setq-default pdb-command-name "python -m pdb")
-(use-package elpy
-  :ensure t
-  :defer t
-  :commands (elpy-enable)
-  :after python
-  :config
-  (elpy-enable)
-  )
+;; (use-package elpy
+  ;; :ensure t
+  ;; :defer t
+  ;; :commands (elpy-enable)
+  ;; :after python
+  ;; :config
+  ;; (elpy-enable)
+  ;; )
 
 (use-package yapfify
   :ensure t

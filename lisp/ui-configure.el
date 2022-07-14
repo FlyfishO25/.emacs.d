@@ -208,7 +208,7 @@
 ;; Rainbow Delimiters -  have delimiters be colored by their depth
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package rainbow-delimiters
-  :defer 1
+  :defer t
   :diminish
   :hook (prog-mode . rainbow-delimiters-mode)
   )
@@ -266,10 +266,6 @@
       :custom-face (linum-highlight-face ((t (:inherit default :background nil :foreground nil))))
       :hook (global-linum-mode . hlinum-activate)
       :init (setq linum-highlight-in-all-buffersp t))))
-
-(use-package dirvish
-  :config
-  (global-set-key (kbd "<f7>") 'dirvish-side))
 
 (defface posframe-border
   `((t (:background ,(face-foreground 'shadow nil t))))

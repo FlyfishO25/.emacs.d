@@ -14,7 +14,7 @@
 ;; flymacs-package-archives-tsinghua
 ;; flymacs-package-archives-tencent
 ;; flymacs-package-archives-origin (default)
-;; (setq package-archives flymacs-package-archives-bfsu)
+;; (setq flymacs-package-archives flymacs-package-archives-bfsu)
 
 ;; Compile
 ;; (setq my:compile-command "")

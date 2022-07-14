@@ -39,16 +39,21 @@
   )
 
 (setq flymacs-package-archives-tsinghua '(("mepla" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-                                             ("elpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"))
+                                          ("elpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                                          ("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/"))
       
       flymacs-package-archives-bfsu '(("elpa" . "https://mirrors.bfsu.edu.cn/elpa/gnu/")
-                                         ("melpa" . "https://mirrors.bfsu.edu.cn/elpa/melpa/"))
+                                      ("melpa" . "https://mirrors.bfsu.edu.cn/elpa/melpa/")
+                                      ("nongnu" . "http://mirrors.bfsu.edu.cn/elpa/nongnu/"))
 
       flymacs-package-archives-tencent '(("elpa" . "https://mirrors.cloud.tencent.com/elpa/gnu/")
-                                            ("melpa" . "https://mirrors.cloud.tencent.com/elpa/melpa/"))
+                                         ("melpa" . "https://mirrors.cloud.tencent.com/elpa/melpa/")
+                                         ("nongnu" . "http://mirrors.cloud.tencent.com/elpa/nongnu/"))
 
       flymacs-package-archives-origin '(("melpa" . "https://melpa.org/packages/")
-                                        ("elpa" . "https://elpa.gnu.org/packages/")))
+                                        ("elpa" . "https://elpa.gnu.org/packages/")
+                                        ("nongnu" . "https://elpa.nongnu.org/nongnu/"))
+)
 
 (provide 'init-const)
 
