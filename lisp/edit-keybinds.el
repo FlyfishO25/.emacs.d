@@ -46,13 +46,15 @@
      :config
      ;; (eval-and-compile (require 'xah-fly-keys))
      (xah-fly-keys-set-layout "qwerty")
+     (define-key xah-fly-command-map (kbd "n") 'ctrlf-forward-default)
+     (define-key xah-fly-command-map (kbd "2") 'delete-window)
+     (define-key xah-fly-command-map (kbd "M-<SPC>") nil)
+     (define-key xah-fly-insert-map (kbd "M-<SPC>") 'xah-fly-command-mode-activate)
+     (define-key xah-fly-leader-key-map (kbd "r") 'anzu-query-replace)
      (defun my-config-xah-fly-key-command ()
        "Modify keys for xah fly key command mode keys
 to be added to `xah-fly-command-mode-activate-hook'"
        (interactive)
-       (define-key xah-fly-command-map (kbd "n") 'ctrlf-forward-default)
-       (define-key xah-fly-command-map (kbd "2") 'delete-window)
-       (define-key xah-fly-command-map (kbd "M-<SPC>") nil)
        (setq flymacs--xah-status "Cmd")
        ;; more here
        )
@@ -61,7 +63,6 @@ to be added to `xah-fly-command-mode-activate-hook'"
        "Modify keys for xah fly key command mode keys
 to be added to `xah-fly-insert-mode-activate-hook'"
        (interactive)
-       (define-key xah-fly-insert-map (kbd "M-<SPC>") 'xah-fly-command-mode-activate)
        (setq flymacs--xah-status "Ins")
        ;; more here
        )

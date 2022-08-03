@@ -113,7 +113,7 @@
   :hook (on-first-input . global-anzu-mode))
 
 (use-package multiple-cursors
-  :defer t
+  :defer 3
   :bind (("M-n" . mc/mark-next-like-this)
          ("M-p" . mc/mark-previous-like-this)
          ("C-c a" . mc/mark-all-like-this)
@@ -141,20 +141,6 @@
 (use-package zzz-to-char
   :defer t
   :bind ("M-z" . zzz-up-to-char))
-
-;; Treat undo history as a tree ;; from https://github.com/seagle0128/.emacs.d/blob/e840ab62fd5f1a8df9818d0678e7413145e4c8d3/lisp/init-edit.el#L320
-(use-package undo-tree
-  :diminish
-  :hook (on-first-input . global-undo-tree-mode)
-  :init
-  (setq undo-tree-visualizer-timestamps t
-        undo-tree-enable-undo-in-region nil
-        undo-tree-auto-save-history nil)
-
-  ;; HACK: keep the diff window
-  (with-no-warnings
-    (make-variable-buffer-local 'undo-tree-visualizer-diff)
-    (setq-default undo-tree-visualizer-diff t)))
 
 (use-package crux
   :diminish)
