@@ -112,6 +112,12 @@ WARNINGS:
                (lambda () ,@body)
                'append)))
 
-(provide 'init-funcs)
+(defun childframe-workable-p ()
+  "Test whether childframe is workable."
+  (eq completion-style 'childframe)
+  (not (or noninteractive
+           emacs-basic-display
+           (not (display-graphic-p)))))
 
+(provide 'init-funcs)
 ;;; init-funcs.el ends here

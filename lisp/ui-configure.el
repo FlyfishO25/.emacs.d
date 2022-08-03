@@ -142,13 +142,6 @@
 (when (and (not (eq system-type 'darwin)) (fboundp 'menu-bar-mode))
   (menu-bar-mode -1))
 
-(defun childframe-workable-p ()
-  "Test whether childframe is workable."
-  (eq completion-style 'childframe)
-  (not (or noninteractive
-           emacs-basic-display
-           (not (display-graphic-p)))))
-
 (setq x-stretch-cursor t)
 (setq echo-keystrokes 0.02)
 
