@@ -66,16 +66,16 @@
 ;; Automatically compile
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(add-hook
- 'after-save-hook
- (function
-  (lambda ()
-    (if (string= (file-truename "~/.emacs.d/init.el")
-                 (file-truename (buffer-file-name)))
-        (byte-compile-init-files (file-truename "~/.emacs.d/init.el")))
-    )
-  )
- )
+;; (add-hook
+;;  'after-save-hook
+;;  (function
+;;   (lambda ()
+;;     (if (string= (file-truename "~/.emacs.d/init.el")
+;;                  (file-truename (buffer-file-name)))
+;;         (byte-compile-init-files (file-truename "~/.emacs.d/init.el")))
+;;     )
+;;   )
+;;  )
 
 (while flymacs-files-to-compile
   (flymacs-compile-file (eval (pop flymacs-files-to-compile)))
